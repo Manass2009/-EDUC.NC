@@ -91,13 +91,13 @@
 
         /* 2. Écran Onboarding 1 (Drapeau + Tour) */
         #screen-onboarding-1 {
-            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,20,80,0.85)), url('images/bg-flag.jpg');
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,20,80,0.85)), url('bg-flag.jpg');
             color: white;
         }
 
         /* 3. Écran Onboarding 2 (Quiz) */
         #screen-onboarding-2 {
-            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,10,50,0.9)), url('images/onboarding-quiz.png');
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,10,50,0.9)), url("questionnaire d'intégration.png");
             color: white;
         }
 
@@ -114,7 +114,7 @@
             line-height: 1.4;
         }
 
-        /* Dots (2 étapes seulement) */
+        /* Dots */
         .dots-container {
             display: flex;
             justify-content: center;
@@ -183,7 +183,7 @@
 
     <div class="screen active" id="screen-splash">
         <div>
-            <img src="images/logo.png" alt="Logo" class="splash-logo" onerror="this.src='https://via.placeholder.com/150?text=Logo+RDC'">
+            <img src="logo.png" alt="Logo" class="splash-logo" onerror="this.src='https://via.placeholder.com/150?text=Logo+RDC'">
             <h1 class="splash-title">EDUC National</h1>
             <p class="splash-subtitle">Apprendre • Réviser • Réussir</p>
         </div>
@@ -226,7 +226,7 @@
             <h2 class="auth-title">Créer un compte</h2>
             <p style="color: #7b8a9b; font-size: 14px; margin-top: 8px;">Rejoignez EDUC National et commencez votre parcours d'apprentissage.</p>
             
-            <button class="btn-primary" style="margin-top: 30px;" onclick="alert('Redirection vers la saisie de téléphone')">📱 Continuer avec le téléphone</button>
+            <button class="btn-primary" style="margin-top: 30px;" onclick="alert('Redirection vers le téléphone')">📱 Continuer avec le téléphone</button>
             
             <div style="margin: 20px 0; color: #b0b9c5; font-size: 13px;">OU</div>
             
@@ -243,12 +243,12 @@
 </div>
 
 <script>
-    // Le logo (screen-splash) disparaît automatiquement après 2.5 secondes
+    // Le logo disparaît automatiquement après 2.5 secondes
     setTimeout(() => {
         nextScreen('screen-onboarding-1');
     }, 2500);
 
-    // Fonction de bascule entre les écrans
+    // Navigation entre les écrans
     function nextScreen(screenId) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(screenId).classList.add('active');
