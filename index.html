@@ -4,31 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDUC National</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: #000;
+            background-color: #0f172a;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
-        /* Cadre de l'application mobile pleine hauteur */
+        /* Conteneur taille smartphone */
         .app-container {
             width: 100%;
-            max-width: 430px;
+            max-width: 420px;
             height: 100vh;
-            max-height: 932px;
+            max-height: 880px;
             background: #ffffff;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .screen {
@@ -39,114 +41,159 @@
         }
 
         .screen.active {
-            display: block;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Images plein écran */
+        /* Images de fond Onboarding */
         .fullscreen-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
 
-        /* Bouton transparent placé exactement sur le bouton "Suivant/Commencer" de tes images */
-        .click-area {
+        /* Bouton "Suivant" interactif par-dessus l'image */
+        .btn-overlay {
             position: absolute;
-            bottom: 40px;
+            bottom: 30px;
             left: 5%;
             width: 90%;
-            height: 60px;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        /* Style de la page Créer un compte */
-        .auth-container {
-            padding: 50px 24px;
-            text-align: center;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            background: #ffffff;
-        }
-
-        .auth-icon {
-            width: 90px;
-            height: 90px;
-            margin: 40px auto 20px;
-        }
-
-        .auth-title {
-            font-size: 26px;
-            font-weight: 700;
-            color: #1a253c;
-        }
-
-        .auth-desc {
-            color: #6b7c96;
-            font-size: 14px;
-            margin-top: 10px;
-            padding: 0 10px;
-        }
-
-        .btn-phone {
-            width: 100%;
             padding: 16px;
             border-radius: 12px;
             border: none;
             background: #1890ff;
             color: white;
             font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(24, 144, 255, 0.4);
+            text-align: center;
+        }
+
+        .btn-overlay:active {
+            transform: scale(0.98);
+        }
+
+        /* --- STYLES EXACTS PAGE DE CRÉATION DE COMPTE --- */
+        .auth-container {
+            padding: 50px 24px 30px 24px;
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: #ffffff;
+            z-index: 10;
+        }
+
+        .auth-header {
+            margin-top: 40px;
+        }
+
+        /* Cercle bleu avec l'icône de création de compte */
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            background-color: #e6f0ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px auto;
+        }
+
+        .icon-circle span {
+            font-size: 42px;
+            color: #0056b3;
+        }
+
+        .auth-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a253c;
+            margin-bottom: 10px;
+        }
+
+        .auth-subtitle {
+            color: #6b7c96;
+            font-size: 14px;
+            line-height: 1.4;
+            padding: 0 15px;
+        }
+
+        /* Bouton Téléphone bleu */
+        .btn-phone {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            background: #0056b3;
+            color: white;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-top: 40px;
+            margin-top: 35px;
+            box-shadow: 0 4px 12px rgba(0, 86, 179, 0.25);
         }
 
-        .divider {
-            margin: 25px 0;
-            color: #a0aec0;
-            font-size: 13px;
+        /* Ligne de séparation "OU" */
+        .divider-container {
             display: flex;
             align-items: center;
+            margin: 25px 0;
+            color: #94a3b8;
+            font-size: 13px;
         }
-        .divider::before, .divider::after {
-            content: "";
-            flex: 1;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        .divider::before { margin-right: 10px; }
-        .divider::after { margin-left: 10px; }
 
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background-color: #e2e8f0;
+        }
+
+        .divider-text {
+            padding: 0 15px;
+        }
+
+        /* Bouton Google blanc */
         .btn-google {
             width: 100%;
             padding: 15px;
             border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            background: white;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
             font-size: 15px;
             font-weight: 600;
-            color: #2d3748;
+            color: #334155;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
+        }
+
+        .btn-google img {
+            width: 20px;
+            height: 20px;
         }
 
         .auth-footer {
-            margin-bottom: 20px;
             font-size: 14px;
-            color: #4a5568;
+            color: #64748b;
+            margin-bottom: 10px;
         }
 
         .auth-footer a {
-            color: #1890ff;
+            color: #0056b3;
             font-weight: bold;
             text-decoration: none;
         }
@@ -162,32 +209,37 @@
 
     <div class="screen" id="screen-2">
         <img src="bg-flag.jpg" class="fullscreen-img" alt="Bienvenue">
-        <div class="click-area" onclick="nextScreen('screen-3')"></div>
+        <button class="btn-overlay" onclick="nextScreen('screen-3')">Suivant</button>
     </div>
 
     <div class="screen" id="screen-3">
         <img src="questionnaire d'intégration.png" class="fullscreen-img" alt="Quiz">
-        <div class="click-area" onclick="nextScreen('screen-auth')"></div>
+        <button class="btn-overlay" onclick="nextScreen('screen-auth')">Suivant</button>
     </div>
 
     <div class="screen" id="screen-auth">
         <div class="auth-container">
-            <div>
-                <svg class="auth-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 14C17.6667 14 23 15.3333 23 18V20H7V18C7 15.3333 12.3333 14 15 14ZM15 12C12.7909 12 11 10.2091 11 8C11 5.79086 12.7909 4 15 4C17.2091 4 19 5.79086 19 8C19 10.2091 17.2091 12 15 12ZM6 8V5H4V8H1V10H4V13H6V10H9V8H6Z" fill="#0052cc"/>
-                </svg>
+            <div class="auth-header">
+                <div class="icon-circle">
+                    <span class="material-icons-outlined">person_add</span>
+                </div>
 
                 <h2 class="auth-title">Créer un compte</h2>
-                <p class="auth-desc">Rejoignez EDUC National et commencez votre parcours d'apprentissage.</p>
+                <p class="auth-subtitle">Rejoignez EDUC National et commencez votre parcours d'apprentissage.</p>
 
-                <button class="btn-phone" onclick="alert('Module téléphone')">
-                    📱 Continuer avec le téléphone
+                <button class="btn-phone" onclick="alert('Redirection vers la connexion téléphone')">
+                    <span class="material-icons-outlined">phone</span>
+                    Continuer avec le téléphone
                 </button>
 
-                <div class="divider">OU</div>
+                <div class="divider-container">
+                    <div class="divider-line"></div>
+                    <span class="divider-text">OU</span>
+                    <div class="divider-line"></div>
+                </div>
 
                 <button class="btn-google">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="Google">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo">
                     Continuer avec Google
                 </button>
             </div>
@@ -201,7 +253,7 @@
 </div>
 
 <script>
-    // Redirection automatique de l'écran 1 vers l'écran 2 après 2.5 secondes (2500 ms)
+    // Transition automatique du logo après 2,5s
     setTimeout(() => {
         nextScreen('screen-2');
     }, 2500);
