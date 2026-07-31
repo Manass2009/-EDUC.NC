@@ -6,7 +6,7 @@
   <title>EDUC National - RDC</title>
   
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -17,22 +17,23 @@
     }
 
     body {
-      background-color: #0b132b;
+      background-color: #0c1c2e;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
     }
 
+    /* CONTENEUR PRINCIPAL APPLI */
     .app-container {
       width: 100%;
       max-width: 420px;
       height: 100vh;
       max-height: 880px;
-      background: #f4f7fe;
+      background: #f0f7ff;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
     }
@@ -88,12 +89,12 @@
       padding: 16px;
       border-radius: 14px;
       border: none;
-      background: linear-gradient(135deg, #0052cc, #0066ff);
+      background: #00a3e0; /* BLEU DRAPEAU RDC */
       color: white;
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0, 102, 255, 0.35);
+      box-shadow: 0 6px 18px rgba(0, 163, 224, 0.4);
     }
 
     /* --- AUTHENTIFICATION --- */
@@ -108,24 +109,24 @@
       overflow-y: auto;
     }
 
-    .auth-title { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .auth-title { font-size: 24px; font-weight: 800; color: #003366; margin-bottom: 6px; }
     .auth-subtitle { color: #64748b; font-size: 13px; margin-bottom: 20px; }
 
     .photo-upload-wrapper { display: flex; justify-content: center; margin-bottom: 15px; }
     .photo-upload-btn {
       width: 85px; height: 85px; border-radius: 50%; background: #e0f2fe;
       display: flex; align-items: center; justify-content: center;
-      position: relative; cursor: pointer; border: 2px dashed #0284c7;
+      position: relative; cursor: pointer; border: 2.5px dashed #00a3e0;
     }
     .photo-upload-btn img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: none; }
     .plus-icon {
-      position: absolute; bottom: 0; right: 0; background: #0284c7; color: white;
-      border-radius: 50%; width: 26px; height: 26px; display: flex;
+      position: absolute; bottom: 0; right: 0; background: #ce1126; /* ROUGE RDC */
+      color: white; border-radius: 50%; width: 26px; height: 26px; display: flex;
       align-items: center; justify-content: center; font-weight: bold; font-size: 14px;
     }
 
     .input-group { margin-bottom: 12px; text-align: left; }
-    .input-group label { display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 4px; }
+    .input-group label { display: block; font-size: 12px; font-weight: 700; color: #003366; margin-bottom: 4px; }
     .input-group input {
       width: 100%; padding: 13px; border: 1.5px solid #cbd5e1;
       border-radius: 12px; font-size: 14px; outline: none; background: #f8fafc;
@@ -133,31 +134,42 @@
 
     .btn-action {
       width: 100%; padding: 15px; border-radius: 12px; border: none;
-      background: linear-gradient(135deg, #0052cc, #0066ff); color: white; font-size: 15px; font-weight: 700; cursor: pointer;
+      background: #00a3e0; color: white; font-size: 15px; font-weight: 800; cursor: pointer;
     }
 
     .btn-google-custom {
       width: 100%; padding: 13px; border-radius: 12px; border: 1px solid #cbd5e1;
-      background: white; font-weight: 600; color: #334155; cursor: pointer;
+      background: white; font-weight: 700; color: #334155; cursor: pointer;
       display: flex; align-items: center; justify-content: center; gap: 10px;
     }
 
-    /* --- DASHBOARD INTÉRIEUR MODERNE --- */
+    /* --- DASHBOARD DRAPEAU RDC (BLEU, JAUNE, ROUGE) --- */
     .app-header {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
+      background: linear-gradient(135deg, #0080ff, #004080); /* BLEU CIEL RDC */
       color: white; padding: 20px 20px 18px; border-radius: 0 0 24px 24px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 20px rgba(0, 163, 224, 0.25);
+      position: relative;
+    }
+
+    /* Ligne rouge décorative rappelant la bande rouge du drapeau */
+    .app-header::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 4px;
+      background: #ce1126; border-radius: 0 0 24px 24px;
     }
 
     .user-info { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
-    .user-avatar { width: 48px; height: 48px; border-radius: 50%; border: 2.5px solid #38bdf8; object-fit: cover; }
+    .user-avatar { width: 48px; height: 48px; border-radius: 50%; border: 2.5px solid #ffd100; object-fit: cover; }
     
-    .progress-section { background: rgba(255, 255, 255, 0.08); padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); }
-    .progress-text { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; font-weight: 700; }
-    .progress-bar-bg { background: rgba(255, 255, 255, 0.15); height: 8px; border-radius: 4px; overflow: hidden; }
-    .progress-bar-fill { background: linear-gradient(90deg, #f59e0b, #fbbf24); width: 0%; height: 100%; transition: width 0.4s ease; }
+    .progress-section { 
+      background: rgba(255, 255, 255, 0.15); 
+      padding: 12px 14px; border-radius: 14px; 
+      border: 1px solid rgba(255, 209, 0, 0.4); 
+    }
+    .progress-text { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; font-weight: 800; }
+    .progress-bar-bg { background: rgba(0, 0, 0, 0.2); height: 8px; border-radius: 4px; overflow: hidden; }
+    .progress-bar-fill { background: #ffd100; /* JAUNE OR RDC */ width: 0%; height: 100%; transition: width 0.4s ease; }
 
-    /* FIL D'ACTUALITÉ STYLE TIKTOK / SCROLL VERTICAL PROPER */
+    /* FLUX DE DE HAUT EN BAS (STYLE SCROLL / TIKTOK) */
     .main-feed {
       flex: 1;
       overflow-y: auto;
@@ -167,72 +179,73 @@
     }
 
     .feed-section-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
-      color: #0f172a;
+      color: #002244;
       margin: 18px 0 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    /* CARTE MODULES AVEC IMAGES DE COUVERTURE */
+    /* MODULES CIVIQUES & ÉDUCATIFS (SANS EXAMEN/TRICHE) */
     .grid-modules { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .module-card {
       background: white; border-radius: 16px; overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s;
-      position: relative; height: 130px; display: flex; flex-direction: column; justify-content: flex-end;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06); cursor: pointer; transition: transform 0.2s;
+      position: relative; height: 120px; display: flex; flex-direction: column; justify-content: flex-end;
+      border: 1px solid #e2e8f0;
     }
     .module-card:active { transform: scale(0.96); }
     .module-card img { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; }
     .module-overlay {
       position: absolute; top:0; left:0; width: 100%; height: 100%;
-      background: linear-gradient(0deg, rgba(15,23,42,0.85) 0%, rgba(0,0,0,0) 70%);
+      background: linear-gradient(0deg, rgba(0, 34, 68, 0.9) 0%, rgba(0,0,0,0) 70%);
     }
     .module-title {
-      position: relative; z-index: 2; padding: 10px; color: white;
-      font-size: 13px; font-weight: 700; line-height: 1.2;
+      position: relative; z-index: 2; padding: 10px; color: #ffffff;
+      font-size: 13px; font-weight: 800; line-height: 1.2;
     }
 
-    /* RANGÉE HORIZONTALE DE BULLES */
+    /* RUBRIQUES EN BULLES (DÉFILEMENT HORIZONTAL) */
     .horizontal-bubbles {
       display: flex; gap: 12px; overflow-x: auto; padding: 4px 0 10px;
       scrollbar-width: none; -webkit-overflow-scrolling: touch;
     }
     .horizontal-bubbles::-webkit-scrollbar { display: none; }
-    .bubble-item { flex: 0 0 auto; text-align: center; width: 70px; cursor: pointer; }
+    .bubble-item { flex: 0 0 auto; text-align: center; width: 72px; cursor: pointer; }
     .bubble-img-box {
       width: 60px; height: 60px; border-radius: 50%;
-      background: #38bdf8; padding: 2px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      margin: 0 auto 6px;
+      background: #ffffff; padding: 2px; border: 2px solid #00a3e0;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08); margin: 0 auto 6px;
     }
     .bubble-img-box img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-    .bubble-txt { font-size: 10px; font-weight: 700; color: #334155; line-height: 1.1; }
+    .bubble-txt { font-size: 10px; font-weight: 800; color: #002244; line-height: 1.1; }
 
-    /* CARTES DU FLUX TIKTOK / DISCOVER (DE HAUT EN BAS) */
+    /* CARTES D'ACTUALITÉS VERTICALES (100% RDC) */
     .feed-card {
-      background: white; border-radius: 18px; overflow: hidden;
-      margin-bottom: 20px; box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      background: white; border-radius: 16px; overflow: hidden;
+      margin-bottom: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
       display: flex; flex-direction: column; text-decoration: none; color: inherit;
+      border: 1px solid #e2e8f0;
     }
-    .feed-card-img { width: 100%; height: 180px; object-fit: cover; background: #e2e8f0; }
-    .feed-card-content { padding: 16px; }
+    .feed-card-img { width: 100%; height: 175px; object-fit: cover; background: #e2e8f0; }
+    .feed-card-content { padding: 14px; }
     .feed-card-tag {
-      font-size: 10px; font-weight: 800; color: #0284c7; text-transform: uppercase;
-      letter-spacing: 0.5px; margin-bottom: 6px; display: inline-block;
-      background: #e0f2fe; padding: 3px 8px; border-radius: 6px;
+      font-size: 10px; font-weight: 800; color: #ce1126; text-transform: uppercase;
+      background: #fff0f2; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-bottom: 6px;
     }
-    .feed-card-title { font-size: 15px; font-weight: 800; color: #0f172a; line-height: 1.35; margin-bottom: 8px; }
-    .feed-card-snippet { font-size: 12px; color: #64748b; line-height: 1.4; margin-bottom: 12px; }
-    .feed-card-footer { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #94a3b8; font-weight: 600; }
+    .feed-card-title { font-size: 14px; font-weight: 800; color: #002244; line-height: 1.35; margin-bottom: 6px; }
+    .feed-card-snippet { font-size: 12px; color: #475569; line-height: 1.4; margin-bottom: 10px; }
+    .feed-card-footer { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #94a3b8; font-weight: 700; }
 
     .bottom-nav {
       position: absolute; bottom: 0; left: 0; width: 100%; height: 65px;
-      background: #ffffff; border-top: 1px solid #e2e8f0; display: flex;
+      background: #ffffff; border-top: 2px solid #ffd100; display: flex;
       justify-content: space-around; align-items: center; z-index: 20;
     }
-    .nav-item { display: flex; flex-direction: column; align-items: center; color: #64748b; cursor: pointer; font-size: 10px; }
-    .nav-item.active { color: #0284c7; font-weight: bold; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; color: #64748b; cursor: pointer; font-size: 10px; font-weight: 700; }
+    .nav-item.active { color: #00a3e0; }
     .nav-item .material-icons-outlined { font-size: 22px; }
   </style>
 </head>
@@ -271,12 +284,12 @@
   <div class="screen" id="screen-auth-choice">
     <div class="auth-container">
       <div style="margin-top: 20px;">
-        <span class="material-icons-outlined" style="font-size: 60px; color: #0052cc;">person_add</span>
-        <h2 class="auth-title">Créer un compte</h2>
-        <p class="auth-subtitle">Rejoignez EDUC National pour vos révisions.</p>
+        <span class="material-icons-outlined" style="font-size: 60px; color: #00a3e0;">account_balance</span>
+        <h2 class="auth-title">Nouvelle Citoyenneté</h2>
+        <p class="auth-subtitle">Espace d'apprentissage patriotique et civique de la RDC.</p>
 
         <button class="btn-action" style="margin-top: 15px;" onclick="nextScreen('screen-phone-form')">
-          📱 Continuer avec le téléphone
+          📱 Inscription rapide avec numéro
         </button>
 
         <div style="margin: 15px 0; color: #94a3b8; font-size: 12px;">OU</div>
@@ -288,7 +301,7 @@
       </div>
 
       <div style="font-size: 13px; color: #64748b;">
-        Déjà un compte ? <a href="#" onclick="nextScreen('screen-dashboard')" style="color: #0052cc; font-weight: bold; text-decoration: none;">Se connecter</a>
+        Déjà un compte ? <a href="#" onclick="nextScreen('screen-dashboard')" style="color: #00a3e0; font-weight: bold; text-decoration: none;">Se connecter</a>
       </div>
     </div>
   </div>
@@ -296,12 +309,12 @@
   <div class="screen" id="screen-phone-form">
     <div class="auth-container">
       <div>
-        <h2 class="auth-title">Vos informations</h2>
-        <p class="auth-subtitle">Complétez votre profil élève.</p>
+        <h2 class="auth-title">Identité Élève</h2>
+        <p class="auth-subtitle">Créez votre carte citoyenne numérique.</p>
 
         <div class="photo-upload-wrapper">
           <div class="photo-upload-btn" onclick="document.getElementById('photoInput').click()">
-            <span id="avatarPlaceholder" class="material-icons-outlined" style="font-size: 36px; color: #0284c7;">person</span>
+            <span id="avatarPlaceholder" class="material-icons-outlined" style="font-size: 36px; color: #00a3e0;">person</span>
             <img id="avatarPreview" alt="Profil" />
             <div class="plus-icon">+</div>
           </div>
@@ -319,7 +332,7 @@
         </div>
 
         <div class="input-group">
-          <label>Numéro Téléphone</label>
+          <label>Téléphone</label>
           <input type="tel" id="inputPhone" value="+243 " />
         </div>
 
@@ -333,15 +346,15 @@
       <div class="user-info">
         <img id="dashAvatar" class="user-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&q=80" alt="User">
         <div>
-          <div style="font-size: 11px; opacity: 0.85;">Bienvenue 👋</div>
-          <div id="dashUserName" style="font-size: 16px; font-weight: 800;">ÉLÈVE EDUC RDC</div>
+          <div style="font-size: 11px; color: #ffd100; font-weight: 700;">RÉPUBLIQUE DÉMOCRATIQUE DU CONGO</div>
+          <div id="dashUserName" style="font-size: 16px; font-weight: 800;">ÉLÈVE CITOYEN</div>
         </div>
       </div>
 
       <div class="progress-section">
         <div class="progress-text">
-          <span>Niveau de Progression</span>
-          <span id="xpText" style="color: #fbbf24;">0 / 1000 XP</span>
+          <span>Points de Civisme (XP)</span>
+          <span id="xpText" style="color: #ffd100;">0 / 1000 XP</span>
         </div>
         <div class="progress-bar-bg">
           <div class="progress-bar-fill" id="progressBar"></div>
@@ -352,66 +365,62 @@
     <div class="main-feed">
       
       <div class="feed-section-title">
-        <span>Programmes & Cours PDF</span>
+        <span>Éducation Civique & Modules</span>
       </div>
 
       <div class="grid-modules">
-        <div class="module-card" onclick="ouvrirPDF('La Constitution RDC')">
+        <div class="module-card" onclick="ouvrirPDF('La Constitution de la RDC')">
           <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&q=80" alt="Constitution">
           <div class="module-overlay"></div>
-          <div class="module-title">La Constitution RDC</div>
+          <div class="module-title">Constitution RDC</div>
         </div>
-        <div class="module-card" onclick="ouvrirPDF('Quiz & Tests')">
+        <div class="module-card" onclick="ouvrirPDF('Quiz Citoyenneté')">
           <img src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=400&q=80" alt="Quiz">
           <div class="module-overlay"></div>
-          <div class="module-title">Quiz & Examen d'État</div>
+          <div class="module-title">Quiz & Civisme</div>
         </div>
-        <div class="module-card" onclick="ouvrirPDF('Bibliothèque Cours PDF')">
-          <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&q=80" alt="Cours">
+        <div class="module-card" onclick="ouvrirPDF('Histoire de la RDC')">
+          <img src="https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=400&q=80" alt="Histoire RDC">
           <div class="module-overlay"></div>
-          <div class="module-title">Mes Cours (PDF)</div>
+          <div class="module-title">Histoire & Héros</div>
         </div>
-        <div class="module-card" onclick="ouvrirPDF('Exercices Pratiques')">
-          <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&q=80" alt="Exercices">
+        <div class="module-card" onclick="ouvrirPDF('Nouvelle Citoyenneté')">
+          <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&q=80" alt="Patriotisme">
           <div class="module-overlay"></div>
-          <div class="module-title">Exercices</div>
+          <div class="module-title">Nouvelle Citoyenneté</div>
         </div>
       </div>
 
       <div class="feed-section-title">
-        <span>Thématiques Éducatives</span>
+        <span>Rubriques & Thématiques</span>
       </div>
 
       <div class="horizontal-bubbles">
-        <div class="bubble-item" onclick="filtrerRubrique('EXAMEN D ETAT')">
-          <div class="bubble-img-box"><img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=150&q=80" alt="Examen"></div>
-          <div class="bubble-txt">Examen d'État</div>
-        </div>
         <div class="bubble-item" onclick="filtrerRubrique('EPST RDC')">
-          <div class="bubble-img-box"><img src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?w=150&q=80" alt="EPST"></div>
-          <div class="bubble-txt">EPST RDC</div>
+          <div class="bubble-img-box"><img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=150&q=80" alt="EPST"></div>
+          <div class="bubble-txt">Éducation RDC</div>
         </div>
-        <div class="bubble-item" onclick="filtrerRubrique('UNIVERSITE')">
+        <div class="bubble-item" onclick="filtrerRubrique('UNIVERSITES RDC')">
           <div class="bubble-img-box"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=150&q=80" alt="Universités"></div>
           <div class="bubble-txt">Universités</div>
         </div>
-        <div class="bubble-item" onclick="filtrerRubrique('BOURSES')">
-          <div class="bubble-img-box"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=150&q=80" alt="Bourses"></div>
-          <div class="bubble-txt">Bourses</div>
+        <div class="bubble-item" onclick="filtrerRubrique('CULTURE & PATRIMOINE')">
+          <div class="bubble-img-box"><img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=150&q=80" alt="Culture"></div>
+          <div class="bubble-txt">Culture RDC</div>
         </div>
-        <div class="bubble-item" onclick="filtrerRubrique('HISTOIRE RDC')">
-          <div class="bubble-img-box"><img src="https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=150&q=80" alt="Histoire"></div>
-          <div class="bubble-txt">Histoire RDC</div>
+        <div class="bubble-item" onclick="filtrerRubrique('BOURSES D ETUDES')">
+          <div class="bubble-img-box"><img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=150&q=80" alt="Bourses"></div>
+          <div class="bubble-txt">Bourses RDC</div>
         </div>
       </div>
 
       <div class="feed-section-title">
-        <span>Fil d'Actualité RDC</span>
-        <span style="font-size: 11px; color: #0284c7; font-weight: 700;">• En Direct</span>
+        <span>Actualités RDC en direct</span>
+        <span style="font-size: 11px; color: #00a3e0; font-weight: 800;">🔴 En Direct</span>
       </div>
 
       <div id="verticalFeedContainer">
-        <p style="font-size:12px; color:#64748b; text-align:center; padding:20px;">Chargement des informations RDC en direct...</p>
+        <p style="font-size:12px; color:#64748b; text-align:center; padding:20px;">Chargement des vraies actualités du jour en RDC...</p>
       </div>
 
     </div>
@@ -421,11 +430,11 @@
         <span class="material-icons-outlined">home</span>
         <span>Accueil</span>
       </div>
-      <div class="nav-item" onclick="ouvrirPDF('Mes Cours')">
-        <span class="material-icons-outlined">menu_book</span>
-        <span>Cours</span>
+      <div class="nav-item" onclick="ouvrirPDF('La Constitution de la RDC')">
+        <span class="material-icons-outlined">gavel</span>
+        <span>Constitution</span>
       </div>
-      <div class="nav-item" onclick="ouvrirPDF('Quiz')">
+      <div class="nav-item" onclick="ouvrirPDF('Quiz Citoyenneté')">
         <span class="material-icons-outlined">extension</span>
         <span>Quiz</span>
       </div>
@@ -450,7 +459,7 @@
     document.getElementById(id).classList.add('active');
 
     if (id === 'screen-dashboard') {
-      fetchGoogleNewsVerticalRDC();
+      fetchRealGoogleNewsRDC();
     }
   }
 
@@ -498,21 +507,21 @@
   }
 
   function filtrerRubrique(nom) {
-    alert("Filtre appliqué pour la catégorie : " + nom);
+    alert("Filtre appliqué pour : " + nom);
   }
 
-  // API GOOGLE NEWS RDC - FLUX VERTICAL DYNAMIQUE
-  async function fetchGoogleNewsVerticalRDC() {
+  // API VRAIES ACTUALITÉS GOOGLE NEWS RDC DU JOUR EN TEMPS RÉEL
+  async function fetchRealGoogleNewsRDC() {
     const feed = document.getElementById('verticalFeedContainer');
-    const query = encodeURIComponent("Education RDC Kinshasa Examen Etat EPST");
+    const query = encodeURIComponent("Education RDC Kinshasa EPST Ministère");
     const rssUrl = encodeURIComponent(`https://news.google.com/rss/search?q=${query}&hl=fr&gl=CD&ceid=CD:fr`);
     const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
 
-    const fallbackImages = [
+    // Images 100% RDC de secours si l'article n'a pas d'image intégrée
+    const rdcImages = [
       "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600&q=80",
-      "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80",
       "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80",
-      "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80"
+      "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80"
     ];
 
     try {
@@ -521,20 +530,20 @@
 
       if (data.status === 'ok' && data.items.length > 0) {
         feed.innerHTML = "";
-        data.items.forEach((item, index) => {
-          const imgUrl = item.thumbnail || fallbackImages[index % fallbackImages.length];
-          const dateFormatted = new Date(item.pubDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+        data.items.slice(0, 10).forEach((item, index) => {
+          const imgUrl = item.thumbnail || rdcImages[index % rdcImages.length];
+          const dateFormatted = new Date(item.pubDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
           const cleanDesc = item.description.replace(/<[^>]*>?/gm, '').substring(0, 110);
 
           feed.innerHTML += `
             <a href="${item.link}" target="_blank" class="feed-card">
               <img src="${imgUrl}" class="feed-card-img" alt="Actualité RDC">
               <div class="feed-card-content">
-                <span class="feed-card-tag">RDC • ACTU</span>
+                <span class="feed-card-tag">RDC • EN DIRECT</span>
                 <div class="feed-card-title">${item.title}</div>
                 <div class="feed-card-snippet">${cleanDesc}...</div>
                 <div class="feed-card-footer">
-                  <span>Source : ${item.author || 'Presse RDC'}</span>
+                  <span>Source : Presse RDC</span>
                   <span>${dateFormatted}</span>
                 </div>
               </div>
@@ -554,24 +563,12 @@
       <a href="https://www.radiookapi.net/education" target="_blank" class="feed-card">
         <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600&q=80" class="feed-card-img" alt="RDC">
         <div class="feed-card-content">
-          <span class="feed-card-tag">EPST • KINSHASA</span>
-          <div class="feed-card-title">Calendrier officiel des épreuves de l'Examen d'État</div>
-          <div class="feed-card-snippet">Le Ministère de l'Éducation Nationale confirme l'organisation des sessions de révision...</div>
+          <span class="feed-card-tag">MINISTÈRE • KINSHASA</span>
+          <div class="feed-card-title">Sensibilisation à la Nouvelle Citoyenneté dans les écoles de la RDC</div>
+          <div class="feed-card-snippet">Le Ministère de l'Éducation Nationale renforce le programme d'éducation civique et patriotique...</div>
           <div class="feed-card-footer">
             <span>Source : Radio Okapi</span>
             <span>Aujourd'hui</span>
-          </div>
-        </div>
-      </a>
-      <a href="https://www.radiookapi.net/education" target="_blank" class="feed-card">
-        <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80" class="feed-card-img" alt="RDC">
-        <div class="feed-card-content">
-          <span class="feed-card-tag">NUMÉRIQUE • EDUC</span>
-          <div class="feed-card-title">Nouvelles fiches de cours PDF mises à disposition</div>
-          <div class="feed-card-snippet">Les élèves des humanités peuvent désormais télécharger gratuitement les annales d'examens...</div>
-          <div class="feed-card-footer">
-            <span>Source : EDUC RDC</span>
-            <span>Hier</span>
           </div>
         </div>
       </a>
