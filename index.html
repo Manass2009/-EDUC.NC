@@ -49,7 +49,7 @@
       display: flex;
     }
 
-    /* --- ONBOARDING --- */
+    /* ONBOARDING */
     .onboarding-layout {
       display: flex;
       flex-direction: column;
@@ -66,7 +66,6 @@
       align-items: center;
       justify-content: center;
       padding: 10px;
-      background: #ffffff;
     }
 
     .onboarding-img-box img {
@@ -93,10 +92,9 @@
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(24, 144, 255, 0.4);
     }
 
-    /* --- AUTHENTIFICATION --- */
+    /* AUTHENTIFICATION */
     .auth-container {
       padding: 30px 24px;
       text-align: center;
@@ -142,7 +140,7 @@
       display: flex; align-items: center; justify-content: center; gap: 10px;
     }
 
-    /* --- HEADER CONFORME À L'ORIGINAL (BLEU ROI & JAUNE) --- */
+    /* HEADER */
     .app-header {
       background: linear-gradient(135deg, #004080, #0066cc);
       color: white; padding: 20px 20px 18px; border-radius: 0 0 20px 20px;
@@ -159,7 +157,7 @@
     .progress-bar-bg { background: rgba(255, 255, 255, 0.3); height: 8px; border-radius: 4px; overflow: hidden; }
     .progress-bar-fill { background: #ffcc00; width: 0%; height: 100%; transition: width 0.4s ease; }
 
-    /* FLUX DE HAUT EN BAS (SCROLL VERTICAL) */
+    /* CONTENU PRINCIPAL EN SCROLL VERTICAL */
     .main-feed {
       flex: 1;
       overflow-y: auto;
@@ -178,56 +176,48 @@
       align-items: center;
     }
 
-    /* MODULES ÉDUCATIFS */
+    /* CARTES D'ICÔNES ÉPURÉES (SANS GROSSES IMAGES) */
     .grid-modules { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .module-card {
-      background: white; border-radius: 14px; overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer; transition: transform 0.2s;
-      position: relative; height: 120px; display: flex; flex-direction: column; justify-content: flex-end;
+      background: white; border-radius: 14px; padding: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04); cursor: pointer;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
       border: 1px solid #e2e8f0;
     }
     .module-card:active { transform: scale(0.97); }
-    .module-card img { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; }
-    .module-overlay {
-      position: absolute; top:0; left:0; width: 100%; height: 100%;
-      background: linear-gradient(0deg, rgba(0, 40, 85, 0.85) 0%, rgba(0,0,0,0) 70%);
+    .module-icon-box {
+      width: 42px; height: 42px; border-radius: 10px; background: #e6f0ff;
+      display: flex; align-items: center; justify-content: center; color: #0056b3;
     }
-    .module-title {
-      position: relative; z-index: 2; padding: 10px; color: #ffffff;
-      font-size: 13px; font-weight: 700; line-height: 1.2;
-    }
+    .module-title { font-size: 13px; font-weight: 700; color: #1e293b; }
 
-    /* BULLES DE RUBRIQUES HORIZONTALES */
+    /* BULLES HORIZONTALES */
     .horizontal-bubbles {
       display: flex; gap: 12px; overflow-x: auto; padding: 4px 0 10px;
       scrollbar-width: none; -webkit-overflow-scrolling: touch;
     }
     .horizontal-bubbles::-webkit-scrollbar { display: none; }
-    .bubble-item { flex: 0 0 auto; text-align: center; width: 72px; cursor: pointer; }
+    .bubble-item { flex: 0 0 auto; text-align: center; width: 70px; cursor: pointer; }
     .bubble-img-box {
-      width: 58px; height: 58px; border-radius: 50%;
-      background: #e6f0ff; padding: 2px; border: 2px solid #1890ff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06); margin: 0 auto 6px;
+      width: 54px; height: 54px; border-radius: 50%;
+      background: #ffffff; border: 2px solid #1890ff;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 6px; color: #1890ff;
     }
-    .bubble-img-box img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
     .bubble-txt { font-size: 10px; font-weight: 700; color: #334155; line-height: 1.1; }
 
-    /* CARTES D'ACTUALITÉS VERTICALES */
+    /* CARTES D'ACTUALITÉS DISCRÈTES EN LISTE VERTICALE */
     .feed-card {
-      background: white; border-radius: 14px; overflow: hidden;
-      margin-bottom: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.06);
-      display: flex; flex-direction: column; text-decoration: none; color: inherit;
-      border: 1px solid #e2e8f0;
+      background: white; border-radius: 12px; padding: 12px;
+      margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      display: flex; gap: 12px; text-decoration: none; color: inherit;
+      border: 1px solid #e2e8f0; align-items: center;
     }
-    .feed-card-img { width: 100%; height: 170px; object-fit: cover; background: #cbd5e1; }
-    .feed-card-content { padding: 14px; }
-    .feed-card-tag {
-      font-size: 10px; font-weight: 800; color: #0056b3; text-transform: uppercase;
-      background: #e6f0ff; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-bottom: 6px;
-    }
-    .feed-card-title { font-size: 14px; font-weight: 800; color: #1e293b; line-height: 1.35; margin-bottom: 6px; }
-    .feed-card-snippet { font-size: 12px; color: #64748b; line-height: 1.4; margin-bottom: 10px; }
-    .feed-card-footer { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #94a3b8; font-weight: 600; }
+    .feed-card-img { width: 70px; height: 70px; border-radius: 8px; object-fit: cover; background: #cbd5e1; flex-shrink: 0; }
+    .feed-card-content { flex: 1; }
+    .feed-card-tag { font-size: 9px; font-weight: 800; color: #0056b3; text-transform: uppercase; margin-bottom: 2px; }
+    .feed-card-title { font-size: 13px; font-weight: 700; color: #1e293b; line-height: 1.3; margin-bottom: 4px; }
+    .feed-card-footer { font-size: 10px; color: #94a3b8; font-weight: 600; }
 
     .bottom-nav {
       position: absolute; bottom: 0; left: 0; width: 100%; height: 65px;
@@ -276,7 +266,7 @@
       <div style="margin-top: 20px;">
         <span class="material-icons-outlined" style="font-size: 60px; color: #0056b3;">person_add</span>
         <h2 class="auth-title">Créer un compte</h2>
-        <p class="auth-subtitle">Rejoignez EDUC National pour débuter vos révisions.</p>
+        <p class="auth-subtitle">Rejoignez EDUC National pour vos révisions.</p>
 
         <button class="btn-action" style="background: #1890ff; margin-top: 15px;" onclick="nextScreen('screen-phone-form')">
           📱 Continuer avec le téléphone
@@ -313,12 +303,12 @@
 
         <div class="input-group">
           <label>Nom</label>
-          <input type="text" id="inputNom" placeholder="" />
+          <input type="text" id="inputNom" />
         </div>
 
         <div class="input-group">
           <label>Post-nom</label>
-          <input type="text" id="inputPostNom" placeholder="" />
+          <input type="text" id="inputPostNom" />
         </div>
 
         <div class="input-group">
@@ -334,7 +324,7 @@
   <div class="screen" id="screen-dashboard">
     <div class="app-header">
       <div class="user-info">
-        <img id="dashAvatar" class="user-avatar" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Félix_Tshisekedi_2023.jpg/330px-Félix_Tshisekedi_2023.jpg" alt="User">
+        <img id="dashAvatar" class="user-avatar" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Coat_of_arms_of_the_Democratic_Republic_of_the_Congo.svg/500px-Coat_of_arms_of_the_Democratic_Republic_of_the_Congo.svg.png" alt="User">
         <div>
           <div style="font-size: 11px; opacity: 0.85;">Bienvenue 👋</div>
           <div id="dashUserName" style="font-size: 16px; font-weight: 700;">Élève EDUC</div>
@@ -355,57 +345,53 @@
     <div class="main-feed">
       
       <div class="feed-section-title">
-        <span>Programmes & Civisme</span>
+        <span>Programmes</span>
       </div>
 
       <div class="grid-modules">
-        <div class="module-card" onclick="ouvrirPDF('La Constitution RDC')">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_map_of_the_Democratic_Republic_of_the_Congo.svg/600px-Flag_map_of_the_Democratic_Republic_of_the_Congo.svg.png" alt="Constitution RDC">
-          <div class="module-overlay"></div>
+        <div class="module-card" onclick="ouvrirPDF('Constitution RDC')">
+          <div class="module-icon-box"><span class="material-icons-outlined">gavel</span></div>
           <div class="module-title">Constitution RDC</div>
         </div>
         <div class="module-card" onclick="ouvrirPDF('Quiz Citoyenneté')">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Coat_of_arms_of_the_Democratic_Republic_of_the_Congo.svg/500px-Coat_of_arms_of_the_Democratic_Republic_of_the_Congo.svg.png" alt="Quiz Civisme">
-          <div class="module-overlay"></div>
-          <div class="module-title">Quiz & Civisme</div>
+          <div class="module-icon-box"><span class="material-icons-outlined">extension</span></div>
+          <div class="module-title">Quiz Civisme</div>
         </div>
-        <div class="module-card" onclick="ouvrirPDF('Histoire de la RDC')">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Patrice_Lumumba_1960.jpg/440px-Patrice_Lumumba_1960.jpg" alt="Histoire RDC">
-          <div class="module-overlay"></div>
-          <div class="module-title">Histoire & Héros</div>
+        <div class="module-card" onclick="ouvrirPDF('Histoire RDC')">
+          <div class="module-icon-box"><span class="material-icons-outlined">history_edu</span></div>
+          <div class="module-title">Histoire RDC</div>
         </div>
         <div class="module-card" onclick="ouvrirPDF('Nouvelle Citoyenneté')">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Félix_Tshisekedi_2023.jpg/330px-Félix_Tshisekedi_2023.jpg" alt="Nouvelle Citoyenneté">
-          <div class="module-overlay"></div>
-          <div class="module-title">Nouvelle Citoyenneté</div>
+          <div class="module-icon-box"><span class="material-icons-outlined">verified_user</span></div>
+          <div class="module-title">Citoyenneté</div>
         </div>
       </div>
 
       <div class="feed-section-title">
-        <span>Rubriques & Thématiques</span>
+        <span>Catégories</span>
       </div>
 
       <div class="horizontal-bubbles">
         <div class="bubble-item" onclick="filtrerRubrique('EPST RDC')">
-          <div class="bubble-img-box"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Coat_of_arms_of_the_Democratic_Republic_of_the_Congo.svg/500px-Coat_of_arms_of_the_Democratic_Republic_of_the_Congo.svg.png" alt="EPST"></div>
-          <div class="bubble-txt">Éducation RDC</div>
+          <div class="bubble-img-box"><span class="material-icons-outlined">school</span></div>
+          <div class="bubble-txt">Éducation</div>
         </div>
-        <div class="bubble-item" onclick="filtrerRubrique('UNIVERSITE')">
-          <div class="bubble-img-box"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_map_of_the_Democratic_Republic_of_the_Congo.svg/600px-Flag_map_of_the_Democratic_Republic_of_the_Congo.svg.png" alt="Universités"></div>
+        <div class="bubble-item" onclick="filtrerRubrique('UNIVERSITES')">
+          <div class="bubble-img-box"><span class="material-icons-outlined">account_balance</span></div>
           <div class="bubble-txt">Universités</div>
         </div>
         <div class="bubble-item" onclick="filtrerRubrique('CULTURE')">
-          <div class="bubble-img-box"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Patrice_Lumumba_1960.jpg/440px-Patrice_Lumumba_1960.jpg" alt="Culture"></div>
-          <div class="bubble-txt">Histoire RDC</div>
+          <div class="bubble-img-box"><span class="material-icons-outlined">auto_stories</span></div>
+          <div class="bubble-txt">Culture</div>
         </div>
         <div class="bubble-item" onclick="filtrerRubrique('BOURSES')">
-          <div class="bubble-img-box"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Félix_Tshisekedi_2023.jpg/330px-Félix_Tshisekedi_2023.jpg" alt="Bourses"></div>
-          <div class="bubble-txt">Bourses RDC</div>
+          <div class="bubble-img-box"><span class="material-icons-outlined">card_membership</span></div>
+          <div class="bubble-txt">Bourses</div>
         </div>
       </div>
 
       <div class="feed-section-title">
-        <span>Actualités RDC en direct</span>
+        <span>Actualités RDC</span>
         <span style="font-size: 11px; color: #0056b3; font-weight: 700;">En Direct</span>
       </div>
 
@@ -420,11 +406,11 @@
         <span class="material-icons-outlined">home</span>
         <span>Accueil</span>
       </div>
-      <div class="nav-item" onclick="ouvrirPDF('La Constitution RDC')">
+      <div class="nav-item" onclick="ouvrirPDF('Constitution RDC')">
         <span class="material-icons-outlined">menu_book</span>
         <span>Cours</span>
       </div>
-      <div class="nav-item" onclick="ouvrirPDF('Quiz Citoyenneté')">
+      <div class="nav-item" onclick="ouvrirPDF('Quiz Civisme')">
         <span class="material-icons-outlined">extension</span>
         <span>Quiz</span>
       </div>
@@ -493,26 +479,21 @@
     const percentage = (userXP / 1000) * 100;
     document.getElementById('progressBar').style.width = percentage + '%';
     document.getElementById('xpText').innerText = userXP + ' / 1000 XP';
-    alert("Ouverture du module : " + nomModule);
+    alert("Ouverture : " + nomModule);
   }
 
   function filtrerRubrique(nom) {
-    alert("Filtre appliqué pour la catégorie : " + nom);
+    alert("Filtre : " + nom);
   }
 
-  // API GOOGLE NEWS RDC - AVEC VRAIES PHOTOS INSTITUTIONNELLES
+  // API GOOGLE NEWS DYNAMIQUE AVEC PETITES IMAGES COMPACTES
   async function fetchRealGoogleNewsVerticalRDC() {
     const feed = document.getElementById('verticalFeedContainer');
-    const query = encodeURIComponent("Education RDC Kinshasa EPST Ministère");
+    const query = encodeURIComponent("Education RDC Kinshasa EPST");
     const rssUrl = encodeURIComponent(`https://news.google.com/rss/search?q=${query}&hl=fr&gl=CD&ceid=CD:fr`);
     const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
 
-    // Photos réelles officielles de secours RDC
-    const rdcOfficialPhotos = [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Félix_Tshisekedi_2023.jpg/330px-Félix_Tshisekedi_2023.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Coat_of_arms_of_the_Democratic_Republic_of_the_Congo.svg/500px-Coat_of_arms_of_the_Democratic_Republic_of_the_Congo.svg.png",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_map_of_the_Democratic_Republic_of_the_Congo.svg/600px-Flag_map_of_the_Democratic_Republic_of_the_Congo.svg.png"
-    ];
+    const defaultLogo = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Coat_of_arms_of_the_Democratic_Republic_of_the_Congo.svg/500px-Coat_of_arms_of_the_Democratic_Republic_of_the_Congo.svg.png";
 
     try {
       const response = await fetch(apiUrl);
@@ -520,22 +501,17 @@
 
       if (data.status === 'ok' && data.items.length > 0) {
         feed.innerHTML = "";
-        data.items.slice(0, 8).forEach((item, index) => {
-          const imgUrl = item.thumbnail || rdcOfficialPhotos[index % rdcOfficialPhotos.length];
+        data.items.slice(0, 10).forEach((item) => {
+          const imgUrl = item.thumbnail || defaultLogo;
           const dateFormatted = new Date(item.pubDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
-          const cleanDesc = item.description.replace(/<[^>]*>?/gm, '').substring(0, 110);
 
           feed.innerHTML += `
             <a href="${item.link}" target="_blank" class="feed-card">
-              <img src="${imgUrl}" class="feed-card-img" alt="Actualité RDC">
+              <img src="${imgUrl}" class="feed-card-img" alt="Actu">
               <div class="feed-card-content">
-                <span class="feed-card-tag">RDC • ACTU</span>
+                <div class="feed-card-tag">RDC • ACTU</div>
                 <div class="feed-card-title">${item.title}</div>
-                <div class="feed-card-snippet">${cleanDesc}...</div>
-                <div class="feed-card-footer">
-                  <span>Source : Presse RDC</span>
-                  <span>${dateFormatted}</span>
-                </div>
+                <div class="feed-card-footer">${dateFormatted}</div>
               </div>
             </a>
           `;
@@ -551,15 +527,11 @@
   function renderFallbackVertical(feed) {
     feed.innerHTML = `
       <a href="https://www.radiookapi.net/education" target="_blank" class="feed-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Félix_Tshisekedi_2023.jpg/330px-Félix_Tshisekedi_2023.jpg" class="feed-card-img" alt="RDC">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Coat_of_arms_of_the_Democratic_Republic_of_the_Congo.svg/500px-Coat_of_arms_of_the_Democratic_Republic_of_the_Congo.svg.png" class="feed-card-img" alt="Actu">
         <div class="feed-card-content">
-          <span class="feed-card-tag">MINISTÈRE • RDC</span>
+          <div class="feed-card-tag">MINISTÈRE • RDC</div>
           <div class="feed-card-title">Sensibilisation à la Nouvelle Citoyenneté dans les écoles</div>
-          <div class="feed-card-snippet">Le Ministère de l'Éducation Nationale renforce le programme d'éducation civique et patriotique...</div>
-          <div class="feed-card-footer">
-            <span>Source : Radio Okapi</span>
-            <span>Aujourd'hui</span>
-          </div>
+          <div class="feed-card-footer">Aujourd'hui</div>
         </div>
       </a>
     `;
