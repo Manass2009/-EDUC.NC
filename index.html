@@ -303,7 +303,7 @@
         }
 
         /* 5. MAIN APPLICATION & NAVIGATION DASHBOARD */
-        #main-app { padding-bottom: 90px; }
+        #main-app { padding-bottom: 90px; overflow-y: auto;}
         .app-header {
             background: var(--primary-blue);
             color: #ffffff;
@@ -670,6 +670,7 @@
             </div>
 
             <h3 class="section-title">Cours en vedette</h3>
+            
             <div class="course-card">
                 <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80" alt="Nouvelle Citoyenneté" class="course-img">
                 <div class="course-content">
@@ -685,7 +686,7 @@
             </div>
 
             <div class="course-card">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg" alt="Histoire et Drapeau RDC" class="course-img" style="background: #002b49; object-fit: contain; padding: 10px;">
+                <img src="histoire.jpeg" alt="Histoire RDC" class="course-img" style="object-fit: cover;">
                 <div class="course-content">
                     <span class="course-badge" style="background: #fef3c7; color: #d97706;"><i class="fa-solid fa-landmark"></i> Histoire & Patrimoine</span>
                     <h4 style="font-size: 1.1rem; font-weight: 800;">Histoire de la RDC et ses Dirigeants</h4>
@@ -695,6 +696,24 @@
                         <span><i class="fa-solid fa-clock"></i> 6h de cours</span>
                     </div>
                     <button class="course-btn" style="background: #d97706;" onclick="addXP(150)">Commencer le cours (+150 XP)</button>
+                </div>
+            </div>
+
+            <h3 class="section-title">Nos Autorités</h3>
+            
+            <div class="course-card" style="margin-bottom: 16px;">
+                <img src="president.jpg" alt="Président de la République" class="course-img" style="height: 220px; object-fit: cover; object-position: top;">
+                <div class="course-content" style="padding: 14px 18px;">
+                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 6px;"><i class="fa-solid fa-star"></i> Présidence</span>
+                    <h4 style="font-size: 1.1rem; font-weight: 800;">Présidence de la République</h4>
+                </div>
+            </div>
+            
+            <div class="course-card" style="margin-bottom: 24px;">
+                <img src="ministre.jpg" alt="Ministre de l'Éducation" class="course-img" style="height: 220px; object-fit: cover; object-position: top;">
+                <div class="course-content" style="padding: 14px 18px;">
+                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 6px;"><i class="fa-solid fa-building-columns"></i> Ministère</span>
+                    <h4 style="font-size: 1.1rem; font-weight: 800;">Ministère de l'Éducation Nationale</h4>
                 </div>
             </div>
         </div>
@@ -844,6 +863,9 @@
             
             document.getElementById(tabId).classList.add('active');
             document.querySelectorAll('.nav-item')[index].classList.add('active');
+            
+            // Remonter en haut de page lors d'un changement de tab
+            window.scrollTo(0, 0);
         }
 
         function openSubject(subjectName) {
