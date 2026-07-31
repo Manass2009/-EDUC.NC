@@ -274,7 +274,6 @@
         .search-input-wrapper input { border: none; outline: none; width: 100%; padding: 16px 10px; }
         .filter-btn { background: var(--primary-blue); color: #ffffff; width: 52px; height: 52px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; }
 
-        /* CARTE PROGRESSION XP (DYNAMIQUE) */
         .xp-card {
             background: #ffffff;
             border-radius: var(--radius-md);
@@ -303,7 +302,6 @@
         .quick-access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 0 20px; margin-bottom: 24px; }
         .access-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 22px 18px; border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; min-height: 130px; }
 
-        /* CARTES DE COURS ET IMAGES ILLUSTRATIVES */
         .course-card {
             background: var(--card-bg);
             border-radius: var(--radius-lg);
@@ -572,7 +570,6 @@
     </div>
 
     <script>
-        // CONFIGURATION ONBOARDING
         const onboardingImages = [
             { bg: "bg-flag.jpg", btn: "Suivant" },
             { bg: "onboarding-quiz.png", btn: "Suivant" },
@@ -580,7 +577,7 @@
         ];
 
         let currentStep = 0;
-        let userXP = 250; // XP de départ
+        let userXP = 250;
 
         setTimeout(() => { showScreen('onboarding-screen'); }, 2500);
 
@@ -607,7 +604,6 @@
             }
         }
 
-        // GOOGLE AUTH
         function loginWithGoogle() {
             const provider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(provider)
@@ -630,7 +626,6 @@
             });
         }
 
-        // NUMÉRO TELEPHONE RDC
         function verifyPhoneRDC() {
             const phone = document.getElementById('rdc-phone').value.trim();
             if (phone.length < 9) {
@@ -653,7 +648,6 @@
             fetchLiveNewsRDC();
         }
 
-        // SYSTEME DE PROGRESSION ET DE MISE A JOUR XP
         function addXP(amount) {
             userXP += amount;
             if (userXP > 1000) userXP = 1000;
@@ -669,7 +663,6 @@
             document.getElementById('user-xp-text').innerText = `${userXP} / ${maxXP} XP`;
         }
 
-        // CHARGEMENT DES ACTUALITÉS EN DIRECT RDC (GOOGLE NEWS RSS)
         async function fetchLiveNewsRDC() {
             const container = document.getElementById('live-news-container');
             const rssUrl = encodeURIComponent('https://news.google.com/rss/search?q=Éducation+RDC+Congo&hl=fr&gl=CD&ceid=CD:fr');
