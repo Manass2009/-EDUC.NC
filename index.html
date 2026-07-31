@@ -302,7 +302,7 @@
             background: #f8fafc;
         }
 
-        /* 5. MAIN DASHBOARD */
+        /* 5. MAIN APPLICATION & NAVIGATION DASHBOARD */
         #main-app { padding-bottom: 90px; }
         .app-header {
             background: var(--primary-blue);
@@ -351,7 +351,71 @@
 
         .section-title { font-size: 1.25rem; font-weight: 800; margin: 24px 20px 14px 20px; }
         .quick-access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 0 20px; margin-bottom: 24px; }
-        .access-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 22px 18px; border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; min-height: 130px; }
+        .access-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 22px 18px; border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; min-height: 130px; cursor: pointer; }
+
+        /* GRILLE DES COURS (6 CARRÉS / LIVRES) */
+        .courses-grid-6 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            padding: 0 20px 24px 20px;
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .book-card:active {
+            transform: scale(0.97);
+        }
+
+        .book-cover-icon {
+            width: 65px;
+            height: 75px;
+            border-radius: 8px 12px 12px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            box-shadow: 3px 4px 10px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        .book-cover-icon::after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: rgba(255,255,255,0.4);
+        }
+
+        .book-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            line-height: 1.3;
+            margin-bottom: 6px;
+        }
+
+        .book-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
 
         .course-card {
             background: var(--card-bg);
@@ -413,14 +477,19 @@
 
         .news-img {
             width: 100%;
-            height: 130px;
+            height: 140px;
             object-fit: cover;
             border-radius: var(--radius-md);
         }
 
+        /* NAVIGATION BASSE */
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; }
         .nav-item.active { color: var(--primary-blue); }
+
+        /* GESTION DES ONGLETS DU DASHBOARD */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
     </style>
 </head>
 <body>
@@ -472,7 +541,7 @@
                 </label>
             </div>
             <input type="file" id="avatar-file-input" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-            <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Cliquez sur l'icône pour modifier la photo</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Ajouter une photo de profil</span>
         </div>
 
         <form onsubmit="finishProfile(event)">
@@ -567,81 +636,160 @@
             <div style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-solid fa-star" style="color: var(--accent-yellow);"></i> Complétez des quiz pour gagner de l'XP</div>
         </div>
 
-        <h3 class="section-title">Accès rapide</h3>
-        <div class="quick-access-grid">
-            <div class="access-card">
-                <i class="fa-solid fa-book-open" style="color: var(--primary-blue); font-size: 1.8rem;"></i>
-                <div>
-                    <h4 style="font-weight: 800; font-size: 1.05rem;">Cours</h4>
-                    <p style="font-size: 0.85rem; color: var(--primary-blue); margin-top: 6px; font-weight: 700;">Explorer →</p>
+        <div id="tab-accueil" class="tab-content active">
+            <h3 class="section-title">Accès rapide</h3>
+            <div class="quick-access-grid">
+                <div class="access-card" onclick="switchTab('tab-cours', 1)">
+                    <i class="fa-solid fa-book-open" style="color: var(--primary-blue); font-size: 1.8rem;"></i>
+                    <div>
+                        <h4 style="font-weight: 800; font-size: 1.05rem;">Cours</h4>
+                        <p style="font-size: 0.85rem; color: var(--primary-blue); margin-top: 6px; font-weight: 700;">Explorer →</p>
+                    </div>
+                </div>
+                <div class="access-card" onclick="switchTab('tab-quiz', 2)">
+                    <i class="fa-solid fa-brain" style="color: #e11d48; font-size: 1.8rem;"></i>
+                    <div>
+                        <h4 style="font-weight: 800; font-size: 1.05rem;">Quiz</h4>
+                        <p style="font-size: 0.85rem; color: #e11d48; margin-top: 6px; font-weight: 700;">Explorer →</p>
+                    </div>
+                </div>
+                <div class="access-card" onclick="switchTab('tab-actu', 3)">
+                    <i class="fa-solid fa-newspaper" style="color: #d97706; font-size: 1.8rem;"></i>
+                    <div>
+                        <h4 style="font-weight: 800; font-size: 1.05rem;">Actualités</h4>
+                        <p style="font-size: 0.85rem; color: #d97706; margin-top: 6px; font-weight: 700;">Explorer →</p>
+                    </div>
+                </div>
+                <div class="access-card">
+                    <i class="fa-solid fa-gavel" style="color: #0284c7; font-size: 1.8rem;"></i>
+                    <div>
+                        <h4 style="font-weight: 800; font-size: 1.05rem;">Constitution</h4>
+                        <p style="font-size: 0.85rem; color: #0284c7; margin-top: 6px; font-weight: 700;">Explorer →</p>
+                    </div>
                 </div>
             </div>
-            <div class="access-card">
-                <i class="fa-solid fa-brain" style="color: #e11d48; font-size: 1.8rem;"></i>
-                <div>
-                    <h4 style="font-weight: 800; font-size: 1.05rem;">Quiz</h4>
-                    <p style="font-size: 0.85rem; color: #e11d48; margin-top: 6px; font-weight: 700;">Explorer →</p>
+
+            <h3 class="section-title">Cours en vedette</h3>
+            <div class="course-card">
+                <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80" alt="Nouvelle Citoyenneté" class="course-img">
+                <div class="course-content">
+                    <span class="course-badge"><i class="fa-solid fa-flag"></i> Valeurs Nationales</span>
+                    <h4 style="font-size: 1.1rem; font-weight: 800;">Éducation à la Nouvelle Citoyenneté</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Découvrez les droits, devoirs et valeurs patriotiques fondamentales pour bâtir la RDC de demain.</p>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">
+                        <span><i class="fa-solid fa-layer-group"></i> 12 Chapitres</span>
+                        <span><i class="fa-solid fa-clock"></i> 4h de cours</span>
+                    </div>
+                    <button class="course-btn" onclick="addXP(150)">Commencer le cours (+150 XP)</button>
                 </div>
             </div>
-            <div class="access-card">
-                <i class="fa-solid fa-newspaper" style="color: #d97706; font-size: 1.8rem;"></i>
-                <div>
-                    <h4 style="font-weight: 800; font-size: 1.05rem;">Actualités</h4>
-                    <p style="font-size: 0.85rem; color: #d97706; margin-top: 6px; font-weight: 700;">Explorer →</p>
-                </div>
-            </div>
-            <div class="access-card">
-                <i class="fa-solid fa-gavel" style="color: #0284c7; font-size: 1.8rem;"></i>
-                <div>
-                    <h4 style="font-weight: 800; font-size: 1.05rem;">Constitution</h4>
-                    <p style="font-size: 0.85rem; color: #0284c7; margin-top: 6px; font-weight: 700;">Explorer →</p>
+
+            <div class="course-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg" alt="Histoire et Drapeau RDC" class="course-img" style="background: #002b49; object-fit: contain; padding: 10px;">
+                <div class="course-content">
+                    <span class="course-badge" style="background: #fef3c7; color: #d97706;"><i class="fa-solid fa-landmark"></i> Histoire & Patrimoine</span>
+                    <h4 style="font-size: 1.1rem; font-weight: 800;">Histoire de la RDC et ses Dirigeants</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Explorez les grandes figures historiques, les présidents de la République et l'évolution politique du Congo.</p>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">
+                        <span><i class="fa-solid fa-layer-group"></i> 15 Chapitres</span>
+                        <span><i class="fa-solid fa-clock"></i> 6h de cours</span>
+                    </div>
+                    <button class="course-btn" style="background: #d97706;" onclick="addXP(150)">Commencer le cours (+150 XP)</button>
                 </div>
             </div>
         </div>
 
-        <h3 class="section-title">Cours proposés</h3>
-        
-        <div class="course-card">
-            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80" alt="Nouvelle Citoyenneté" class="course-img">
-            <div class="course-content">
-                <span class="course-badge"><i class="fa-solid fa-flag"></i> Valeurs Nationales</span>
-                <h4 style="font-size: 1.1rem; font-weight: 800;">Éducation à la Nouvelle Citoyenneté</h4>
-                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Découvrez les droits, devoirs et valeurs patriotiques fondamentales pour bâtir la RDC de demain.</p>
-                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">
-                    <span><i class="fa-solid fa-layer-group"></i> 12 Chapitres</span>
-                    <span><i class="fa-solid fa-clock"></i> 4h de cours</span>
+        <div id="tab-cours" class="tab-content">
+            <h3 class="section-title">Programme d'Études Nationales</h3>
+            <div class="courses-grid-6">
+                <div class="book-card" onclick="openSubject('Éducation Civique et Morale')">
+                    <div class="book-cover-icon" style="background: #0066cc;">
+                        <i class="fa-solid fa-book-bookmark"></i>
+                    </div>
+                    <div class="book-title">Éducation Civique & Morale</div>
+                    <div class="book-sub">10 Modules</div>
                 </div>
-                <button class="course-btn" onclick="addXP(150)">Commencer le cours (+150 XP)</button>
+
+                <div class="book-card" onclick="openSubject('Nouvelle Citoyenneté')">
+                    <div class="book-cover-icon" style="background: #059669;">
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+                    </div>
+                    <div class="book-title">Nouvelle Citoyenneté</div>
+                    <div class="book-sub">12 Modules</div>
+                </div>
+
+                <div class="book-card" onclick="openSubject('Histoire de la RDC')">
+                    <div class="book-cover-icon" style="background: #d97706;">
+                        <i class="fa-solid fa-landmark"></i>
+                    </div>
+                    <div class="book-title">Histoire de la RDC</div>
+                    <div class="book-sub">15 Modules</div>
+                </div>
+
+                <div class="book-card" onclick="openSubject('Sociologie Africaine')">
+                    <div class="book-cover-icon" style="background: #7c3aed;">
+                        <i class="fa-solid fa-people-group"></i>
+                    </div>
+                    <div class="book-title">Sociologie Africaine</div>
+                    <div class="book-sub">8 Modules</div>
+                </div>
+
+                <div class="book-card" onclick="openSubject('Géographie de la RDC')">
+                    <div class="book-cover-icon" style="background: #0284c7;">
+                        <i class="fa-solid fa-earth-africa"></i>
+                    </div>
+                    <div class="book-title">Géographie de la RDC</div>
+                    <div class="book-sub">14 Modules</div>
+                </div>
+
+                <div class="book-card" onclick="openSubject('Patrimoine et Serment du Citoyen')">
+                    <div class="book-cover-icon" style="background: #dc2626;">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="book-title">Patrimoine & Serment</div>
+                    <div class="book-sub">6 Modules</div>
+                </div>
             </div>
         </div>
 
-        <div class="course-card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg" alt="Histoire et Drapeau RDC" class="course-img" style="background: #002b49; object-fit: contain; padding: 10px;">
-            <div class="course-content">
-                <span class="course-badge" style="background: #fef3c7; color: #d97706;"><i class="fa-solid fa-landmark"></i> Histoire & Patrimoine</span>
-                <h4 style="font-size: 1.1rem; font-weight: 800;">Histoire de la RDC et ses Dirigeants</h4>
-                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Explorez les grandes figures historiques, les présidents de la République et l'évolution politique du Congo.</p>
-                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">
-                    <span><i class="fa-solid fa-layer-group"></i> 15 Chapitres</span>
-                    <span><i class="fa-solid fa-clock"></i> 6h de cours</span>
+        <div id="tab-quiz" class="tab-content">
+            <h3 class="section-title">Quiz et Évaluations</h3>
+            <div style="padding: 0 20px;">
+                <div class="course-card" style="margin: 0 0 16px 0;">
+                    <div class="course-content">
+                        <span class="course-badge" style="background: #ffe4e6; color: #e11d48;"><i class="fa-solid fa-brain"></i> Defi du Jour</span>
+                        <h4 style="font-size: 1.1rem; font-weight: 800;">Grand Quiz Civique RDC</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Testez vos connaissances sur les symboles de la République et gagnez du niveau.</p>
+                        <button class="course-btn" style="background: #e11d48;" onclick="addXP(100)">Démarrer le Quiz (+100 XP)</button>
+                    </div>
                 </div>
-                <button class="course-btn" style="background: #d97706;" onclick="addXP(150)">Commencer le cours (+150 XP)</button>
             </div>
         </div>
 
-        <h3 class="section-title">Actualités en République Démocratique du Congo</h3>
-        <div id="live-news-container">
-            <div class="news-card">
-                <p style="color: var(--text-muted); font-size: 0.85rem;">Chargement des dernières actualités nationales et éducatives...</p>
+        <div id="tab-actu" class="tab-content">
+            <h3 class="section-title">Actualités en République Démocratique du Congo</h3>
+            <div id="live-news-container">
+                <div class="news-card">
+                    <p style="color: var(--text-muted); font-size: 0.85rem;">Chargement des dernières actualités nationales et éducatives...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-profil" class="tab-content">
+            <h3 class="section-title">Mon Profil Apprenant</h3>
+            <div class="xp-card" style="text-align: center;">
+                <img id="tab-user-avatar" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="User" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-blue); margin-bottom: 12px;">
+                <h3 id="profile-full-name" style="font-weight: 800;">Manassé</h3>
+                <p id="profile-email-disp" style="color: var(--text-muted); font-size: 0.85rem;">Compte Élève EDUC</p>
             </div>
         </div>
 
         <div class="bottom-nav">
-            <div class="nav-item active"><i class="fa-solid fa-house"></i>Accueil</div>
-            <div class="nav-item"><i class="fa-solid fa-book"></i>Cours</div>
-            <div class="nav-item"><i class="fa-solid fa-circle-question"></i>Quiz</div>
-            <div class="nav-item"><i class="fa-solid fa-newspaper"></i>Actualités</div>
-            <div class="nav-item"><i class="fa-solid fa-user"></i>Profil</div>
+            <div class="nav-item active" onclick="switchTab('tab-accueil', 0)"><i class="fa-solid fa-house"></i>Accueil</div>
+            <div class="nav-item" onclick="switchTab('tab-cours', 1)"><i class="fa-solid fa-book"></i>Cours</div>
+            <div class="nav-item" onclick="switchTab('tab-quiz', 2)"><i class="fa-solid fa-circle-question"></i>Quiz</div>
+            <div class="nav-item" onclick="switchTab('tab-actu', 3)"><i class="fa-solid fa-newspaper"></i>Actualités</div>
+            <div class="nav-item" onclick="switchTab('tab-profil', 4)"><i class="fa-solid fa-user"></i>Profil</div>
         </div>
     </div>
 
@@ -656,7 +804,13 @@
         let userXP = 250;
         let userPhotoUrl = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
 
-        const rdcDefaultFlag = "https://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg";
+        // BANQUE D'IMAGES POUR LES ACTUALITÉS POUR COMPLÉTER LES ARTICLES SANS THUMBNAIL
+        const newsImagePool = [
+            "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80",
+            "https://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg",
+            "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80"
+        ];
 
         setTimeout(() => { showScreen('onboarding-screen'); }, 2500);
 
@@ -683,7 +837,20 @@
             }
         }
 
-        // SELECTIONNER / TELECHARGER UNE PHOTO DE PROFIL LOCALE
+        // NAVIGATION ENTRE ONGLETS
+        function switchTab(tabId, index) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            document.querySelectorAll('.nav-item')[index].classList.add('active');
+        }
+
+        function openSubject(subjectName) {
+            alert(`Ouverture du cours : ${subjectName}`);
+        }
+
+        // TELECHARGER / AFFICHER LA PHOTO DE PROFIL MANUELLE
         function handleImageUpload(event) {
             const file = event.target.files[0];
             if (file) {
@@ -691,12 +858,14 @@
                 reader.onload = function(e) {
                     userPhotoUrl = e.target.result;
                     document.getElementById('profile-avatar-img').src = userPhotoUrl;
+                    document.getElementById('dash-avatar-img').src = userPhotoUrl;
+                    document.getElementById('tab-user-avatar').src = userPhotoUrl;
                 }
                 reader.readAsDataURL(file);
             }
         }
 
-        // CONNEXION GOOGLE AMELIOREE AVEC RECUPERATION AUTO DE LA PHOTO ET DE L'EMAIL
+        // CONNEXION GOOGLE AVEC RECUPERATION AUTO DE LA PHOTO ET DE L'EMAIL
         function loginWithGoogle() {
             try {
                 const provider = new firebase.auth.GoogleAuthProvider();
@@ -747,8 +916,13 @@
         function finishProfile(e) {
             e.preventDefault();
             const firstname = document.getElementById('user-firstname').value || 'Manassé';
+            const email = document.getElementById('user-email').value || '';
             document.getElementById('display-username').innerText = firstname;
+            document.getElementById('profile-full-name').innerText = firstname;
+            document.getElementById('profile-email-disp').innerText = email;
             document.getElementById('dash-avatar-img').src = userPhotoUrl;
+            document.getElementById('tab-user-avatar').src = userPhotoUrl;
+
             showScreen('main-app');
             updateXPBar();
             fetchLiveNewsRDC();
@@ -769,7 +943,7 @@
             document.getElementById('user-xp-text').innerText = `${userXP} / ${maxXP} XP`;
         }
 
-        // CHARGEMENT DES ACTUALITES AVEC IMAGES DE COUVERTURE
+        // AFFICHER LES ACTUALITÉS EN DIRECT AVEC DIVERSES IMAGES PATRIOTIQUES/PRESIDENTIELLES/ÉDUCATIVES
         async function fetchLiveNewsRDC() {
             const container = document.getElementById('live-news-container');
             const rssUrl = encodeURIComponent('https://news.google.com/rss/search?q=Éducation+RDC+Congo&hl=fr&gl=CD&ceid=CD:fr');
@@ -780,14 +954,15 @@
                 
                 if (data.status === 'ok' && data.items.length > 0) {
                     container.innerHTML = '';
-                    data.items.slice(0, 4).forEach(item => {
+                    data.items.slice(0, 5).forEach((item, index) => {
                         const date = new Date(item.pubDate).toLocaleDateString('fr-FR');
-                        // Vérification de l'image de l'article ou fallback sur le drapeau RDC
-                        const articleImg = item.thumbnail || item.enclosure?.link || rdcDefaultFlag;
+                        // Attribution d'une image variée si l'article n'en possède pas
+                        const fallbackImg = newsImagePool[index % newsImagePool.length];
+                        const articleImg = item.thumbnail || item.enclosure?.link || fallbackImg;
                         
                         const card = `
                             <div class="news-card">
-                                <img src="${articleImg}" alt="Actualité RDC" class="news-img" onerror="this.src='${rdcDefaultFlag}'">
+                                <img src="${articleImg}" alt="Actualité RDC" class="news-img" onerror="this.src='${fallbackImg}'">
                                 <span style="font-size: 0.75rem; color: var(--primary-blue); font-weight: 700;">Actualité RDC</span>
                                 <h4 style="font-size: 0.95rem; font-weight: 700; margin: 2px 0;">${item.title}</h4>
                                 <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">${item.description.replace(/<[^>]*>?/gm, '').substring(0, 110)}...</p>
@@ -803,7 +978,7 @@
             } catch (err) {
                 container.innerHTML = `
                     <div class="news-card">
-                        <img src="${rdcDefaultFlag}" alt="Drapeau RDC" class="news-img">
+                        <img src="${newsImagePool[0]}" alt="Éducation RDC" class="news-img">
                         <span style="font-size: 0.75rem; color: var(--primary-blue); font-weight: 700;">Éducation RDC</span>
                         <h4 style="font-size: 0.95rem; font-weight: 700; margin: 2px 0;">Développement du système éducatif national</h4>
                         <p style="font-size: 0.8rem; color: var(--text-muted);">Restez informé des réformes et opportunités pour la jeunesse congolaise.</p>
