@@ -351,7 +351,7 @@
 
         .section-title { font-size: 1.25rem; font-weight: 800; margin: 24px 20px 14px 20px; }
         .quick-access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 0 20px; margin-bottom: 24px; }
-        .access-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 22px 18px; border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; min-height: 130px; cursor: pointer; }
+        .access-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 22px 18px; border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; min-height: 130px; cursor: pointer; text-decoration: none; color: inherit; }
 
         /* GRILLE DES COURS (6 CARRÉS / LIVRES) */
         .courses-grid-6 {
@@ -492,6 +492,39 @@
         /* GESTION DES ONGLETS DU DASHBOARD */
         .tab-content { display: none; }
         .tab-content.active { display: block; }
+
+        /* STYLES INTERNES POUR LES QUIZ GÉNÉRÉS PAR MANASSÉ IA EN ARRIÉRÉ-PLAN */
+        .quiz-container-box {
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin: 0 20px 16px 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .quiz-question-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 14px;
+        }
+        .quiz-option-btn {
+            width: 100%;
+            text-align: left;
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quiz-option-btn:hover {
+            background: #e8f2ff;
+            border-color: var(--primary-light-blue);
+        }
     </style>
 </head>
 <body>
@@ -662,13 +695,13 @@
                         <p style="font-size: 0.85rem; color: #d97706; margin-top: 6px; font-weight: 700;">Explorer →</p>
                     </div>
                 </div>
-                <div class="access-card">
+                <a href="Constitution-18-fevrier.pdf" target="_blank" class="access-card">
                     <i class="fa-solid fa-gavel" style="color: #0284c7; font-size: 1.8rem;"></i>
                     <div>
                         <h4 style="font-weight: 800; font-size: 1.05rem;">Constitution</h4>
-                        <p style="font-size: 0.85rem; color: #0284c7; margin-top: 6px; font-weight: 700;">Explorer →</p>
+                        <p style="font-size: 0.85rem; color: #0284c7; margin-top: 6px; font-weight: 700;">PDF Officiel →</p>
                     </div>
-                </div>
+                </a>
             </div>
 
             <h3 class="section-title">Cours en vedette</h3>
@@ -775,14 +808,11 @@
 
         <div id="tab-quiz" class="tab-content">
             <h3 class="section-title">Quiz et Évaluations</h3>
-            <div style="padding: 0 20px;">
-                <div class="course-card" style="margin: 0 0 16px 0;">
-                    <div class="course-content">
-                        <span class="course-badge" style="background: #ffe4e6; color: #e11d48;"><i class="fa-solid fa-brain"></i> Defi du Jour</span>
-                        <h4 style="font-size: 1.1rem; font-weight: 800;">Grand Quiz Civique RDC</h4>
-                        <p style="font-size: 0.85rem; color: var(--text-muted);">Testez vos connaissances sur les symboles de la République et gagnez du niveau.</p>
-                        <button class="course-btn" style="background: #e11d48;" onclick="addXP(100)">Démarrer le Quiz (+100 XP)</button>
-                    </div>
+            <div style="padding: 0 20px;" id="ai-quiz-dynamic-container">
+                <div class="quiz-container-box">
+                    <span class="course-badge" style="background: #ffe4e6; color: #e11d48; margin-bottom: 12px;"><i class="fa-solid fa-brain"></i> Défi du Cours</span>
+                    <h4 class="quiz-question-title" id="quiz-q-text">Chargement des questions générées...</h4>
+                    <div id="quiz-options-list"></div>
                 </div>
             </div>
         </div>
@@ -825,7 +855,43 @@
         let userXP = 250;
         let userPhotoUrl = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
 
-        // BANQUE D'IMAGES POUR LES ACTUALITÉS POUR COMPLÉTER LES ARTICLES SANS THUMBNAIL
+        // BANQUE DE QUESTIONS INTERNES (GÉNÉRÉES EN ARRIÉRÉ-PLAN PAR LE MOTEUR IA BASÉ SUR LES COURS DU SITE)
+        const backgroundGeneratedQuestions = [
+            {
+                question: "Selon l'Éducation Civique & Morale et la Constitution de la RDC, quel est l'un des devoirs fondamentaux du citoyen ?",
+                options: [
+                    "Respecter la Constitution et les lois de la République",
+                    "Ne payer des impôts qu'en cas de nécessité",
+                    "Ignorer les symboles de l'État",
+                    "Participer uniquement aux activités privées"
+                ],
+                correct: 0
+            },
+            {
+                question: "Quelle est la date historique de l'adoption de la Constitution de la République Démocratique du Congo actuelle ?",
+                options: [
+                    "30 juin 1960",
+                    "18 février 2006",
+                    "24 novembre 1965",
+                    "17 mai 1997"
+                ],
+                correct: 1
+            },
+            {
+                question: "Quel est le rôle principal de l'Éducation à la Nouvelle Citoyenneté dans le programme d'études national ?",
+                options: [
+                    "Promouvoir les valeurs patriotiques, les droits et les devoirs civiques",
+                    "Enseigner exclusivement les langues étrangères",
+                    "Remplacer l'histoire nationale",
+                    "Dispenser des cours de sport"
+                ],
+                correct: 0
+            }
+        ];
+
+        let currentQuizIndex = 0;
+
+        // BANQUE D'IMAGES POUR LES ACTUALITÉS
         const newsImagePool = [
             "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80",
             "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80",
@@ -866,12 +932,42 @@
             document.getElementById(tabId).classList.add('active');
             document.querySelectorAll('.nav-item')[index].classList.add('active');
             
-            // Remonter en haut de page lors d'un changement de tab
+            if (tabId === 'tab-quiz') {
+                loadBackgroundAIQuiz();
+            }
+            
             window.scrollTo(0, 0);
         }
 
         function openSubject(subjectName) {
             alert(`Ouverture du cours : ${subjectName}`);
+        }
+
+        // GESTION DU QUIZ GÉNÉRÉ DISCRÈTEMENT PAR L'IA EN ARRIÉRÉ-PLAN
+        function loadBackgroundAIQuiz() {
+            const qData = backgroundGeneratedQuestions[currentQuizIndex];
+            document.getElementById('quiz-q-text').innerText = qData.question;
+            const optionsContainer = document.getElementById('quiz-options-list');
+            optionsContainer.innerHTML = '';
+
+            qData.options.forEach((optText, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-option-btn';
+                btn.innerText = optText;
+                btn.onclick = () => checkQuizAnswer(idx, qData.correct);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkQuizAnswer(selectedIdx, correctIdx) {
+            if (selectedIdx === correctIdx) {
+                addXP(50);
+                alert("Bonne réponse ! +50 XP");
+            } else {
+                alert("Mauvaise réponse. Retentez l'exercice !");
+            }
+            currentQuizIndex = (currentQuizIndex + 1) % backgroundGeneratedQuestions.length;
+            loadBackgroundAIQuiz();
         }
 
         // TELECHARGER / AFFICHER LA PHOTO DE PROFIL MANUELLE
@@ -889,7 +985,7 @@
             }
         }
 
-        // CONNEXION GOOGLE AVEC RECUPERATION AUTO DE LA PHOTO ET DE L'EMAIL
+        // CONNEXION GOOGLE
         function loginWithGoogle() {
             try {
                 const provider = new firebase.auth.GoogleAuthProvider();
@@ -950,13 +1046,13 @@
             showScreen('main-app');
             updateXPBar();
             fetchLiveNewsRDC();
+            loadBackgroundAIQuiz();
         }
 
         function addXP(amount) {
             userXP += amount;
             if (userXP > 1000) userXP = 1000;
             updateXPBar();
-            alert(`Félicitations ! Vous avez gagné +${amount} XP.`);
         }
 
         function updateXPBar() {
@@ -967,7 +1063,7 @@
             document.getElementById('user-xp-text').innerText = `${userXP} / ${maxXP} XP`;
         }
 
-        // AFFICHER LES ACTUALITÉS EN DIRECT AVEC DIVERSES IMAGES PATRIOTIQUES/PRESIDENTIELLES/ÉDUCATIVES
+        // AFFICHER LES ACTUALITÉS EN DIRECT
         async function fetchLiveNewsRDC() {
             const container = document.getElementById('live-news-container');
             const rssUrl = encodeURIComponent('https://news.google.com/rss/search?q=Éducation+RDC+Congo&hl=fr&gl=CD&ceid=CD:fr');
@@ -980,7 +1076,6 @@
                     container.innerHTML = '';
                     data.items.slice(0, 5).forEach((item, index) => {
                         const date = new Date(item.pubDate).toLocaleDateString('fr-FR');
-                        // Attribution d'une image variée si l'article n'en possède pas
                         const fallbackImg = newsImagePool[index % newsImagePool.length];
                         const articleImg = item.thumbnail || item.enclosure?.link || fallbackImg;
                         
