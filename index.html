@@ -230,11 +230,54 @@
             font-weight: 600;
         }
 
-        /* 4. PROFILE SCREEN */
+        /* 4. PROFILE SCREEN & PHOTO UPLOAD */
         #profile-screen {
             background: #ffffff;
             padding: 30px 24px;
             overflow-y: auto;
+        }
+
+        .avatar-picker-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .avatar-preview-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-blue);
+            overflow: hidden;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-preview-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-upload-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--primary-blue);
+            color: #ffffff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            border: 2px solid #ffffff;
         }
 
         .form-group {
@@ -269,6 +312,14 @@
             border-bottom-right-radius: 28px;
         }
         .user-info-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .header-user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffffff;
+        }
+
         .search-bar-container { display: flex; gap: 10px; margin: -22px 20px 16px 20px; }
         .search-input-wrapper { flex: 1; background: #ffffff; border-radius: var(--radius-md); display: flex; align-items: center; padding: 0 16px; border: 1px solid var(--border-color); }
         .search-input-wrapper input { border: none; outline: none; width: 100%; padding: 16px 10px; }
@@ -355,6 +406,16 @@
             padding: 18px;
             border: 1px solid var(--border-color);
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .news-img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
         }
 
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; }
@@ -401,7 +462,19 @@
     </div>
 
     <div id="profile-screen" class="screen">
-        <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; text-align: center;">Compléter votre profil</h2>
+        <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 16px; text-align: center;">Compléter votre profil</h2>
+        
+        <div class="avatar-picker-container">
+            <div class="avatar-preview-wrapper" style="position:relative;">
+                <img id="profile-avatar-img" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="Avatar">
+                <label for="avatar-file-input" class="avatar-upload-btn">
+                    <i class="fa-solid fa-camera"></i>
+                </label>
+            </div>
+            <input type="file" id="avatar-file-input" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+            <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Cliquez sur l'icône pour modifier la photo</span>
+        </div>
+
         <form onsubmit="finishProfile(event)">
             <div class="form-group">
                 <label class="form-label">E-mail / Compte connecté</label>
@@ -461,9 +534,12 @@
     <div id="main-app" class="screen">
         <div class="app-header">
             <div class="user-info-bar">
-                <div>
-                    <span style="opacity: 0.85; font-size: 0.85rem;">Bienvenue 👋</span>
-                    <h2 id="display-username" style="font-size: 1.4rem; font-weight: 800;">Manassé</h2>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <img id="dash-avatar-img" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="User" class="header-user-avatar">
+                    <div>
+                        <span style="opacity: 0.85; font-size: 0.85rem;">Bienvenue 👋</span>
+                        <h2 id="display-username" style="font-size: 1.3rem; font-weight: 800;">Manassé</h2>
+                    </div>
                 </div>
                 <div style="background: rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                     <i class="fa-solid fa-bell"></i>
@@ -540,7 +616,7 @@
         </div>
 
         <div class="course-card">
-            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80" alt="Histoire RDC" class="course-img">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg" alt="Histoire et Drapeau RDC" class="course-img" style="background: #002b49; object-fit: contain; padding: 10px;">
             <div class="course-content">
                 <span class="course-badge" style="background: #fef3c7; color: #d97706;"><i class="fa-solid fa-landmark"></i> Histoire & Patrimoine</span>
                 <h4 style="font-size: 1.1rem; font-weight: 800;">Histoire de la RDC et ses Dirigeants</h4>
@@ -578,6 +654,9 @@
 
         let currentStep = 0;
         let userXP = 250;
+        let userPhotoUrl = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
+
+        const rdcDefaultFlag = "https://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg";
 
         setTimeout(() => { showScreen('onboarding-screen'); }, 2500);
 
@@ -604,26 +683,52 @@
             }
         }
 
+        // SELECTIONNER / TELECHARGER UNE PHOTO DE PROFIL LOCALE
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    userPhotoUrl = e.target.result;
+                    document.getElementById('profile-avatar-img').src = userPhotoUrl;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // CONNEXION GOOGLE AMELIOREE AVEC RECUPERATION AUTO DE LA PHOTO ET DE L'EMAIL
         function loginWithGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(provider)
-            .then((result) => {
-                const user = result.user;
-                document.getElementById('user-email').value = user.email;
-                if(user.displayName) {
-                    const names = user.displayName.split(' ');
-                    document.getElementById('user-firstname').value = names[0] || '';
-                    document.getElementById('user-lastname').value = names.slice(1).join(' ') || '';
-                }
-                showScreen('profile-screen');
-            })
-            .catch(() => {
-                const mockEmail = prompt("Entrez votre adresse e-mail Google :", "votre.nom@gmail.com");
-                if (mockEmail) {
-                    document.getElementById('user-email').value = mockEmail;
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                firebase.auth().signInWithPopup(provider)
+                .then((result) => {
+                    const user = result.user;
+                    document.getElementById('user-email').value = user.email || '';
+                    if(user.displayName) {
+                        const names = user.displayName.split(' ');
+                        document.getElementById('user-firstname').value = names[0] || '';
+                        document.getElementById('user-lastname').value = names.slice(1).join(' ') || '';
+                    }
+                    if(user.photoURL) {
+                        userPhotoUrl = user.photoURL;
+                        document.getElementById('profile-avatar-img').src = userPhotoUrl;
+                    }
                     showScreen('profile-screen');
-                }
-            });
+                })
+                .catch(() => {
+                    fallbackGooglePrompt();
+                });
+            } catch(e) {
+                fallbackGooglePrompt();
+            }
+        }
+
+        function fallbackGooglePrompt() {
+            const mockEmail = prompt("Saisissez votre adresse e-mail Google :", "votre.compte@gmail.com");
+            if (mockEmail) {
+                document.getElementById('user-email').value = mockEmail;
+                showScreen('profile-screen');
+            }
         }
 
         function verifyPhoneRDC() {
@@ -643,6 +748,7 @@
             e.preventDefault();
             const firstname = document.getElementById('user-firstname').value || 'Manassé';
             document.getElementById('display-username').innerText = firstname;
+            document.getElementById('dash-avatar-img').src = userPhotoUrl;
             showScreen('main-app');
             updateXPBar();
             fetchLiveNewsRDC();
@@ -663,6 +769,7 @@
             document.getElementById('user-xp-text').innerText = `${userXP} / ${maxXP} XP`;
         }
 
+        // CHARGEMENT DES ACTUALITES AVEC IMAGES DE COUVERTURE
         async function fetchLiveNewsRDC() {
             const container = document.getElementById('live-news-container');
             const rssUrl = encodeURIComponent('https://news.google.com/rss/search?q=Éducation+RDC+Congo&hl=fr&gl=CD&ceid=CD:fr');
@@ -675,12 +782,16 @@
                     container.innerHTML = '';
                     data.items.slice(0, 4).forEach(item => {
                         const date = new Date(item.pubDate).toLocaleDateString('fr-FR');
+                        // Vérification de l'image de l'article ou fallback sur le drapeau RDC
+                        const articleImg = item.thumbnail || item.enclosure?.link || rdcDefaultFlag;
+                        
                         const card = `
                             <div class="news-card">
+                                <img src="${articleImg}" alt="Actualité RDC" class="news-img" onerror="this.src='${rdcDefaultFlag}'">
                                 <span style="font-size: 0.75rem; color: var(--primary-blue); font-weight: 700;">Actualité RDC</span>
-                                <h4 style="font-size: 0.95rem; font-weight: 700; margin: 6px 0;">${item.title}</h4>
-                                <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">${item.description.replace(/<[^>]*>?/gm, '').substring(0, 110)}...</p>
-                                <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.75rem; color: var(--text-muted);">
+                                <h4 style="font-size: 0.95rem; font-weight: 700; margin: 2px 0;">${item.title}</h4>
+                                <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">${item.description.replace(/<[^>]*>?/gm, '').substring(0, 110)}...</p>
+                                <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
                                     <span><i class="fa-regular fa-clock"></i> ${date}</span>
                                     <a href="${item.link}" target="_blank" style="color: var(--primary-blue); font-weight: 700; text-decoration: none;">Lire l'article →</a>
                                 </div>
@@ -692,8 +803,9 @@
             } catch (err) {
                 container.innerHTML = `
                     <div class="news-card">
+                        <img src="${rdcDefaultFlag}" alt="Drapeau RDC" class="news-img">
                         <span style="font-size: 0.75rem; color: var(--primary-blue); font-weight: 700;">Éducation RDC</span>
-                        <h4 style="font-size: 0.95rem; font-weight: 700; margin: 6px 0;">Développement du système éducatif national</h4>
+                        <h4 style="font-size: 0.95rem; font-weight: 700; margin: 2px 0;">Développement du système éducatif national</h4>
                         <p style="font-size: 0.8rem; color: var(--text-muted);">Restez informé des réformes et opportunités pour la jeunesse congolaise.</p>
                     </div>
                 `;
