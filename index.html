@@ -200,7 +200,6 @@
             gap: 10px;
         }
 
-        /* PHONE INPUT & MODAL */
         .phone-input-wrapper {
             display: flex;
             align-items: center;
@@ -260,7 +259,7 @@
             background: #f8fafc;
         }
 
-        /* DASHBOARD */
+        /* 5. MAIN DASHBOARD */
         #main-app { padding-bottom: 90px; }
         .app-header {
             background: var(--primary-blue);
@@ -274,12 +273,92 @@
         .search-input-wrapper { flex: 1; background: #ffffff; border-radius: var(--radius-md); display: flex; align-items: center; padding: 0 16px; border: 1px solid var(--border-color); }
         .search-input-wrapper input { border: none; outline: none; width: 100%; padding: 16px 10px; }
         .filter-btn { background: var(--primary-blue); color: #ffffff; width: 52px; height: 52px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; }
+
+        /* CARTE PROGRESSION XP (DYNAMIQUE) */
+        .xp-card {
+            background: #ffffff;
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 0 20px 16px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            border: 1px solid var(--border-color);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-yellow);
+            width: 0%;
+            transition: width 0.6s ease;
+        }
+
         .section-title { font-size: 1.25rem; font-weight: 800; margin: 24px 20px 14px 20px; }
         .quick-access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 0 20px; margin-bottom: 24px; }
         .access-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 22px 18px; border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; min-height: 130px; }
-        .course-card { background: var(--card-bg); border-radius: var(--radius-lg); margin: 0 20px 16px 20px; padding: 20px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; }
-        .course-badge { display: inline-block; background: #e8f2ff; color: var(--primary-blue); padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; align-self: flex-start; }
-        .course-btn { background: var(--primary-blue); color: #ffffff; border: none; padding: 12px; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; text-align: center; }
+
+        /* CARTES DE COURS ET IMAGES ILLUSTRATIVES */
+        .course-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            margin: 0 20px 16px 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+
+        .course-content {
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .course-badge {
+            display: inline-block;
+            background: #e8f2ff;
+            color: var(--primary-blue);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            align-self: flex-start;
+        }
+
+        .course-btn {
+            background: var(--primary-blue);
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .news-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-md);
+            margin: 0 20px 16px 20px;
+            padding: 18px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; }
         .nav-item.active { color: var(--primary-blue); }
@@ -347,13 +426,13 @@
                 </select>
             </div>
             <div class="form-group">
-                <label class="form-label">Province (Les 26 provinces de la RDC)</label>
+                <label class="form-label">Province (26 provinces de la RDC)</label>
                 <select id="user-province" class="form-control" required>
                     <option value="">Sélectionnez votre province</option>
                     <option value="Bas-Uele">Bas-Uele</option>
                     <option value="Équateur">Équateur</option>
                     <option value="Haut-Katanga">Haut-Katanga</option>
-                    <option value="Haut-Lami">Haut-Lomami</option>
+                    <option value="Haut-Lomami">Haut-Lomami</option>
                     <option value="Haut-Uele">Haut-Uele</option>
                     <option value="Ituri">Ituri</option>
                     <option value="Kasaï">Kasaï</option>
@@ -404,6 +483,16 @@
             <div class="filter-btn"><i class="fa-solid fa-sliders"></i></div>
         </div>
 
+        <div class="xp-card">
+            <div style="display: flex; justify-content: space-between; font-weight: 700;">
+                <span id="user-level">Niveau 1</span>
+                <span id="user-xp-percent" style="color: var(--primary-blue);">0%</span>
+            </div>
+            <div id="user-xp-text" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">0 / 1000 XP</div>
+            <div class="progress-bar"><div class="progress-fill" id="xp-fill"></div></div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-solid fa-star" style="color: var(--accent-yellow);"></i> Complétez des quiz pour gagner de l'XP</div>
+        </div>
+
         <h3 class="section-title">Accès rapide</h3>
         <div class="quick-access-grid">
             <div class="access-card">
@@ -437,18 +526,40 @@
         </div>
 
         <h3 class="section-title">Cours proposés</h3>
+        
         <div class="course-card">
-            <span class="course-badge"><i class="fa-solid fa-flag"></i> Valeurs Nationales</span>
-            <h4 style="font-size: 1.1rem; font-weight: 800;">Éducation à la Nouvelle Citoyenneté</h4>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">Découvrez les droits, devoirs et valeurs patriotiques pour bâtir la RDC.</p>
-            <button class="course-btn">Commencer le cours</button>
+            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80" alt="Nouvelle Citoyenneté" class="course-img">
+            <div class="course-content">
+                <span class="course-badge"><i class="fa-solid fa-flag"></i> Valeurs Nationales</span>
+                <h4 style="font-size: 1.1rem; font-weight: 800;">Éducation à la Nouvelle Citoyenneté</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Découvrez les droits, devoirs et valeurs patriotiques fondamentales pour bâtir la RDC de demain.</p>
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">
+                    <span><i class="fa-solid fa-layer-group"></i> 12 Chapitres</span>
+                    <span><i class="fa-solid fa-clock"></i> 4h de cours</span>
+                </div>
+                <button class="course-btn" onclick="addXP(150)">Commencer le cours (+150 XP)</button>
+            </div>
         </div>
 
         <div class="course-card">
-            <span class="course-badge" style="background: #fef3c7; color: #d97706;"><i class="fa-solid fa-landmark"></i> Histoire & Patrimoine</span>
-            <h4 style="font-size: 1.1rem; font-weight: 800;">Histoire de la RDC</h4>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">Explorez les grandes étapes de l'histoire du Congo jusqu'à nos jours.</p>
-            <button class="course-btn" style="background: #d97706;">Commencer le cours</button>
+            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80" alt="Histoire RDC" class="course-img">
+            <div class="course-content">
+                <span class="course-badge" style="background: #fef3c7; color: #d97706;"><i class="fa-solid fa-landmark"></i> Histoire & Patrimoine</span>
+                <h4 style="font-size: 1.1rem; font-weight: 800;">Histoire de la RDC et ses Dirigeants</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Explorez les grandes figures historiques, les présidents de la République et l'évolution politique du Congo.</p>
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">
+                    <span><i class="fa-solid fa-layer-group"></i> 15 Chapitres</span>
+                    <span><i class="fa-solid fa-clock"></i> 6h de cours</span>
+                </div>
+                <button class="course-btn" style="background: #d97706;" onclick="addXP(150)">Commencer le cours (+150 XP)</button>
+            </div>
+        </div>
+
+        <h3 class="section-title">Actualités en République Démocratique du Congo</h3>
+        <div id="live-news-container">
+            <div class="news-card">
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Chargement des dernières actualités nationales et éducatives...</p>
+            </div>
         </div>
 
         <div class="bottom-nav">
@@ -461,24 +572,7 @@
     </div>
 
     <script>
-        // --- CONFIGURATION FIREBASE (REMPLACER AVEC VOS CLÉS DE CONFIGURATION FIREBASE) ---
-        const firebaseConfig = {
-            apiKey: "VOTRE_API_KEY_FIREBASE",
-            authDomain: "votre-app.firebaseapp.com",
-            projectId: "votre-app-id",
-            storageBucket: "votre-app.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcde12345"
-        };
-        
-        // Initialiser Firebase si clés configurées
-        try {
-            firebase.initializeApp(firebaseConfig);
-        } catch(e) {
-            console.log("Firebase prêt à être configuré avec vos accès console.");
-        }
-
-        // --- GESTION DE L'ONBOARDING ---
+        // CONFIGURATION ONBOARDING
         const onboardingImages = [
             { bg: "bg-flag.jpg", btn: "Suivant" },
             { bg: "onboarding-quiz.png", btn: "Suivant" },
@@ -486,6 +580,7 @@
         ];
 
         let currentStep = 0;
+        let userXP = 250; // XP de départ
 
         setTimeout(() => { showScreen('onboarding-screen'); }, 2500);
 
@@ -512,14 +607,12 @@
             }
         }
 
-        // --- AUTHENTIFICATION GOOGLE OAUTH REAL DYNAMIC ---
+        // GOOGLE AUTH
         function loginWithGoogle() {
             const provider = new firebase.auth.GoogleAuthProvider();
-            
             firebase.auth().signInWithPopup(provider)
             .then((result) => {
                 const user = result.user;
-                // Auto-remplissage des données réelles du compte Google
                 document.getElementById('user-email').value = user.email;
                 if(user.displayName) {
                     const names = user.displayName.split(' ');
@@ -528,9 +621,8 @@
                 }
                 showScreen('profile-screen');
             })
-            .catch((error) => {
-                // Simulation de repli si Firebase n'est pas encore lié à votre projet Google Cloud
-                const mockEmail = prompt("Entrez votre véritable adresse e-mail Google :", "votre.nom@gmail.com");
+            .catch(() => {
+                const mockEmail = prompt("Entrez votre adresse e-mail Google :", "votre.nom@gmail.com");
                 if (mockEmail) {
                     document.getElementById('user-email').value = mockEmail;
                     showScreen('profile-screen');
@@ -538,28 +630,81 @@
             });
         }
 
-        // --- VERIFICATION NUMERO DE TELEPHONE RDC (+243) ---
+        // NUMÉRO TELEPHONE RDC
         function verifyPhoneRDC() {
             const phone = document.getElementById('rdc-phone').value.trim();
             if (phone.length < 9) {
-                alert("Veuillez saisir un numéro de téléphone RDC valide à 9 chiffres (ex: 812345678).");
+                alert("Veuillez saisir un numéro de téléphone RDC valide à 9 chiffres.");
                 return;
             }
-
-            const codeInput = prompt(`Un SMS de vérification avec le code de confirmation a été envoyé au +243${phone}.\n\nSaisissez le code reçu (Ex: 123456) :`, "123456");
+            const codeInput = prompt(`Un SMS de confirmation a été envoyé au +243${phone}.\nEntrez le code reçu :`, "123456");
             if (codeInput) {
                 document.getElementById('user-email').value = `+243${phone}`;
-                alert("Numéro vérifié avec succès !");
                 showScreen('profile-screen');
             }
         }
 
-        // --- SOUMISSION DU PROFIL ---
         function finishProfile(e) {
             e.preventDefault();
             const firstname = document.getElementById('user-firstname').value || 'Manassé';
             document.getElementById('display-username').innerText = firstname;
             showScreen('main-app');
+            updateXPBar();
+            fetchLiveNewsRDC();
+        }
+
+        // SYSTEME DE PROGRESSION ET DE MISE A JOUR XP
+        function addXP(amount) {
+            userXP += amount;
+            if (userXP > 1000) userXP = 1000;
+            updateXPBar();
+            alert(`Félicitations ! Vous avez gagné +${amount} XP.`);
+        }
+
+        function updateXPBar() {
+            const maxXP = 1000;
+            const percentage = Math.round((userXP / maxXP) * 100);
+            document.getElementById('xp-fill').style.width = percentage + '%';
+            document.getElementById('user-xp-percent').innerText = percentage + '%';
+            document.getElementById('user-xp-text').innerText = `${userXP} / ${maxXP} XP`;
+        }
+
+        // CHARGEMENT DES ACTUALITÉS EN DIRECT RDC (GOOGLE NEWS RSS)
+        async function fetchLiveNewsRDC() {
+            const container = document.getElementById('live-news-container');
+            const rssUrl = encodeURIComponent('https://news.google.com/rss/search?q=Éducation+RDC+Congo&hl=fr&gl=CD&ceid=CD:fr');
+            
+            try {
+                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`);
+                const data = await response.json();
+                
+                if (data.status === 'ok' && data.items.length > 0) {
+                    container.innerHTML = '';
+                    data.items.slice(0, 4).forEach(item => {
+                        const date = new Date(item.pubDate).toLocaleDateString('fr-FR');
+                        const card = `
+                            <div class="news-card">
+                                <span style="font-size: 0.75rem; color: var(--primary-blue); font-weight: 700;">Actualité RDC</span>
+                                <h4 style="font-size: 0.95rem; font-weight: 700; margin: 6px 0;">${item.title}</h4>
+                                <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">${item.description.replace(/<[^>]*>?/gm, '').substring(0, 110)}...</p>
+                                <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.75rem; color: var(--text-muted);">
+                                    <span><i class="fa-regular fa-clock"></i> ${date}</span>
+                                    <a href="${item.link}" target="_blank" style="color: var(--primary-blue); font-weight: 700; text-decoration: none;">Lire l'article →</a>
+                                </div>
+                            </div>
+                        `;
+                        container.innerHTML += card;
+                    });
+                }
+            } catch (err) {
+                container.innerHTML = `
+                    <div class="news-card">
+                        <span style="font-size: 0.75rem; color: var(--primary-blue); font-weight: 700;">Éducation RDC</span>
+                        <h4 style="font-size: 0.95rem; font-weight: 700; margin: 6px 0;">Développement du système éducatif national</h4>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Restez informé des réformes et opportunités pour la jeunesse congolaise.</p>
+                    </div>
+                `;
+            }
         }
     </script>
 </body>
