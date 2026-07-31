@@ -20,7 +20,7 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --radius-lg: 20px;
-            --radius-md: 14px;
+            --radius-md: 16px;
         }
 
         * {
@@ -54,7 +54,7 @@
             display: flex;
         }
 
-        /* ---------------- 1. SPLASH SCREEN ---------------- */
+        /* ---------------- 1. SPLASH SCREEN (LOGO AUTO 2.5s) ---------------- */
         #splash-screen {
             background: #ffffff;
             align-items: center;
@@ -65,24 +65,10 @@
         }
 
         .splash-logo {
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             object-fit: contain;
             margin-bottom: 24px;
-        }
-
-        .splash-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #0d2137;
-            margin-bottom: 8px;
-        }
-
-        .splash-subtitle {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            font-weight: 500;
-            margin-bottom: 40px;
         }
 
         .spinner {
@@ -99,13 +85,13 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* ---------------- 2. ONBOARDING SCREEN ---------------- */
+        /* ---------------- 2. ONBOARDING (IMAGES D'ACCUEIL) ---------------- */
         .onboarding-container {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding: 30px 24px;
+            padding: 30px 20px;
             background-size: cover;
             background-position: center;
             position: relative;
@@ -115,34 +101,14 @@
         .onboarding-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(180deg, rgba(0,20,50,0.2) 0%, rgba(0,30,70,0.88) 100%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,20,50,0.75) 100%);
             z-index: 1;
-        }
-
-        .onboarding-content {
-            position: relative;
-            z-index: 2;
-            margin-bottom: 24px;
-        }
-
-        .onboarding-title {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-            line-height: 1.25;
-        }
-
-        .onboarding-desc {
-            font-size: 1rem;
-            opacity: 0.9;
-            line-height: 1.5;
-            margin-bottom: 20px;
         }
 
         .dots-container {
             display: flex;
             gap: 8px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             position: relative;
             z-index: 2;
         }
@@ -167,9 +133,9 @@
             background: var(--primary-light-blue);
             color: #ffffff;
             border: none;
-            padding: 16px;
+            padding: 18px;
             border-radius: var(--radius-md);
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             cursor: pointer;
             box-shadow: 0 4px 14px rgba(26, 140, 255, 0.4);
@@ -242,7 +208,7 @@
 
         .form-control {
             width: 100%;
-            padding: 14px 16px;
+            padding: 16px;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             font-size: 0.95rem;
@@ -291,15 +257,15 @@
             border: none;
             outline: none;
             width: 100%;
-            padding: 14px 10px;
-            font-size: 0.9rem;
+            padding: 16px 10px;
+            font-size: 0.95rem;
         }
 
         .filter-btn {
             background: var(--primary-blue);
             color: #ffffff;
-            width: 48px;
-            height: 48px;
+            width: 52px;
+            height: 52px;
             border-radius: var(--radius-md);
             display: flex;
             align-items: center;
@@ -312,18 +278,18 @@
         .xp-card {
             background: #ffffff;
             border-radius: var(--radius-md);
-            padding: 18px;
+            padding: 20px;
             margin: 0 20px 16px 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.04);
             border: 1px solid var(--border-color);
         }
 
         .progress-bar {
-            height: 8px;
+            height: 10px;
             background: #e2e8f0;
-            border-radius: 4px;
+            border-radius: 6px;
             overflow: hidden;
-            margin: 10px 0;
+            margin: 12px 0;
         }
 
         .progress-fill {
@@ -336,7 +302,7 @@
             background: linear-gradient(135deg, #0052cc 0%, #0066cc 100%);
             color: #ffffff;
             border-radius: var(--radius-lg);
-            padding: 20px;
+            padding: 22px;
             margin: 0 20px 24px 20px;
             box-shadow: 0 8px 20px rgba(0, 102, 204, 0.25);
         }
@@ -345,14 +311,14 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin: 16px 0;
+            margin: 18px 0;
         }
 
         .stat-box {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(5px);
             border-radius: var(--radius-md);
-            padding: 14px;
+            padding: 16px;
             text-align: center;
         }
 
@@ -361,41 +327,45 @@
             color: var(--primary-blue);
             border: none;
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border-radius: var(--radius-md);
             font-weight: 700;
             font-size: 0.95rem;
             cursor: pointer;
-            margin-top: 6px;
         }
 
         .section-title {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 800;
-            margin: 20px 20px 12px 20px;
+            margin: 24px 20px 14px 20px;
         }
 
+        /* ---------------- CARTES ÉLARGIES ET PLUS LONGUES ---------------- */
         .quick-access-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            gap: 16px;
             padding: 0 20px;
             margin-bottom: 24px;
         }
 
         .access-card {
             background: var(--card-bg);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border-radius: var(--radius-lg);
+            padding: 22px 18px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.04);
             border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 130px;
         }
 
         .news-card {
             background: var(--card-bg);
             border-radius: var(--radius-md);
             margin: 0 20px 16px 20px;
-            padding: 16px;
+            padding: 18px;
             border: 1px solid var(--border-color);
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
@@ -408,7 +378,7 @@
             border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
+            padding: 12px 0;
             z-index: 100;
         }
 
@@ -428,7 +398,7 @@
         }
 
         .nav-item i {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 4px;
         }
     </style>
@@ -436,19 +406,13 @@
 <body>
 
     <div id="splash-screen" class="screen active">
-        <img src="logo.png" alt="Ministère de l'Éducation RDC" class="splash-logo" onerror="this.onerror=null; this.src='logo.png';">
-        <h1 class="splash-title">EDUC National</h1>
-        <p class="splash-subtitle">Apprendre • Réviser • Réussir</p>
+        <img src="logo.png" alt="Logo" class="splash-logo">
         <div class="spinner"></div>
     </div>
 
     <div id="onboarding-screen" class="screen">
         <div class="onboarding-container" id="onboarding-bg" style="background-image: url('bg-flag.jpg');">
             <div class="onboarding-overlay"></div>
-            <div class="onboarding-content">
-                <h2 class="onboarding-title" id="onb-title">Bienvenue sur EDUC</h2>
-                <p class="onboarding-desc" id="onb-desc">Apprenez partout et à tout moment grâce à une plateforme éducative moderne.</p>
-            </div>
             <div class="dots-container">
                 <div class="dot active" id="dot-0"></div>
                 <div class="dot" id="dot-1"></div>
@@ -515,7 +479,7 @@
         <div class="search-bar-container">
             <div class="search-input-wrapper">
                 <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted);"></i>
-                <input type="text" placeholder="Rechercher un cours, un q...">
+                <input type="text" placeholder="Rechercher un cours, un quiz...">
             </div>
             <div class="filter-btn">
                 <i class="fa-solid fa-sliders"></i>
@@ -544,13 +508,13 @@
 
             <div class="stats-grid">
                 <div class="stat-box">
-                    <i class="fa-solid fa-book-open" style="font-size: 1.2rem; margin-bottom: 4px;"></i>
-                    <h3 style="font-size: 1.2rem; font-weight: 800;">8</h3>
+                    <i class="fa-solid fa-book-open" style="font-size: 1.3rem; margin-bottom: 4px;"></i>
+                    <h3 style="font-size: 1.3rem; font-weight: 800;">8</h3>
                     <p style="font-size: 0.75rem; opacity: 0.9;">Cours terminés</p>
                 </div>
                 <div class="stat-box">
-                    <i class="fa-regular fa-file-lines" style="font-size: 1.2rem; margin-bottom: 4px;"></i>
-                    <h3 style="font-size: 1.2rem; font-weight: 800;">20</h3>
+                    <i class="fa-regular fa-file-lines" style="font-size: 1.3rem; margin-bottom: 4px;"></i>
+                    <h3 style="font-size: 1.3rem; font-weight: 800;">20</h3>
                     <p style="font-size: 0.75rem; opacity: 0.9;">Cours disponibles</p>
                 </div>
             </div>
@@ -561,24 +525,32 @@
         <h3 class="section-title">Accès rapide</h3>
         <div class="quick-access-grid">
             <div class="access-card">
-                <i class="fa-solid fa-book-open" style="color: var(--primary-blue); font-size: 1.5rem; margin-bottom: 8px;"></i>
-                <h4 style="font-weight: 700;">Cours</h4>
-                <p style="font-size: 0.8rem; color: var(--primary-blue); margin-top: 6px; font-weight: 700;">Explorer →</p>
+                <i class="fa-solid fa-book-open" style="color: var(--primary-blue); font-size: 1.8rem;"></i>
+                <div>
+                    <h4 style="font-weight: 800; font-size: 1.05rem;">Cours</h4>
+                    <p style="font-size: 0.85rem; color: var(--primary-blue); margin-top: 6px; font-weight: 700;">Explorer →</p>
+                </div>
             </div>
             <div class="access-card">
-                <i class="fa-solid fa-brain" style="color: #e11d48; font-size: 1.5rem; margin-bottom: 8px;"></i>
-                <h4 style="font-weight: 700;">Quiz</h4>
-                <p style="font-size: 0.8rem; color: #e11d48; margin-top: 6px; font-weight: 700;">Explorer →</p>
+                <i class="fa-solid fa-brain" style="color: #e11d48; font-size: 1.8rem;"></i>
+                <div>
+                    <h4 style="font-weight: 800; font-size: 1.05rem;">Quiz</h4>
+                    <p style="font-size: 0.85rem; color: #e11d48; margin-top: 6px; font-weight: 700;">Explorer →</p>
+                </div>
             </div>
             <div class="access-card">
-                <i class="fa-solid fa-newspaper" style="color: #d97706; font-size: 1.5rem; margin-bottom: 8px;"></i>
-                <h4 style="font-weight: 700;">Actualités</h4>
-                <p style="font-size: 0.8rem; color: #d97706; margin-top: 6px; font-weight: 700;">Explorer →</p>
+                <i class="fa-solid fa-newspaper" style="color: #d97706; font-size: 1.8rem;"></i>
+                <div>
+                    <h4 style="font-weight: 800; font-size: 1.05rem;">Actualités</h4>
+                    <p style="font-size: 0.85rem; color: #d97706; margin-top: 6px; font-weight: 700;">Explorer →</p>
+                </div>
             </div>
             <div class="access-card">
-                <i class="fa-solid fa-gavel" style="color: #0284c7; font-size: 1.5rem; margin-bottom: 8px;"></i>
-                <h4 style="font-weight: 700;">Constitution</h4>
-                <p style="font-size: 0.8rem; color: #0284c7; margin-top: 6px; font-weight: 700;">Explorer →</p>
+                <i class="fa-solid fa-gavel" style="color: #0284c7; font-size: 1.8rem;"></i>
+                <div>
+                    <h4 style="font-weight: 800; font-size: 1.05rem;">Constitution</h4>
+                    <p style="font-size: 0.85rem; color: #0284c7; margin-top: 6px; font-weight: 700;">Explorer →</p>
+                </div>
             </div>
         </div>
 
@@ -599,30 +571,16 @@
     </div>
 
     <script>
-        const onboardingData = [
-            {
-                title: "Bienvenue sur EDUC",
-                desc: "Apprenez partout et à tout moment grâce à une plateforme éducative moderne.",
-                bg: "bg-flag.jpg",
-                btn: "Suivant"
-            },
-            {
-                title: "Apprenez avec des Quiz",
-                desc: "Évaluez vos connaissances grâce à des quiz interactifs et progressifs.",
-                bg: "onboarding-quiz.png",
-                btn: "Suivant"
-            },
-            {
-                title: "Progressez chaque jour",
-                desc: "Suivez votre évolution et obtenez de meilleurs résultats à chaque étape.",
-                bg: "bg-flag.jpg",
-                btn: "Commencer"
-            }
+        // DIAPOSITIVES EN ORDRE SANS DOUBLONS
+        const onboardingImages = [
+            { bg: "bg-flag.jpg", btn: "Suivant" },
+            { bg: "onboarding-quiz.png", btn: "Suivant" },
+            { bg: "bg-flag.jpg", btn: "Commencer" }
         ];
 
         let currentStep = 0;
 
-        // AUTOMATIC SPLASH REDIRECTION (2.5 SECONDS)
+        // REDIRECTION AUTO LOGO (2.5 SECONDES)
         setTimeout(() => {
             showScreen('onboarding-screen');
         }, 2500);
@@ -634,7 +592,7 @@
 
         function nextOnboarding() {
             currentStep++;
-            if (currentStep >= onboardingData.length) {
+            if (currentStep >= onboardingImages.length) {
                 showScreen('auth-screen');
             } else {
                 updateOnboarding();
@@ -642,9 +600,7 @@
         }
 
         function updateOnboarding() {
-            const data = onboardingData[currentStep];
-            document.getElementById('onb-title').innerText = data.title;
-            document.getElementById('onb-desc').innerText = data.desc;
+            const data = onboardingImages[currentStep];
             document.getElementById('onb-btn').innerText = data.btn;
             document.getElementById('onboarding-bg').style.backgroundImage = `url('${data.bg}')`;
             
@@ -661,7 +617,7 @@
             fetchLiveNews();
         }
 
-        // FLUX EN TEMPS RÉEL DE GOOGLE NEWS CONGO
+        // FLUX EN TEMPS RÉEL GOOGLE NEWS
         async function fetchLiveNews() {
             const container = document.getElementById('live-news-container');
             const rssUrl = encodeURIComponent('https://news.google.com/rss/search?q=Éducation+RDC+Congo&hl=fr&gl=CD&ceid=CD:fr');
