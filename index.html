@@ -96,6 +96,7 @@
             background-position: center;
             position: relative;
             color: #ffffff;
+            transition: background-image 0.4s ease-in-out;
         }
 
         .onboarding-overlay {
@@ -340,7 +341,7 @@
             margin: 24px 20px 14px 20px;
         }
 
-        /* ---------------- CARTES ÉLARGIES ET PLUS LONGUES ---------------- */
+        /* CARTES D'ACCÈS RAPIDE ÉLARGIES ET ALLONGÉES */
         .quick-access-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -361,6 +362,42 @@
             min-height: 130px;
         }
 
+        /* CARTES DE COURS PROPOSÉS */
+        .course-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            margin: 0 20px 16px 20px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .course-badge {
+            display: inline-block;
+            background: #e8f2ff;
+            color: var(--primary-blue);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            align-self: flex-start;
+        }
+
+        .course-btn {
+            background: var(--primary-blue);
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-align: center;
+        }
+
         .news-card {
             background: var(--card-bg);
             border-radius: var(--radius-md);
@@ -370,7 +407,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
 
-        /* BOTTOM NAV BAR */
+        /* BARRE DE NAVIGATION INFÉRIEURE */
         .bottom-nav {
             position: fixed;
             bottom: 0; left: 0; right: 0;
@@ -554,6 +591,30 @@
             </div>
         </div>
 
+        <h3 class="section-title">Cours proposés</h3>
+        
+        <div class="course-card">
+            <span class="course-badge"><i class="fa-solid fa-flag"></i> Valeurs Nationales</span>
+            <h4 style="font-size: 1.1rem; font-weight: 800;">Éducation à la Nouvelle Citoyenneté</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Découvrez les droits, devoirs et valeurs patriotiques fondamentales pour bâtir la RDC de demain.</p>
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">
+                <span><i class="fa-solid fa-layer-group"></i> 12 Chapitres</span>
+                <span><i class="fa-solid fa-clock"></i> 4h de cours</span>
+            </div>
+            <button class="course-btn">Commencer le cours</button>
+        </div>
+
+        <div class="course-card">
+            <span class="course-badge" style="background: #fef3c7; color: #d97706;"><i class="fa-solid fa-landmark"></i> Histoire & Patrimoine</span>
+            <h4 style="font-size: 1.1rem; font-weight: 800;">Histoire de la RDC</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Explorez les grandes étapes de l'histoire du Congo, de l'époque précoloniale jusqu'à nos jours.</p>
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">
+                <span><i class="fa-solid fa-layer-group"></i> 15 Chapitres</span>
+                <span><i class="fa-solid fa-clock"></i> 6h de cours</span>
+            </div>
+            <button class="course-btn" style="background: #d97706;">Commencer le cours</button>
+        </div>
+
         <h3 class="section-title">Actualités récentes (En direct)</h3>
         <div id="live-news-container">
             <div class="news-card">
@@ -571,16 +632,16 @@
     </div>
 
     <script>
-        // DIAPOSITIVES EN ORDRE SANS DOUBLONS
+        // SÉQUENCE DES IMAGES D'ONBOARDING SANS DOUBLONS
         const onboardingImages = [
             { bg: "bg-flag.jpg", btn: "Suivant" },
             { bg: "onboarding-quiz.png", btn: "Suivant" },
-            { bg: "bg-flag.jpg", btn: "Commencer" }
+            { bg: "MNLPEng.png", btn: "Commencer" }
         ];
 
         let currentStep = 0;
 
-        // REDIRECTION AUTO LOGO (2.5 SECONDES)
+        // TRANSITION DU SPLASH SCREEN LOGO VERS ONBOARDING (2.5 SECONDES)
         setTimeout(() => {
             showScreen('onboarding-screen');
         }, 2500);
@@ -604,7 +665,7 @@
             document.getElementById('onb-btn').innerText = data.btn;
             document.getElementById('onboarding-bg').style.backgroundImage = `url('${data.bg}')`;
             
-            for(let i=0; i<3; i++) {
+            for(let i = 0; i < 3; i++) {
                 document.getElementById(`dot-${i}`).classList.toggle('active', i === currentStep);
             }
         }
@@ -617,7 +678,7 @@
             fetchLiveNews();
         }
 
-        // FLUX EN TEMPS RÉEL GOOGLE NEWS
+        // FLUX EN TEMPS RÉEL
         async function fetchLiveNews() {
             const container = document.getElementById('live-news-container');
             const rssUrl = encodeURIComponent('https://news.google.com/rss/search?q=Éducation+RDC+Congo&hl=fr&gl=CD&ceid=CD:fr');
