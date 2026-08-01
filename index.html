@@ -341,9 +341,9 @@
         }
 
         .book-cover-icon {
-            width: 65px;
-            height: 75px;
-            border-radius: 8px;
+            width: 75px;
+            height: 85px;
+            border-radius: 12px;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -353,6 +353,7 @@
             margin-bottom: 12px;
             position: relative;
             background: #e2e8f0;
+            border: 1px solid var(--border-color);
         }
 
         .book-cover-icon img {
@@ -365,7 +366,7 @@
             font-size: 0.9rem;
             font-weight: 800;
             color: var(--text-dark);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .book-sub {
@@ -441,7 +442,6 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* PRINCIPE D'INFORMATION / DESCRIPTION INSTITUTIONNELLE */
         .info-box-ministere {
             background: #e8f2ff;
             border-left: 4px solid var(--primary-blue);
@@ -453,7 +453,6 @@
             color: var(--text-dark);
         }
 
-        /* BOUTON DÉCONNEXION DANS PROFIL */
         .btn-logout {
             width: 100%;
             background: #fef2f2;
@@ -471,7 +470,6 @@
             margin-top: 20px;
         }
 
-        /* QUIZ 3D STYLE */
         .quiz-container-box {
             background: #ffffff;
             border-radius: var(--radius-lg);
@@ -548,7 +546,6 @@
             display: none;
         }
 
-        /* LIGHTBOX POUR LES AUTORITÉS */
         #lightbox-modal {
             display: none;
             position: fixed;
@@ -779,7 +776,7 @@
                 <div class="course-content" style="padding: 16px 18px;">
                     <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-timeline"></i> Frise Chronologique</span>
                     <h4 style="font-size: 1.15rem; font-weight: 800;">Histoire de tous les Présidents de la RDC</h4>
-                    <p style="font-size: 0.8rem; color: var(--text-muted);">Cliquez ici pour accéder aux carrés chronologiques de tous les chefs d'État de l'indépendance à nos jours.</p>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Cliquez ici pour accéder aux carrés chronologiques de tous les chefs d'État avec leurs photos et histoires en PDF.</p>
                 </div>
             </div>
 
@@ -809,59 +806,44 @@
                 <button onclick="switchTab('tab-accueil', 0)" style="background: var(--border-color); border: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;"><i class="fa-solid fa-arrow-left"></i></button>
                 <h3 class="section-title" style="margin: 0;">Les Présidents de la RDC</h3>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-muted); padding: 8px 20px 16px 20px;">Sélectionnez un carré pour découvrir l'historique de chaque président dans l'ordre chronologique.</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted); padding: 8px 20px 16px 20px;">Cliquez sur un carré pour accéder directement à l'histoire officielle en PDF de chaque président.</p>
             
             <div class="courses-grid-6" id="president-squares-container">
-                <div class="book-card" onclick="ouvrirDetailPresident(0)">
+                <a href="Président Joseph Kasa Vubu.pdf" target="_blank" class="book-card">
                     <div class="book-cover-icon">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Joseph_Kasa-Vubu_%28cropped%29.jpg/800px-Joseph_Kasa-Vubu_%28cropped%29.jpg" alt="Joseph Kasa-Vubu">
                     </div>
                     <div class="book-title">Joseph Kasa-Vubu</div>
                     <div class="book-sub">1er Président (1960-1965)</div>
-                </div>
-                <div class="book-card" onclick="ouvrirDetailPresident(1)">
+                </a>
+                <a href="Président Mobutu.pdf" target="_blank" class="book-card">
                     <div class="book-cover-icon">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Mobutu_Sese_Seko_1983.jpg/800px-Mobutu_Sese_Seko_1983.jpg" alt="Mobutu Sese Seko">
                     </div>
                     <div class="book-title">Mobutu Sese Seko</div>
                     <div class="book-sub">2ème Président (1965-1997)</div>
-                </div>
-                <div class="book-card" onclick="ouvrirDetailPresident(2)">
+                </a>
+                <a href="Président Laurent-Désiré .pdf" target="_blank" class="book-card">
                     <div class="book-cover-icon">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Laurent-D%C3%A9sir%C3%A9_Kabila_%28cropped%29.jpg/800px-Laurent-D%C3%A9sir%C3%A9_Kabila_%28cropped%29.jpg" alt="Laurent-Désiré Kabila">
                     </div>
                     <div class="book-title">Laurent-Désiré Kabila</div>
                     <div class="book-sub">3ème Président (1997-2001)</div>
-                </div>
-                <div class="book-card" onclick="ouvrirDetailPresident(3)">
+                </a>
+                <a href="Président Joseph Kabila.pdf" target="_blank" class="book-card">
                     <div class="book-cover-icon">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Joseph_Kabila_in_2014_%28cropped%29.jpg/800px-Joseph_Kabila_in_2014_%28cropped%29.jpg" alt="Joseph Kabila">
                     </div>
                     <div class="book-title">Joseph Kabila</div>
                     <div class="book-sub">4ème Président (2001-2019)</div>
-                </div>
-                <div class="book-card" onclick="ouvrirDetailPresident(4)">
+                </a>
+                <a href="Président Félix Antoine.pdf" target="_blank" class="book-card">
                     <div class="book-cover-icon">
                         <img src="president.jpg" alt="Félix Tshisekedi">
                     </div>
                     <div class="book-title">Félix Tshisekedi</div>
                     <div class="book-sub">5ème Président (2019-Présent)</div>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-president-detail" class="tab-content">
-            <div style="padding: 16px 20px 0 20px; display: flex; align-items: center; gap: 10px;">
-                <button onclick="switchTabPresidentsList()" style="background: var(--border-color); border: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;"><i class="fa-solid fa-arrow-left"></i></button>
-                <h3 class="section-title" id="detail-president-title" style="margin: 0;">Détail Président</h3>
-            </div>
-            
-            <div class="course-card" style="margin: 20px;">
-                <div class="course-content" style="padding: 20px;">
-                    <span class="course-badge" id="detail-president-mandat" style="margin-bottom: 8px;">Mandat</span>
-                    <h2 id="detail-president-name" style="font-size: 1.3rem; font-weight: 800; margin-bottom: 12px;">Nom du Président</h2>
-                    <p id="detail-president-desc" style="font-size: 0.95rem; color: var(--text-dark); line-height: 1.6;"></p>
-                </div>
+                </a>
             </div>
         </div>
 
@@ -954,35 +936,6 @@
         let userXP = 250;
         let userPhotoUrl = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
 
-        // DONNÉES HISTORIQUES DES 5 PRÉSIDENTS DE LA RDC (ORDRE CHRONOLOGIQUE)
-        const presidentsDataRDC = [
-            {
-                nom: "Joseph Kasa-Vubu",
-                mandat: "1er Président (1960 - 1965)",
-                histoire: "Premier président de la République démocratique du Congo (alors République du Congo) après l'indépendance proclamée le 30 juin 1960. Figure emblématique de l'ABAKO, il a dirigé le pays durant les premières années mouvementées de la jeune république jusqu'au coup d'État de 1965."
-            },
-            {
-                nom: "Mobutu Sese Seko",
-                mandat: "2ème Président (1965 - 1997)",
-                histoire: "Arrivé au pouvoir en novembre 1965, il a dirigé le pays pendant plus de trente ans. Il a instauré la politique de recours à l'authenticité, rebaptisé le pays Zaïre, ainsi que le fleuve et la monnaie, avant d'être renversé par l'Alliance des Forces Démocratiques pour la Libération du Congo (AFDL) en mai 1997."
-            },
-            {
-                nom: "Laurent-Désiré Kabila",
-                mandat: "3ème Président (1997 - 2001)",
-                histoire: "Leader de l'AFDL, il prend le pouvoir en mai 1997 après la chute du régime de Mobutu et restaure le nom de République Démocratique du Congo. Son mandat a été marqué par la reconstruction de l'État et la gestion de la deuxième guerre du Congo, jusqu'à son assassinat en janvier 2001."
-            },
-            {
-                nom: "Joseph Kabila",
-                mandat: "4ème Président (2001 - 2019)",
-                histoire: "Il succède à son père Laurent-Désiré Kabila en janvier 2001 à l'âge de 29 ans. Il a conduit le processus de réunification du pays à travers les accords de paix de Sun City, l'organisation des élections démocratiques de 2006 et 2011, et a réalisé la première transition pacifique du pouvoir en RDC en janvier 2019."
-            },
-            {
-                nom: "Félix Tshisekedi",
-                mandat: "5ème Président (2019 - Présent)",
-                histoire: "Élu président lors des élections de décembre 2018, il prête serment le 24 janvier 2019, marquant la première alternance pacifique au sommet de l'État congolais. Réélu pour un second mandat, il œuvre pour la pacification de l'est du pays, la gratuité de l'enseignement primaire et le développement national."
-            }
-        ];
-
         const subdivisionsData = {
             "Bas-Uele": ["Buta", "Aketi", "Bondo", "Bambesa", "Poko"],
             "Équateur": ["Mbandaka", "Bikoro", "Ingende", "Basankusu", "Lukolela"],
@@ -1043,7 +996,6 @@
 
         function verifierSessionUtilisateur() {
             const utilisateurActif = localStorage.getItem('educ_utilisateur_connecte');
-            
             if (utilisateurActif) {
                 const user = JSON.parse(utilisateurActif);
                 restaurerSessionDashboard(user);
@@ -1107,28 +1059,9 @@
             window.scrollTo(0, 0);
         }
 
-        // NAVIGATION POUR LA SECTION DES PRÉSIDENTS
         function ouvrirPagePresidents() {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.getElementById('tab-presidents-list').classList.add('active');
-            window.scrollTo(0, 0);
-        }
-
-        function switchTabPresidentsList() {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.getElementById('tab-presidents-list').classList.add('active');
-            window.scrollTo(0, 0);
-        }
-
-        function ouvrirDetailPresident(index) {
-            const president = presidentsDataRDC[index];
-            document.getElementById('detail-president-title').innerText = president.nom;
-            document.getElementById('detail-president-name').innerText = president.nom;
-            document.getElementById('detail-president-mandat').innerText = president.mandat;
-            document.getElementById('detail-president-desc').innerText = president.histoire;
-
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.getElementById('tab-president-detail').classList.add('active');
             window.scrollTo(0, 0);
         }
 
@@ -1263,7 +1196,6 @@
                 selectedButton.classList.add('correct');
                 selectedButton.querySelector('i').className = 'fa-solid fa-circle-check';
                 selectedButton.querySelector('i').style.color = 'var(--success-green)';
-                
                 feedbackBox.innerText = "Excellente réponse ! Manassé IA valide. +50 XP";
                 feedbackBox.className = 'quiz-feedback-box success';
                 addXP(50);
