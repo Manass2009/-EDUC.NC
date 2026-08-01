@@ -445,6 +445,28 @@
             color: var(--text-dark);
         }
 
+        /* BOUTONS DISCRETS EN HAUT DE L'ONGLET PROFIL (POUR ACCÈS ADMIN M N L) */
+        .secret-admin-trigger-container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 4px;
+            padding: 0 20px 10px 20px;
+        }
+        .secret-dot-btn {
+            width: 8px;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.2s;
+        }
+        .secret-dot-btn:active {
+            opacity: 1;
+            background: var(--primary-blue);
+        }
+
         /* QUIZ 3D STYLE */
         .quiz-container-box {
             background: #ffffff;
@@ -834,7 +856,13 @@
         </div>
 
         <div id="tab-profil" class="tab-content">
-            <h3 class="section-title">Mon Profil Apprenant</h3>
+            <div class="secret-admin-trigger-container">
+                <button class="secret-dot-btn" onclick="demanderCodeAdmin()"></button>
+                <button class="secret-dot-btn" onclick="demanderCodeAdmin()"></button>
+                <button class="secret-dot-btn" onclick="demanderCodeAdmin()"></button>
+            </div>
+            
+            <h3 class="section-title" style="margin-top: 0;">Mon Profil Apprenant</h3>
             <div class="xp-card" style="text-align: center;">
                 <img id="tab-user-avatar" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="User" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-blue); margin-bottom: 12px;">
                 <h3 id="profile-full-name" style="font-weight: 800;">Manassé</h3>
@@ -1009,7 +1037,6 @@
             const subdivision = document.getElementById('user-subdivision').value;
             const phone = document.getElementById('rdc-phone').value;
 
-            // CONTRÔLE CRÉATEUR / MINISTÈRE : ENREGISTREMENT DES INSCRITS
             const nouveauProfil = {
                 nomComplet: `${nom} ${postnom} ${prenom}`,
                 ecole: ecole,
@@ -1019,7 +1046,6 @@
                 dateInscription: new Date().toISOString()
             };
 
-            // Sauvegarde locale dans le navigateur (peut être envoyé sur Firebase/Firestore pour le suivi du Ministère)
             let inscrits = JSON.parse(localStorage.getItem('educ_inscrits_rdc') || '[]');
             inscrits.push(nouveauProfil);
             localStorage.setItem('educ_inscrits_rdc', JSON.stringify(inscrits));
@@ -1035,6 +1061,30 @@
             updateXPBar();
             fetchLiveNewsRDC();
             generateInfiniteQuizQuestion();
+        }
+
+        // FONCTION DE SÉCURITÉ ADMIN AVEC LE CODE "MNL"
+        function demanderCodeAdmin() {
+            let codeSaisi = prompt("Entrez le code secret du créateur :");
+            if (codeSaisi && codeSaisi.toUpperCase() === "MNL") {
+                afficherListeInscritsAdmin();
+            } else if (codeSaisi !== null) {
+                alert("Code incorrect ! Accès refusé.");
+            }
+        }
+
+        function afficherListeInscritsAdmin() {
+            let inscrits = JSON.parse(localStorage.getItem('educ_inscrits_rdc') || '[]');
+            if (inscrits.length === 0) {
+                alert("👑 ESPACE CRÉATEUR\nAucun élève inscrit pour le moment.");
+                return;
+            }
+            
+            let texte = `👑 ESPACE CRÉATEUR - TOTAL INSCRITS : ${inscrits.length}\n\n`;
+            inscrits.forEach((el, index) => {
+                texte += `${index + 1}. ${el.nomComplet}\n   École: ${el.ecole}\n   Lieu: ${el.sousDivision}, ${el.province}\n   Tél: ${el.telephone}\n\n`;
+            });
+            alert(texte);
         }
 
         function generateInfiniteQuizQuestion() {
