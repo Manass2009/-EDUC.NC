@@ -9,9 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-
     <style>
         :root {
             --primary-blue: #0066cc;
@@ -178,23 +175,6 @@
             font-weight: 700;
             font-size: 1rem;
             width: 100%;
-            margin-bottom: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-google {
-            background: #ffffff;
-            color: var(--text-dark);
-            border: 1px solid var(--border-color);
-            padding: 16px;
-            border-radius: var(--radius-md);
-            font-weight: 700;
-            font-size: 1rem;
-            width: 100%;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -244,12 +224,13 @@
             flex-direction: column;
             align-items: center;
             margin-bottom: 20px;
+            cursor: pointer;
         }
 
         .avatar-preview-wrapper {
             position: relative;
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             border: 3px solid var(--primary-blue);
             overflow: hidden;
@@ -266,7 +247,7 @@
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .form-label {
@@ -279,7 +260,7 @@
 
         .form-control {
             width: 100%;
-            padding: 16px;
+            padding: 14px;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             font-size: 0.95rem;
@@ -445,13 +426,6 @@
             gap: 10px;
         }
 
-        .news-img {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
-            border-radius: var(--radius-md);
-        }
-
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; }
         .nav-item.active { color: var(--primary-blue); }
@@ -536,7 +510,7 @@
             display: none;
         }
 
-        /* MODAL IMAGE LIGHTBOX POUR LES AUTORITÉS */
+        /* LIGHTBOX POUR LES AUTORITÉS */
         #lightbox-modal {
             display: none;
             position: fixed;
@@ -591,9 +565,9 @@
     </div>
 
     <div id="auth-screen" class="screen">
-        <div class="auth-icon"><i class="fa-solid fa-user-plus"></i></div>
-        <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 8px;">Créer un compte</h2>
-        <p style="color: var(--text-muted); margin-bottom: 24px;">Rejoignez EDUC National et commencez votre parcours d'apprentissage.</p>
+        <div class="auth-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+        <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 8px;">Connexion / Inscription</h2>
+        <p style="color: var(--text-muted); margin-bottom: 24px;">Entrez votre numéro de téléphone pour commencer.</p>
         
         <div style="width: 100%; text-align: left; margin-bottom: 12px;">
             <label class="form-label">Numéro de téléphone (RDC)</label>
@@ -601,53 +575,61 @@
                 <span class="phone-prefix">🇨🇩 +243</span>
                 <input type="tel" id="rdc-phone" placeholder="81 234 56 78" maxlength="9">
             </div>
-            <button class="btn-phone" onclick="verifyPhoneRDC()"><i class="fa-solid fa-mobile-screen"></i> Continuer avec le téléphone</button>
+            <button class="btn-phone" onclick="verifyPhoneRDC()"><i class="fa-solid fa-arrow-right"></i> Continuer</button>
         </div>
-
-        <div style="margin: 12px 0; color: var(--text-muted); font-size: 0.85rem;">OU</div>
-
-        <button class="btn-google" onclick="loginWithGoogle()"><i class="fa-brands fa-google" style="color: #ea4335;"></i> Continuer avec Google</button>
     </div>
 
     <div id="profile-screen" class="screen">
-        <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 16px; text-align: center;">Vérification du Profil</h2>
+        <h2 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 14px; text-align: center;">Informations de l'Apprenant</h2>
         
-        <div class="avatar-picker-container">
+        <div class="avatar-picker-container" onclick="document.getElementById('file-avatar-input').click()">
             <div class="avatar-preview-wrapper">
                 <img id="profile-avatar-img" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="Avatar">
             </div>
-            <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Photo récupérée automatiquement</span>
+            <span style="font-size: 0.75rem; color: var(--primary-blue); font-weight: 700; margin-top: 6px;"><i class="fa-solid fa-camera"></i> Ajouter / Modifier photo</span>
+            <input type="file" id="file-avatar-input" accept="image/*" style="display: none;" onchange="previewAvatar(event)">
         </div>
 
         <form onsubmit="finishProfile(event)">
             <div class="form-group">
-                <label class="form-label">E-mail Google</label>
-                <input type="email" id="user-email" class="form-control" readonly style="background: #e2e8f0;">
+                <label class="form-label">Nom</label>
+                <input type="text" id="user-name" class="form-control" placeholder="Ex: Tshisekedi" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Nom</label>
-                <input type="text" id="user-lastname" class="form-control" required>
+                <label class="form-label">Post-nom</label>
+                <input type="text" id="user-postnom" class="form-control" placeholder="Ex: Mulamba" required>
             </div>
             <div class="form-group">
                 <label class="form-label">Prénom</label>
-                <input type="text" id="user-firstname" class="form-control" required>
+                <input type="text" id="user-firstname" class="form-control" placeholder="Ex: Manassé" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Province (RDC)</label>
-                <select id="user-province" class="form-control" required>
+                <label class="form-label">École</label>
+                <input type="text" id="user-school" class="form-control" placeholder="Nom de votre école" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Province</label>
+                <select id="user-province" class="form-control" onchange="updateSubDivisions()" required>
                     <option value="">Sélectionnez votre province</option>
                     <option value="Kinshasa">Kinshasa</option>
                     <option value="Haut-Katanga">Haut-Katanga</option>
                     <option value="Nord-Kivu">Nord-Kivu</option>
                     <option value="Sud-Kivu">Sud-Kivu</option>
                     <option value="Kongo-Central">Kongo-Central</option>
-                    <option value="Ituri">Ituri</option>
                     <option value="Lualaba">Lualaba</option>
                     <option value="Tshopo">Tshopo</option>
+                    <option value="Ituri">Ituri</option>
+                    <option value="Kasai">Kasaï</option>
                     <option value="Autre">Autre province</option>
                 </select>
             </div>
-            <button type="submit" class="btn-primary" style="margin-top: 10px;">Valider et entrer</button>
+            <div class="form-group">
+                <label class="form-label">Sous-division (Prov. Éducationnelle)</label>
+                <select id="user-subdivision" class="form-control" required>
+                    <option value="">Choisissez d'abord une province</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-primary" style="margin-top: 6px;">Valider et entrer</button>
         </form>
     </div>
 
@@ -658,7 +640,7 @@
                     <img id="dash-avatar-img" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="User" class="header-user-avatar">
                     <div>
                         <span style="opacity: 0.85; font-size: 0.85rem;">Bienvenue 👋</span>
-                        <h2 id="display-username" style="font-size: 1.3rem; font-weight: 800;">Manassé</h2>
+                        <h2 id="display-username" style="font-size: 1.2rem; font-weight: 800;">Manassé</h2>
                     </div>
                 </div>
                 <div style="background: rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
@@ -824,7 +806,7 @@
             <div class="xp-card" style="text-align: center;">
                 <img id="tab-user-avatar" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="User" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-blue); margin-bottom: 12px;">
                 <h3 id="profile-full-name" style="font-weight: 800;">Manassé</h3>
-                <p id="profile-email-disp" style="color: var(--text-muted); font-size: 0.85rem;">Compte Élève</p>
+                <p id="profile-details-disp" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Élève</p>
             </div>
         </div>
 
@@ -838,14 +820,6 @@
     </div>
 
     <script>
-        // CONFIGURATION FIREBASE (REMPLACER PAR VOS VRAIES CLÉS SI NÉCESSAIRE)
-        const firebaseConfig = {
-            apiKey: "AIzaSyDummyKeyForDemoPurposesOnly12345",
-            authDomain: "educ-national-rdc.firebaseapp.com",
-            projectId: "educ-national-rdc"
-        };
-        try { firebase.initializeApp(firebaseConfig); } catch(e){}
-
         const onboardingImages = [
             { bg: "bg-flag.jpg", btn: "Suivant" },
             { bg: "onboarding-quiz.png", btn: "Suivant" },
@@ -856,7 +830,20 @@
         let userXP = 250;
         let userPhotoUrl = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
 
-        // BANQUE DE QUESTIONS RICHE, SENSEE ET NON RÉPÉTITIVE (GÉRÉE PAR MANASSÉ IA)
+        // SOUS-DIVISIONS (PROVINCES ÉDUCATIONNELLES) PAR PROVINCE DE LA RDC
+        const subdivisionsData = {
+            "Kinshasa": ["Kinshasa-Funa", "Kinshasa-Lukunga", "Kinshasa-Mont Amba", "Kinshasa-Tshangu", "Kinshasa-Plateau"],
+            "Haut-Katanga": ["Lubumbashi 1", "Lubumbashi 2", "Likasi", "Kipushi", "Kasenga", "Sakania"],
+            "Nord-Kivu": ["Goma", "Butembo", "Beni", "Rutshuru", "Masisi", "Walikale", "Lubero"],
+            "Sud-Kivu": ["Bukavu", "Uvira", "Walungu", "Kabare", "Fizi", "Mwenga", "Shabunda"],
+            "Kongo-Central": ["Matadi", "Boma", "Mbanza-Ngungu", "Kisantu", "Lukula", "Songololo"],
+            "Lualaba": ["Kolwezi 1", "Kolwezi 2", "Fungurume", "Dilolo", "Kapanga"],
+            "Tshopo": ["Kisangani 1", "Kisangani 2", "Basoko", "Banalia", "Opala"],
+            "Ituri": ["Bunia", "Aru", "Mahagi", "Djugu", "Irumu"],
+            "Kasai": ["Kananga 1", "Kananga 2", "Tshikapa 1", "Tshikapa 2", "Mweka", "Ilebo"],
+            "Autre": ["Sous-division Générale 1", "Sous-division Générale 2"]
+        };
+
         const manasseQuestionBank = [
             {
                 q: "Quel est l'article de la Constitution de la RDC qui garantit le droit à l'éducation pour chaque citoyen ?",
@@ -892,24 +879,6 @@
                     "La suppression totale des examens d'État de fin d'études secondaires.",
                     "L'interdiction de l'usage du français dans toutes les écoles primaires.",
                     "Le remplacement complet des manuels scolaires par des tablettes numériques obligatoires."
-                ]
-            },
-            {
-                q: "Que représente le 'Serment du Citoyen' en République Démocratique du Congo ?",
-                correct: "Un engagement moral et solennel à respecter les lois, défendre la patrie et préserver l'unité nationale.",
-                wrongs: [
-                    "Un contrat de travail obligatoire signé par tous les fonctionnaires de l'État.",
-                    "Une promesse d'adhésion à un parti politique majeur du pays.",
-                    "Un serment militaire prononcé uniquement par les officiers des FARDC."
-                ]
-            },
-            {
-                q: "Dans quelle province de la RDC se trouve le Parc National des Virunga, plus ancienne réserve naturelle d'Afrique ?",
-                correct: "Dans la province du Nord-Kivu.",
-                wrongs: [
-                    "Dans la province du Haut-Katanga.",
-                    "Dans la province du Kongo-Central.",
-                    "Dans la province du Kasaï-Central."
                 ]
             }
         ];
@@ -954,7 +923,6 @@
             window.scrollTo(0, 0);
         }
 
-        // LIGHTBOX POUR AGRANDIR LES PHOTOS DES AUTORITÉS
         function openLightbox(imgSrc) {
             document.getElementById('lightbox-img').src = imgSrc;
             document.getElementById('lightbox-modal').classList.add('active');
@@ -963,12 +931,73 @@
             document.getElementById('lightbox-modal').classList.remove('active');
         }
 
-        // MOTEUR DE QUIZ INFINI ET ALÉATOIRE (PAR MANASSÉ IA)
+        // MISE À JOUR DYNAMIQUE DES SOUS-DIVISIONS SELON LA PROVINCE
+        function updateSubDivisions() {
+            const provinceSelect = document.getElementById('user-province');
+            const subDivSelect = document.getElementById('user-subdivision');
+            const selectedProvince = provinceSelect.value;
+
+            subDivSelect.innerHTML = '<option value="">Sélectionnez votre sous-division</option>';
+
+            if (subdivisionsData[selectedProvince]) {
+                subdivisionsData[selectedProvince].forEach(sub => {
+                    const opt = document.createElement('option');
+                    opt.value = sub;
+                    opt.textContent = sub;
+                    subDivSelect.appendChild(opt);
+                });
+            }
+        }
+
+        // APERÇU DE LA PHOTO DE PROFIL UPLOADÉE PAR L'UTILISATEUR
+        function previewAvatar(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    userPhotoUrl = e.target.result;
+                    document.getElementById('profile-avatar-img').src = userPhotoUrl;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function verifyPhoneRDC() {
+            const phone = document.getElementById('rdc-phone').value.trim();
+            if (phone.length < 9) {
+                alert("Veuillez saisir un numéro de téléphone RDC valide à 9 chiffres.");
+                return;
+            }
+            showScreen('profile-screen');
+        }
+
+        function finishProfile(e) {
+            e.preventDefault();
+            const nom = document.getElementById('user-name').value;
+            const postnom = document.getElementById('user-postnom').value;
+            const prenom = document.getElementById('user-firstname').value;
+            const ecole = document.getElementById('user-school').value;
+            const province = document.getElementById('user-province').value;
+            const subdivision = document.getElementById('user-subdivision').value;
+
+            const fullName = `${prenom} ${nom}`;
+            document.getElementById('display-username').innerText = prenom;
+            document.getElementById('profile-full-name').innerText = `${prenom} ${nom} ${postnom}`;
+            document.getElementById('profile-details-disp').innerText = `École: ${ecole} | ${subdivision}, ${province}`;
+            
+            document.getElementById('dash-avatar-img').src = userPhotoUrl;
+            document.getElementById('tab-user-avatar').src = userPhotoUrl;
+
+            showScreen('main-app');
+            updateXPBar();
+            fetchLiveNewsRDC();
+            generateInfiniteQuizQuestion();
+        }
+
         function generateInfiniteQuizQuestion() {
             const baseItem = manasseQuestionBank[Math.floor(Math.random() * manasseQuestionBank.length)];
             let options = [baseItem.correct, ...baseItem.wrongs];
             
-            // Mélange aléatoire pour que la bonne réponse ne soit jamais au même endroit
             for (let i = options.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [options[i], options[j]] = [options[j], options[i]];
@@ -1037,66 +1066,6 @@
         }
 
         function loadNextInfiniteQuestion() {
-            generateInfiniteQuizQuestion();
-        }
-
-        // AUTHENTIFICATION GOOGLE AUTOMATIQUE VIA FIREBASE POPUP
-        function loginWithGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(provider)
-            .then((result) => {
-                const user = result.user;
-                const email = user.email || '';
-                const fullName = user.displayName || '';
-                const parts = fullName.split(' ');
-                const firstname = parts[0] || 'Apprenant';
-                const lastname = parts.slice(1).join(' ') || '';
-                
-                if(user.photoURL) {
-                    userPhotoUrl = user.photoURL;
-                }
-
-                document.getElementById('user-email').value = email;
-                document.getElementById('user-firstname').value = firstname;
-                document.getElementById('user-lastname').value = lastname;
-                document.getElementById('profile-avatar-img').src = userPhotoUrl;
-
-                showScreen('profile-screen');
-            })
-            .catch((error) => {
-                alert("Connexion Google annulée ou indisponible. Veuillez réessayer.");
-            });
-        }
-
-        function verifyPhoneRDC() {
-            const phone = document.getElementById('rdc-phone').value.trim();
-            if (phone.length < 9) {
-                alert("Veuillez saisir un numéro de téléphone RDC valide à 9 chiffres.");
-                return;
-            }
-            const codeInput = prompt(`Un code de validation a été envoyé au +243${phone}.\nEntrez le code :`, "123456");
-            if (codeInput) {
-                document.getElementById('user-email').value = `+243${phone}@educ.cd`;
-                document.getElementById('user-firstname').value = "Citoyen";
-                document.getElementById('user-lastname').value = "RDC";
-                showScreen('profile-screen');
-            }
-        }
-
-        function finishProfile(e) {
-            e.preventDefault();
-            const firstname = document.getElementById('user-firstname').value || 'Manassé';
-            const email = document.getElementById('user-email').value || '';
-            
-            document.getElementById('display-username').innerText = firstname;
-            document.getElementById('profile-full-name').innerText = firstname;
-            document.getElementById('profile-email-disp').innerText = email;
-            document.getElementById('dash-avatar-img').src = userPhotoUrl;
-            document.getElementById('tab-user-avatar').src = userPhotoUrl;
-
-            showScreen('main-app');
-            updateXPBar();
-            fetchLiveNewsRDC();
             generateInfiniteQuizQuestion();
         }
 
