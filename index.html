@@ -343,7 +343,8 @@
         .book-cover-icon {
             width: 65px;
             height: 75px;
-            border-radius: 8px 12px 12px 8px;
+            border-radius: 8px;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -351,6 +352,13 @@
             font-size: 1.8rem;
             margin-bottom: 12px;
             position: relative;
+            background: #e2e8f0;
+        }
+
+        .book-cover-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .book-title {
@@ -443,28 +451,6 @@
             font-size: 0.85rem;
             line-height: 1.5;
             color: var(--text-dark);
-        }
-
-        /* BOUTONS DISCRETS EN HAUT DE L'ONGLET PROFIL */
-        .secret-admin-trigger-container {
-            display: flex;
-            justify-content: flex-end;
-            gap: 4px;
-            padding: 0 20px 10px 20px;
-        }
-        .secret-dot-btn {
-            width: 8px;
-            height: 8px;
-            background: var(--border-color);
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            opacity: 0.4;
-            transition: opacity 0.2s;
-        }
-        .secret-dot-btn:active {
-            opacity: 1;
-            background: var(--primary-blue);
         }
 
         /* BOUTON DÉCONNEXION DANS PROFIL */
@@ -560,51 +546,6 @@
             font-size: 0.95rem;
             cursor: pointer;
             display: none;
-        }
-
-        /* SCHÉMA INTERACTIF DES RÈGLES */
-        .golden-rules-card {
-            background: linear-gradient(135deg, #0066cc 0%, #1a8cff 100%);
-            border-radius: var(--radius-lg);
-            padding: 20px;
-            margin: 0 20px 24px 20px;
-            color: #ffffff;
-            box-shadow: 0 8px 20px rgba(0, 102, 204, 0.25);
-        }
-        .golden-rules-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-top: 14px;
-        }
-        .rule-item {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: var(--radius-md);
-            padding: 14px 16px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .rule-item:active {
-            transform: scale(0.98);
-            background: rgba(255, 255, 255, 0.25);
-        }
-        .rule-icon-box {
-            width: 40px;
-            height: 40px;
-            background: #ffffff;
-            color: var(--primary-blue);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.1rem;
-            flex-shrink: 0;
         }
 
         /* LIGHTBOX POUR LES AUTORITÉS */
@@ -819,37 +760,6 @@
                 </a>
             </div>
 
-            <div class="golden-rules-card">
-                <div style="display: flex; align-items: center; justify-content: space-between;">
-                    <h4 style="font-size: 1.05rem; font-weight: 800;"><i class="fa-solid fa-shield-cat"></i> Les 3 Règles d'Or EDUC</h4>
-                    <span style="font-size: 0.75rem; background: rgba(255,255,255,0.25); padding: 4px 8px; border-radius: 12px; font-weight: 700;">Schéma Clé</span>
-                </div>
-                <p style="font-size: 0.8rem; opacity: 0.9; margin-top: 4px;">Appuyez sur chaque règle pour comprendre les fondements de la réussite.</p>
-                <div class="golden-rules-grid">
-                    <div class="rule-item" onclick="alert('Règle 1 : Connexion de réussite\nElle implique un engagement constant et des efforts soutenus dans l\'apprentissage numérique et civique.')">
-                        <div class="rule-icon-box">1</div>
-                        <div>
-                            <h5 style="font-weight: 800; font-size: 0.95rem;">Connexion de réussite</h5>
-                            <p style="font-size: 0.75rem; opacity: 0.85;">Engagement et suivi pédagogique permanent.</p>
-                        </div>
-                    </div>
-                    <div class="rule-item" onclick="alert('Règle 2 : Valeurs civiques et religieuses\nLe respect de nos traditions, de l\'éthique et des principes moraux pour forger une conscience citoyenne.')">
-                        <div class="rule-icon-box">2</div>
-                        <div>
-                            <h5 style="font-weight: 800; font-size: 0.95rem;">Principes civiques et moraux</h5>
-                            <p style="font-size: 0.75rem; opacity: 0.85;">Respect mutuel, éthique et intégrité.</p>
-                        </div>
-                    </div>
-                    <div class="rule-item" onclick="alert('Règle 3 : Schéma d\'excellence (12000-11)\nLa feuille de route stratégique pour l\'encadrement de la jeunesse studieuse de la RDC.')">
-                        <div class="rule-icon-box">3</div>
-                        <div>
-                            <h5 style="font-weight: 800; font-size: 0.95rem;">Schéma d'Excellence (12000-11)</h5>
-                            <p style="font-size: 0.75rem; opacity: 0.85;">Objectif de performance et de développement.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <h3 class="section-title">Cours en vedette</h3>
             
             <div class="course-card">
@@ -865,7 +775,7 @@
             <h3 class="section-title">Chronologie et Histoire des Présidents de la RDC</h3>
             
             <div class="course-card" style="margin-bottom: 24px; cursor: pointer;" onclick="ouvrirPagePresidents()">
-                <img src="president.jpg" alt="Présidents de la RDC" class="course-img" style="height: 200px; object-fit: cover; object-position: top;">
+                <img src="histoire.jpeg" alt="Histoire des Présidents de la RDC" class="course-img" style="height: 200px; object-fit: cover; object-position: top;">
                 <div class="course-content" style="padding: 16px 18px;">
                     <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-timeline"></i> Frise Chronologique</span>
                     <h4 style="font-size: 1.15rem; font-weight: 800;">Histoire de tous les Présidents de la RDC</h4>
@@ -903,27 +813,37 @@
             
             <div class="courses-grid-6" id="president-squares-container">
                 <div class="book-card" onclick="ouvrirDetailPresident(0)">
-                    <div class="book-cover-icon" style="background: #0066cc;"><i class="fa-solid fa-user-tie"></i></div>
+                    <div class="book-cover-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Joseph_Kasa-Vubu_%28cropped%29.jpg/800px-Joseph_Kasa-Vubu_%28cropped%29.jpg" alt="Joseph Kasa-Vubu">
+                    </div>
                     <div class="book-title">Joseph Kasa-Vubu</div>
                     <div class="book-sub">1er Président (1960-1965)</div>
                 </div>
                 <div class="book-card" onclick="ouvrirDetailPresident(1)">
-                    <div class="book-cover-icon" style="background: #059669;"><i class="fa-solid fa-user-tie"></i></div>
+                    <div class="book-cover-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Mobutu_Sese_Seko_1983.jpg/800px-Mobutu_Sese_Seko_1983.jpg" alt="Mobutu Sese Seko">
+                    </div>
                     <div class="book-title">Mobutu Sese Seko</div>
                     <div class="book-sub">2ème Président (1965-1997)</div>
                 </div>
                 <div class="book-card" onclick="ouvrirDetailPresident(2)">
-                    <div class="book-cover-icon" style="background: #d97706;"><i class="fa-solid fa-user-tie"></i></div>
+                    <div class="book-cover-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Laurent-D%C3%A9sir%C3%A9_Kabila_%28cropped%29.jpg/800px-Laurent-D%C3%A9sir%C3%A9_Kabila_%28cropped%29.jpg" alt="Laurent-Désiré Kabila">
+                    </div>
                     <div class="book-title">Laurent-Désiré Kabila</div>
                     <div class="book-sub">3ème Président (1997-2001)</div>
                 </div>
                 <div class="book-card" onclick="ouvrirDetailPresident(3)">
-                    <div class="book-cover-icon" style="background: #7c3aed;"><i class="fa-solid fa-user-tie"></i></div>
+                    <div class="book-cover-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Joseph_Kabila_in_2014_%28cropped%29.jpg/800px-Joseph_Kabila_in_2014_%28cropped%29.jpg" alt="Joseph Kabila">
+                    </div>
                     <div class="book-title">Joseph Kabila</div>
                     <div class="book-sub">4ème Président (2001-2019)</div>
                 </div>
                 <div class="book-card" onclick="ouvrirDetailPresident(4)">
-                    <div class="book-cover-icon" style="background: #0284c7;"><i class="fa-solid fa-user-tie"></i></div>
+                    <div class="book-cover-icon">
+                        <img src="president.jpg" alt="Félix Tshisekedi">
+                    </div>
                     <div class="book-title">Félix Tshisekedi</div>
                     <div class="book-sub">5ème Président (2019-Présent)</div>
                 </div>
@@ -1002,13 +922,7 @@
         </div>
 
         <div id="tab-profil" class="tab-content">
-            <div class="secret-admin-trigger-container">
-                <button class="secret-dot-btn" onclick="demanderCodeAdmin()"></button>
-                <button class="secret-dot-btn" onclick="demanderCodeAdmin()"></button>
-                <button class="secret-dot-btn" onclick="demanderCodeAdmin()"></button>
-            </div>
-            
-            <h3 class="section-title" style="margin-top: 0;">Mon Profil Apprenant</h3>
+            <h3 class="section-title" style="margin-top: 20px;">Mon Profil Apprenant</h3>
             <div class="xp-card" style="text-align: center;">
                 <img id="tab-user-avatar" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="User" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-blue); margin-bottom: 12px;">
                 <h3 id="profile-full-name" style="font-weight: 800;">Manassé</h3>
@@ -1300,29 +1214,6 @@
                 localStorage.removeItem('educ_utilisateur_connecte');
                 location.reload();
             }
-        }
-
-        function demanderCodeAdmin() {
-            let codeSaisi = prompt("Entrez le code secret du créateur :");
-            if (codeSaisi && codeSaisi.toUpperCase() === "MNL") {
-                afficherListeInscritsAdmin();
-            } else if (codeSaisi !== null) {
-                alert("Code incorrect ! Accès refusé.");
-            }
-        }
-
-        function afficherListeInscritsAdmin() {
-            let inscrits = JSON.parse(localStorage.getItem('educ_inscrits_rdc') || '[]');
-            if (inscrits.length === 0) {
-                alert("👑 ESPACE CRÉATEUR\nAucun élève inscrit pour le moment.");
-                return;
-            }
-            
-            let texte = `👑 ESPACE CRÉATEUR - TOTAL INSCRITS : ${inscrits.length}\n\n`;
-            inscrits.forEach((el, index) => {
-                texte += `${index + 1}. ${el.nomComplet}\n   École: ${el.ecole}\n   Lieu: ${el.sousDivision}, ${el.province}\n   Tél: ${el.telephone}\n\n`;
-            });
-            alert(texte);
         }
 
         function generateInfiniteQuizQuestion() {
