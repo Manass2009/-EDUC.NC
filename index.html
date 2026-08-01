@@ -232,7 +232,7 @@
             font-weight: 600;
         }
 
-        /* 4. PROFILE SCREEN & PHOTO UPLOAD */
+        /* 4. PROFILE SCREEN */
         #profile-screen {
             background: #ffffff;
             padding: 30px 24px;
@@ -265,23 +265,6 @@
             object-fit: cover;
         }
 
-        .avatar-upload-btn {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            background: var(--primary-blue);
-            color: #ffffff;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 0.85rem;
-            border: 2px solid #ffffff;
-        }
-
         .form-group {
             margin-bottom: 16px;
         }
@@ -304,7 +287,7 @@
             background: #f8fafc;
         }
 
-        /* 5. MAIN APPLICATION & NAVIGATION DASHBOARD */
+        /* 5. MAIN DASHBOARD */
         #main-app { padding-bottom: 90px; overflow-y: auto;}
         .app-header {
             background: var(--primary-blue);
@@ -355,7 +338,6 @@
         .quick-access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 0 20px; margin-bottom: 24px; }
         .access-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 22px 18px; border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; min-height: 130px; cursor: pointer; text-decoration: none; color: inherit; }
 
-        /* GRILLE DES COURS (6 CARRÉS / LIVRES) */
         .courses-grid-6 {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -374,12 +356,7 @@
             align-items: center;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.2s;
             text-decoration: none;
-        }
-
-        .book-card:active {
-            transform: scale(0.97);
         }
 
         .book-cover-icon {
@@ -392,25 +369,13 @@
             color: #ffffff;
             font-size: 1.8rem;
             margin-bottom: 12px;
-            box-shadow: 3px 4px 10px rgba(0,0,0,0.15);
             position: relative;
-        }
-
-        .book-cover-icon::after {
-            content: '';
-            position: absolute;
-            left: 4px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: rgba(255,255,255,0.4);
         }
 
         .book-title {
             font-size: 0.9rem;
             font-weight: 800;
             color: var(--text-dark);
-            line-height: 1.3;
             margin-bottom: 6px;
         }
 
@@ -435,6 +400,7 @@
             width: 100%;
             height: 140px;
             object-fit: cover;
+            cursor: pointer;
         }
 
         .course-content {
@@ -486,16 +452,14 @@
             border-radius: var(--radius-md);
         }
 
-        /* NAVIGATION BASSE */
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; }
         .nav-item.active { color: var(--primary-blue); }
 
-        /* GESTION DES ONGLETS DU DASHBOARD */
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* STYLES INTERNES POUR LE QUIZ STYLE TÉLÉPHONE 3D (VALIDATION VISUELLE INSPIRÉE DE LA MAQUETTE) */
+        /* QUIZ 3D STYLE */
         .quiz-container-box {
             background: #ffffff;
             border-radius: var(--radius-lg);
@@ -522,14 +486,10 @@
             font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s;
             display: flex;
             align-items: center;
             justify-content: space-between;
-        }
-        .quiz-option-btn:hover {
-            background: #f1f5f9;
-            border-color: var(--primary-light-blue);
         }
         .quiz-option-btn.correct {
             background: #ecfdf5 !important;
@@ -575,9 +535,43 @@
             cursor: pointer;
             display: none;
         }
+
+        /* MODAL IMAGE LIGHTBOX POUR LES AUTORITÉS */
+        #lightbox-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        #lightbox-modal.active {
+            display: flex;
+        }
+        #lightbox-img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: var(--radius-md);
+            object-fit: contain;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #ffffff;
+            font-size: 2.2rem;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+
+    <div id="lightbox-modal" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Agrandissement">
+    </div>
 
     <div id="splash-screen" class="screen active">
         <img src="logo.png" alt="Logo" class="splash-logo">
@@ -607,7 +601,7 @@
                 <span class="phone-prefix">🇨🇩 +243</span>
                 <input type="tel" id="rdc-phone" placeholder="81 234 56 78" maxlength="9">
             </div>
-            <button class="btn-phone" onclick="verifyPhoneRDC()"><i class="fa-solid fa-mobile-screen"></i> Vérifier le numéro</button>
+            <button class="btn-phone" onclick="verifyPhoneRDC()"><i class="fa-solid fa-mobile-screen"></i> Continuer avec le téléphone</button>
         </div>
 
         <div style="margin: 12px 0; color: var(--text-muted); font-size: 0.85rem;">OU</div>
@@ -616,72 +610,44 @@
     </div>
 
     <div id="profile-screen" class="screen">
-        <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 16px; text-align: center;">Compléter votre profil</h2>
+        <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 16px; text-align: center;">Vérification du Profil</h2>
         
         <div class="avatar-picker-container">
-            <div class="avatar-preview-wrapper" style="position:relative;">
+            <div class="avatar-preview-wrapper">
                 <img id="profile-avatar-img" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="Avatar">
-                <label for="avatar-file-input" class="avatar-upload-btn">
-                    <i class="fa-solid fa-camera"></i>
-                </label>
             </div>
-            <input type="file" id="avatar-file-input" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-            <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Ajouter une photo de profil</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Photo récupérée automatiquement</span>
         </div>
 
         <form onsubmit="finishProfile(event)">
             <div class="form-group">
-                <label class="form-label">E-mail / Compte connecté</label>
-                <input type="email" id="user-email" class="form-control" placeholder="exemple@gmail.com" readonly style="background: #e2e8f0;">
+                <label class="form-label">E-mail Google</label>
+                <input type="email" id="user-email" class="form-control" readonly style="background: #e2e8f0;">
             </div>
             <div class="form-group">
                 <label class="form-label">Nom</label>
-                <input type="text" id="user-lastname" class="form-control" placeholder="Entrez votre nom" required>
+                <input type="text" id="user-lastname" class="form-control" required>
             </div>
             <div class="form-group">
                 <label class="form-label">Prénom</label>
-                <input type="text" id="user-firstname" class="form-control" placeholder="Entrez votre prénom" required>
+                <input type="text" id="user-firstname" class="form-control" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Sexe</label>
-                <select id="user-gender" class="form-control" required>
-                    <option value="">Sélectionnez le sexe</option>
-                    <option value="M">Masculin</option>
-                    <option value="F">Féminin</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Province (26 provinces de la RDC)</label>
+                <label class="form-label">Province (RDC)</label>
                 <select id="user-province" class="form-control" required>
                     <option value="">Sélectionnez votre province</option>
-                    <option value="Bas-Uele">Bas-Uele</option>
-                    <option value="Équateur">Équateur</option>
-                    <option value="Haut-Katanga">Haut-Katanga</option>
-                    <option value="Haut-Lomami">Haut-Lomami</option>
-                    <option value="Haut-Uele">Haut-Uele</option>
-                    <option value="Ituri">Ituri</option>
-                    <option value="Kasaï">Kasaï</option>
-                    <option value="Kasaï-Central">Kasaï-Central</option>
-                    <option value="Kasaï-Oriental">Kasaï-Oriental</option>
                     <option value="Kinshasa">Kinshasa</option>
-                    <option value="Kwilu">Kwilu</option>
-                    <option value="Kwango">Kwango</option>
-                    <option value="Lomami">Lomami</option>
-                    <option value="Lualaba">Lualaba</option>
-                    <option value="Mai-Ndombe">Mai-Ndombe</option>
-                    <option value="Maniema">Maniema</option>
-                    <option value="Mongala">Mongala</option>
+                    <option value="Haut-Katanga">Haut-Katanga</option>
                     <option value="Nord-Kivu">Nord-Kivu</option>
-                    <option value="Nord-Ubangi">Nord-Ubangi</option>
-                    <option value="Sankuru">Sankuru</option>
                     <option value="Sud-Kivu">Sud-Kivu</option>
-                    <option value="Sud-Ubangi">Sud-Ubangi</option>
-                    <option value="Tanganyika">Tanganyika</option>
+                    <option value="Kongo-Central">Kongo-Central</option>
+                    <option value="Ituri">Ituri</option>
+                    <option value="Lualaba">Lualaba</option>
                     <option value="Tshopo">Tshopo</option>
-                    <option value="Tshuapa">Tshuapa</option>
+                    <option value="Autre">Autre province</option>
                 </select>
             </div>
-            <button type="submit" class="btn-primary" style="margin-top: 10px;">Enregistrer et continuer</button>
+            <button type="submit" class="btn-primary" style="margin-top: 10px;">Valider et entrer</button>
         </form>
     </div>
 
@@ -718,7 +684,7 @@
             </div>
             <div id="user-xp-text" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">0 / 1000 XP</div>
             <div class="progress-bar"><div class="progress-fill" id="xp-fill"></div></div>
-            <div style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-solid fa-star" style="color: var(--accent-yellow);"></i> Complétez des quiz pour gagner de l'XP</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-solid fa-star" style="color: var(--accent-yellow);"></i> Gagnez de l'XP avec les quiz de Manassé IA</div>
         </div>
 
         <div id="tab-accueil" class="tab-content active">
@@ -761,25 +727,17 @@
                 <div class="course-content">
                     <span class="course-badge"><i class="fa-solid fa-flag"></i> Valeurs Nationales</span>
                     <h4 style="font-size: 1.1rem; font-weight: 800;">Éducation à la Nouvelle Citoyenneté</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Découvrez les droits, devoirs et valeurs patriotiques fondamentales pour bâtir la RDC de demain.</p>
-                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">
-                        <span><i class="fa-solid fa-layer-group"></i> 12 Chapitres</span>
-                        <span><i class="fa-solid fa-clock"></i> 4h de cours</span>
-                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Droits, devoirs et valeurs patriotiques fondamentales pour bâtir la RDC.</p>
                     <button class="course-btn" onclick="addXP(150)">Commencer le cours (+150 XP)</button>
                 </div>
             </div>
 
             <div class="course-card">
-                <img src="histoire.jpeg" alt="Histoire RDC" class="course-img" style="object-fit: cover;">
+                <img src="histoire.jpeg" alt="Histoire RDC" class="course-img">
                 <div class="course-content">
                     <span class="course-badge" style="background: #fef3c7; color: #d97706;"><i class="fa-solid fa-landmark"></i> Histoire & Patrimoine</span>
                     <h4 style="font-size: 1.1rem; font-weight: 800;">Histoire de la RDC et ses Dirigeants</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Explorez les grandes figures historiques, les présidents de la République et l'évolution politique du Congo.</p>
-                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">
-                        <span><i class="fa-solid fa-layer-group"></i> 15 Chapitres</span>
-                        <span><i class="fa-solid fa-clock"></i> 6h de cours</span>
-                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Grandes figures historiques et évolution politique du Congo.</p>
                     <button class="course-btn" style="background: #d97706;" onclick="addXP(150)">Commencer le cours (+150 XP)</button>
                 </div>
             </div>
@@ -787,69 +745,54 @@
             <h3 class="section-title">Nos Autorités</h3>
             
             <div class="course-card" style="margin-bottom: 16px;">
-                <img src="president.jpg" alt="Président de la République" class="course-img" style="height: 220px; object-fit: cover; object-position: top;">
+                <img src="president.jpg" alt="S.E. Félix Tshisekedi" class="course-img" style="height: 220px; object-position: top;" onclick="openLightbox('president.jpg')">
                 <div class="course-content" style="padding: 14px 18px;">
-                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 6px;"><i class="fa-solid fa-star"></i> Présidence</span>
-                    <h4 style="font-size: 1.1rem; font-weight: 800;">Présidence de la République</h4>
+                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-star"></i> Présidence de la République</span>
+                    <h4 style="font-size: 1.15rem; font-weight: 800;">S.E. Félix Tshisekedi</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Président de la République Démocratique du Congo</p>
                 </div>
             </div>
             
             <div class="course-card" style="margin-bottom: 24px;">
-                <img src="ministre.jpg" alt="Ministre de l'Éducation" class="course-img" style="height: 220px; object-fit: cover; object-position: top;">
+                <img src="ministre.jpg" alt="Raïssa Malu" class="course-img" style="height: 220px; object-position: top;" onclick="openLightbox('ministre.jpg')">
                 <div class="course-content" style="padding: 14px 18px;">
-                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 6px;"><i class="fa-solid fa-building-columns"></i> Ministère</span>
-                    <h4 style="font-size: 1.1rem; font-weight: 800;">Ministère de l'Éducation Nationale</h4>
+                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-building-columns"></i> Ministère de l'Éducation Nationale</span>
+                    <h4 style="font-size: 1.15rem; font-weight: 800;">Raïssa Malu</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Ministre de l'Éducation Nationale et Nouvelle Citoyenneté</p>
                 </div>
             </div>
         </div>
 
         <div id="tab-cours" class="tab-content">
-            <h3 class="section-title">Programme d'Études Nationales</h3>
+            <h3 class="section-title">Programme National</h3>
             <div class="courses-grid-6">
                 <a href="ECM.pdf" target="_blank" class="book-card">
-                    <div class="book-cover-icon" style="background: #0066cc;">
-                        <i class="fa-solid fa-book-bookmark"></i>
-                    </div>
+                    <div class="book-cover-icon" style="background: #0066cc;"><i class="fa-solid fa-book-bookmark"></i></div>
                     <div class="book-title">Éducation Civique & Morale</div>
                     <div class="book-sub">Document PDF</div>
                 </a>
-
-                <div class="book-card" onclick="openSubject('Nouvelle Citoyenneté')">
-                    <div class="book-cover-icon" style="background: #059669;">
-                        <i class="fa-solid fa-hand-holding-heart"></i>
-                    </div>
+                <div class="book-card" onclick="alert('Module Nouvelle Citoyenneté')">
+                    <div class="book-cover-icon" style="background: #059669;"><i class="fa-solid fa-hand-holding-heart"></i></div>
                     <div class="book-title">Nouvelle Citoyenneté</div>
                     <div class="book-sub">12 Modules</div>
                 </div>
-
-                <div class="book-card" onclick="openSubject('Histoire de la RDC')">
-                    <div class="book-cover-icon" style="background: #d97706;">
-                        <i class="fa-solid fa-landmark"></i>
-                    </div>
+                <div class="book-card" onclick="alert('Module Histoire')">
+                    <div class="book-cover-icon" style="background: #d97706;"><i class="fa-solid fa-landmark"></i></div>
                     <div class="book-title">Histoire de la RDC</div>
                     <div class="book-sub">15 Modules</div>
                 </div>
-
-                <div class="book-card" onclick="openSubject('Sociologie Africaine')">
-                    <div class="book-cover-icon" style="background: #7c3aed;">
-                        <i class="fa-solid fa-people-group"></i>
-                    </div>
+                <div class="book-card" onclick="alert('Module Sociologie')">
+                    <div class="book-cover-icon" style="background: #7c3aed;"><i class="fa-solid fa-people-group"></i></div>
                     <div class="book-title">Sociologie Africaine</div>
                     <div class="book-sub">8 Modules</div>
                 </div>
-
-                <div class="book-card" onclick="openSubject('Géographie de la RDC')">
-                    <div class="book-cover-icon" style="background: #0284c7;">
-                        <i class="fa-solid fa-earth-africa"></i>
-                    </div>
+                <div class="book-card" onclick="alert('Module Géographie')">
+                    <div class="book-cover-icon" style="background: #0284c7;"><i class="fa-solid fa-earth-africa"></i></div>
                     <div class="book-title">Géographie de la RDC</div>
                     <div class="book-sub">14 Modules</div>
                 </div>
-
                 <a href="Serment_du_citoyen_RDC.pdf" target="_blank" class="book-card">
-                    <div class="book-cover-icon" style="background: #dc2626;">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
+                    <div class="book-cover-icon" style="background: #dc2626;"><i class="fa-solid fa-shield-halved"></i></div>
                     <div class="book-title">Serment du citoyen</div>
                     <div class="book-sub">Document PDF</div>
                 </a>
@@ -857,10 +800,10 @@
         </div>
 
         <div id="tab-quiz" class="tab-content">
-            <h3 class="section-title">Quiz et Évaluations</h3>
+            <h3 class="section-title">Manassé IA - Quiz Intelligent</h3>
             <div style="padding: 0 20px;">
                 <div class="quiz-container-box">
-                    <span class="course-badge" style="background: #ffe4e6; color: #e11d48; margin-bottom: 12px;"><i class="fa-solid fa-brain"></i> Défi Continu</span>
+                    <span class="course-badge" style="background: #ffe4e6; color: #e11d48; margin-bottom: 12px;"><i class="fa-solid fa-robot"></i> Composé & Corrigé par Manassé IA</span>
                     <h4 class="quiz-question-title" id="quiz-q-text">Chargement de la question...</h4>
                     <div id="quiz-options-list"></div>
                     <div id="quiz-feedback" class="quiz-feedback-box"></div>
@@ -870,11 +813,9 @@
         </div>
 
         <div id="tab-actu" class="tab-content">
-            <h3 class="section-title">Actualités en République Démocratique du Congo</h3>
+            <h3 class="section-title">Actualités en RDC</h3>
             <div id="live-news-container">
-                <div class="news-card">
-                    <p style="color: var(--text-muted); font-size: 0.85rem;">Chargement des dernières actualités nationales et éducatives...</p>
-                </div>
+                <div class="news-card"><p style="color: var(--text-muted); font-size: 0.85rem;">Chargement des actualités...</p></div>
             </div>
         </div>
 
@@ -883,7 +824,7 @@
             <div class="xp-card" style="text-align: center;">
                 <img id="tab-user-avatar" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="User" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-blue); margin-bottom: 12px;">
                 <h3 id="profile-full-name" style="font-weight: 800;">Manassé</h3>
-                <p id="profile-email-disp" style="color: var(--text-muted); font-size: 0.85rem;">Compte Élève EDUC</p>
+                <p id="profile-email-disp" style="color: var(--text-muted); font-size: 0.85rem;">Compte Élève</p>
             </div>
         </div>
 
@@ -897,6 +838,14 @@
     </div>
 
     <script>
+        // CONFIGURATION FIREBASE (REMPLACER PAR VOS VRAIES CLÉS SI NÉCESSAIRE)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDummyKeyForDemoPurposesOnly12345",
+            authDomain: "educ-national-rdc.firebaseapp.com",
+            projectId: "educ-national-rdc"
+        };
+        try { firebase.initializeApp(firebaseConfig); } catch(e){}
+
         const onboardingImages = [
             { bg: "bg-flag.jpg", btn: "Suivant" },
             { bg: "onboarding-quiz.png", btn: "Suivant" },
@@ -907,66 +856,67 @@
         let userXP = 250;
         let userPhotoUrl = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
 
-        // MOTEUR DE GÉNÉRATION DE QUESTIONS INFINIES EN ARRIÉRÉ-PLAN (BASÉ EXCLUSIVEMENT SUR LES COURS DU SITE)
-        const courseQuestionBank = [
+        // BANQUE DE QUESTIONS RICHE, SENSEE ET NON RÉPÉTITIVE (GÉRÉE PAR MANASSÉ IA)
+        const manasseQuestionBank = [
             {
-                q: "Quel est l'un des devoirs civiques fondamentaux inscrits dans l'Éducation Civique & Morale et la Constitution de la RDC ?",
-                correct: "Respecter la Constitution et les lois de la République",
+                q: "Quel est l'article de la Constitution de la RDC qui garantit le droit à l'éducation pour chaque citoyen ?",
+                correct: "L'article 43 qui stipule que l'éducation est un droit fondamental et gratuit au niveau primaire.",
                 wrongs: [
-                    "Ignorer les symboles de l'État et les institutions",
-                    "Ne payer des impôts qu'en période de fête",
-                    "Refuser de participer aux votes nationaux"
+                    "L'article 12 relatif à l'égalité de tous les Congolais devant la loi.",
+                    "L'article 5 qui rappelle que la souveraineté nationale appartient au peuple.",
+                    "L'article 20 sur la liberté de pensée et de conscience."
                 ]
             },
             {
-                q: "À quelle date historique la Constitution de la République Démocratique du Congo actuelle a-t-elle été adoptée ?",
-                correct: "18 février 2006",
+                q: "Quelle est la signification exacte des couleurs du drapeau de la République Démocratique du Congo ?",
+                correct: "Le bleu ciel symbolise la paix, la bande rouge le sang des martyrs, le jaune le pays et l'étoile l'avenir radieux.",
                 wrongs: [
-                    "30 juin 1960",
-                    "24 novembre 1965",
-                    "17 mai 1997"
+                    "Le bleu représente le fleuve Congo, le rouge la terre minière et le jaune les richesses forestières.",
+                    "Le bleu symbolise l'unité nationale, le rouge la liberté politique et le jaune le climat tropical.",
+                    "Le bleu représente les lacs, le rouge l'armée et le jaune l'indépendance financière."
                 ]
             },
             {
-                q: "Quel est l'objectif principal de l'Éducation à la Nouvelle Citoyenneté ?",
-                correct: "Promouvoir les valeurs patriotiques, civiques et les droits fondamentaux",
+                q: "Quel rôle joue le Ministère de l'Éducation Nationale et Nouvelle Citoyenneté dirigé par Raïssa Malu ?",
+                correct: "Il pilote la politique éducative, la qualité des apprentissages et l'ancrage des valeurs civiques nationales.",
                 wrongs: [
-                    "Dispenser exclusivement des cours de langues étrangères",
-                    "Remplacer l'apprentissage de l'histoire régionale",
-                    "Former uniquement aux métiers de l'industrie lourde"
+                    "Il gère exclusivement les infrastructures routières des universités publiques.",
+                    "Il supervise uniquement les compétitions sportives interscolaires.",
+                    "Il s'occupe de la diplomatie internationale et des relations frontalières."
                 ]
             },
             {
-                q: "Dans l'Histoire de la RDC, quel événement marquant s'est déroulé le 30 juin 1960 ?",
-                correct: "L'accession du pays à l'indépendance nationale",
+                q: "Sous la présidence de S.E. Félix Tshisekedi, quelle grande mesure phare a été introduite dans l'enseignement de base en RDC ?",
+                correct: "L'effectivité de la gratuité de l'enseignement primaire dans les établissements publics.",
                 wrongs: [
-                    "La signature de la Constitution de la IIIe République",
-                    "L'unification administrative des 26 provinces",
-                    "La création des symboles de l'État congolais"
+                    "La suppression totale des examens d'État de fin d'études secondaires.",
+                    "L'interdiction de l'usage du français dans toutes les écoles primaires.",
+                    "Le remplacement complet des manuels scolaires par des tablettes numériques obligatoires."
                 ]
             },
             {
-                q: "Combien compte-t-on officiellement de provinces en République Démocratique du Congo depuis le découpage territorial ?",
-                correct: "26 provinces",
+                q: "Que représente le 'Serment du Citoyen' en République Démocratique du Congo ?",
+                correct: "Un engagement moral et solennel à respecter les lois, défendre la patrie et préserver l'unité nationale.",
                 wrongs: [
-                    "11 provinces",
-                    "20 provinces",
-                    "30 provinces"
+                    "Un contrat de travail obligatoire signé par tous les fonctionnaires de l'État.",
+                    "Une promesse d'adhésion à un parti politique majeur du pays.",
+                    "Un serment militaire prononcé uniquement par les officiers des FARDC."
+                ]
+            },
+            {
+                q: "Dans quelle province de la RDC se trouve le Parc National des Virunga, plus ancienne réserve naturelle d'Afrique ?",
+                correct: "Dans la province du Nord-Kivu.",
+                wrongs: [
+                    "Dans la province du Haut-Katanga.",
+                    "Dans la province du Kongo-Central.",
+                    "Dans la province du Kasaï-Central."
                 ]
             }
         ];
 
         let currentActiveQuestion = null;
 
-        // BANQUE D'IMAGES POUR LES ACTUALITÉS
-        const newsImagePool = [
-            "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80",
-            "https://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg",
-            "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80"
-        ];
-
-        setTimeout(() => { showScreen('onboarding-screen'); }, 2500);
+        setTimeout(() => { showScreen('onboarding-screen'); }, 2000);
 
         function showScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -991,7 +941,6 @@
             }
         }
 
-        // NAVIGATION ENTRE ONGLETS
         function switchTab(tabId, index) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -1002,23 +951,24 @@
             if (tabId === 'tab-quiz') {
                 generateInfiniteQuizQuestion();
             }
-            
             window.scrollTo(0, 0);
         }
 
-        function openSubject(subjectName) {
-            alert(`Ouverture du cours : ${subjectName}`);
+        // LIGHTBOX POUR AGRANDIR LES PHOTOS DES AUTORITÉS
+        function openLightbox(imgSrc) {
+            document.getElementById('lightbox-img').src = imgSrc;
+            document.getElementById('lightbox-modal').classList.add('active');
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.remove('active');
         }
 
-        // GÉNÉRATEUR INFINI DE QUESTIONS (MÉLANGE ALÉATOIRE DES POSITIONS DE RÉPONSES)
+        // MOTEUR DE QUIZ INFINI ET ALÉATOIRE (PAR MANASSÉ IA)
         function generateInfiniteQuizQuestion() {
-            // Sélection aléatoire d'une question source
-            const baseItem = courseQuestionBank[Math.floor(Math.random() * courseQuestionBank.length)];
-            
-            // Combiner la bonne réponse et les mauvaises réponses
+            const baseItem = manasseQuestionBank[Math.floor(Math.random() * manasseQuestionBank.length)];
             let options = [baseItem.correct, ...baseItem.wrongs];
             
-            // Mélanger aléatoirement les options pour que la bonne réponse change toujours d'emplacement (Algorithme de Fisher-Yates)
+            // Mélange aléatoire pour que la bonne réponse ne soit jamais au même endroit
             for (let i = options.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [options[i], options[j]] = [options[j], options[i]];
@@ -1051,10 +1001,9 @@
             });
         }
 
-        // VALIDATION VISUELLE INSPIRÉE DE LA MAQUETTE 3D
         function validateAnswerChoice(selectedButton, chosenText) {
             const allButtons = document.querySelectorAll('.quiz-option-btn');
-            allButtons.forEach(b => b.disabled = true); // Désactiver les clics multiples
+            allButtons.forEach(b => b.disabled = true);
 
             const isCorrect = (chosenText === currentActiveQuestion.correctAnswer);
             const feedbackBox = document.getElementById('quiz-feedback');
@@ -1064,7 +1013,7 @@
                 selectedButton.querySelector('i').className = 'fa-solid fa-circle-check';
                 selectedButton.querySelector('i').style.color = 'var(--success-green)';
                 
-                feedbackBox.innerText = "Excellente réponse ! Validation réussie. +50 XP";
+                feedbackBox.innerText = "Excellente réponse ! Manassé IA valide. +50 XP";
                 feedbackBox.className = 'quiz-feedback-box success';
                 addXP(50);
             } else {
@@ -1072,7 +1021,6 @@
                 selectedButton.querySelector('i').className = 'fa-solid fa-circle-xmark';
                 selectedButton.querySelector('i').style.color = 'var(--error-red)';
 
-                // Mettre en évidence la bonne réponse pour l'apprentissage
                 allButtons.forEach(b => {
                     if (b.innerText.trim() === currentActiveQuestion.correctAnswer.trim()) {
                         b.classList.add('correct');
@@ -1081,7 +1029,7 @@
                     }
                 });
 
-                feedbackBox.innerText = "Mauvaise réponse. La bonne réponse est mise en surbrillance ci-dessus.";
+                feedbackBox.innerText = "Incorrect. Manassé IA a mis en évidence la bonne réponse ci-dessus.";
                 feedbackBox.className = 'quiz-feedback-box error';
             }
 
@@ -1092,54 +1040,32 @@
             generateInfiniteQuizQuestion();
         }
 
-        // TELECHARGER / AFFICHER LA PHOTO DE PROFIL MANUELLE
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    userPhotoUrl = e.target.result;
-                    document.getElementById('profile-avatar-img').src = userPhotoUrl;
-                    document.getElementById('dash-avatar-img').src = userPhotoUrl;
-                    document.getElementById('tab-user-avatar').src = userPhotoUrl;
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        // CONNEXION GOOGLE
+        // AUTHENTIFICATION GOOGLE AUTOMATIQUE VIA FIREBASE POPUP
         function loginWithGoogle() {
-            try {
-                const provider = new firebase.auth.GoogleAuthProvider();
-                firebase.auth().signInWithPopup(provider)
-                .then((result) => {
-                    const user = result.user;
-                    document.getElementById('user-email').value = user.email || '';
-                    if(user.displayName) {
-                        const names = user.displayName.split(' ');
-                        document.getElementById('user-firstname').value = names[0] || '';
-                        document.getElementById('user-lastname').value = names.slice(1).join(' ') || '';
-                    }
-                    if(user.photoURL) {
-                        userPhotoUrl = user.photoURL;
-                        document.getElementById('profile-avatar-img').src = userPhotoUrl;
-                    }
-                    showScreen('profile-screen');
-                })
-                .catch(() => {
-                    fallbackGooglePrompt();
-                });
-            } catch(e) {
-                fallbackGooglePrompt();
-            }
-        }
+            const provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider)
+            .then((result) => {
+                const user = result.user;
+                const email = user.email || '';
+                const fullName = user.displayName || '';
+                const parts = fullName.split(' ');
+                const firstname = parts[0] || 'Apprenant';
+                const lastname = parts.slice(1).join(' ') || '';
+                
+                if(user.photoURL) {
+                    userPhotoUrl = user.photoURL;
+                }
 
-        function fallbackGooglePrompt() {
-            const mockEmail = prompt("Saisissez votre adresse e-mail Google :", "votre.compte@gmail.com");
-            if (mockEmail) {
-                document.getElementById('user-email').value = mockEmail;
+                document.getElementById('user-email').value = email;
+                document.getElementById('user-firstname').value = firstname;
+                document.getElementById('user-lastname').value = lastname;
+                document.getElementById('profile-avatar-img').src = userPhotoUrl;
+
                 showScreen('profile-screen');
-            }
+            })
+            .catch((error) => {
+                alert("Connexion Google annulée ou indisponible. Veuillez réessayer.");
+            });
         }
 
         function verifyPhoneRDC() {
@@ -1148,9 +1074,11 @@
                 alert("Veuillez saisir un numéro de téléphone RDC valide à 9 chiffres.");
                 return;
             }
-            const codeInput = prompt(`Un SMS de confirmation a été envoyé au +243${phone}.\nEntrez le code reçu :`, "123456");
+            const codeInput = prompt(`Un code de validation a été envoyé au +243${phone}.\nEntrez le code :`, "123456");
             if (codeInput) {
-                document.getElementById('user-email').value = `+243${phone}`;
+                document.getElementById('user-email').value = `+243${phone}@educ.cd`;
+                document.getElementById('user-firstname').value = "Citoyen";
+                document.getElementById('user-lastname').value = "RDC";
                 showScreen('profile-screen');
             }
         }
@@ -1159,6 +1087,7 @@
             e.preventDefault();
             const firstname = document.getElementById('user-firstname').value || 'Manassé';
             const email = document.getElementById('user-email').value || '';
+            
             document.getElementById('display-username').innerText = firstname;
             document.getElementById('profile-full-name').innerText = firstname;
             document.getElementById('profile-email-disp').innerText = email;
@@ -1185,7 +1114,6 @@
             document.getElementById('user-xp-text').innerText = `${userXP} / ${maxXP} XP`;
         }
 
-        // AFFICHER LES ACTUALITÉS EN DIRECT
         async function fetchLiveNewsRDC() {
             const container = document.getElementById('live-news-container');
             const rssUrl = encodeURIComponent('https://news.google.com/rss/search?q=Éducation+RDC+Congo&hl=fr&gl=CD&ceid=CD:fr');
@@ -1196,18 +1124,14 @@
                 
                 if (data.status === 'ok' && data.items.length > 0) {
                     container.innerHTML = '';
-                    data.items.slice(0, 5).forEach((item, index) => {
+                    data.items.slice(0, 4).forEach((item) => {
                         const date = new Date(item.pubDate).toLocaleDateString('fr-FR');
-                        const fallbackImg = newsImagePool[index % newsImagePool.length];
-                        const articleImg = item.thumbnail || item.enclosure?.link || fallbackImg;
-                        
                         const card = `
                             <div class="news-card">
-                                <img src="${articleImg}" alt="Actualité RDC" class="news-img" onerror="this.src='${fallbackImg}'">
                                 <span style="font-size: 0.75rem; color: var(--primary-blue); font-weight: 700;">Actualité RDC</span>
-                                <h4 style="font-size: 0.95rem; font-weight: 700; margin: 2px 0;">${item.title}</h4>
-                                <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">${item.description.replace(/<[^>]*>?/gm, '').substring(0, 110)}...</p>
-                                <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+                                <h4 style="font-size: 0.95rem; font-weight: 700; margin: 4px 0;">${item.title}</h4>
+                                <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">${item.description.replace(/<[^>]*>?/gm, '').substring(0, 100)}...</p>
+                                <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">
                                     <span><i class="fa-regular fa-clock"></i> ${date}</span>
                                     <a href="${item.link}" target="_blank" style="color: var(--primary-blue); font-weight: 700; text-decoration: none;">Lire l'article →</a>
                                 </div>
@@ -1217,14 +1141,7 @@
                     });
                 }
             } catch (err) {
-                container.innerHTML = `
-                    <div class="news-card">
-                        <img src="${newsImagePool[0]}" alt="Éducation RDC" class="news-img">
-                        <span style="font-size: 0.75rem; color: var(--primary-blue); font-weight: 700;">Éducation RDC</span>
-                        <h4 style="font-size: 0.95rem; font-weight: 700; margin: 2px 0;">Développement du système éducatif national</h4>
-                        <p style="font-size: 0.8rem; color: var(--text-muted);">Restez informé des réformes et opportunités pour la jeunesse congolaise.</p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="news-card"><p style="font-size: 0.85rem; color: var(--text-muted);">Actualités éducatives nationales en continu.</p></div>`;
             }
         }
     </script>
