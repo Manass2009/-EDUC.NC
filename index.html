@@ -433,6 +433,18 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
+        /* PRINCIPE D'INFORMATION / DESCRIPTION INSTITUTIONNELLE */
+        .info-box-ministere {
+            background: #e8f2ff;
+            border-left: 4px solid var(--primary-blue);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            margin: 0 20px 20px 20px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--text-dark);
+        }
+
         /* QUIZ 3D STYLE */
         .quiz-container-box {
             background: #ffffff;
@@ -608,19 +620,35 @@
                 <input type="text" id="user-school" class="form-control" placeholder="Nom de votre école" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Province</label>
+                <label class="form-label">Province (26 Provinces de la RDC)</label>
                 <select id="user-province" class="form-control" onchange="updateSubDivisions()" required>
                     <option value="">Sélectionnez votre province</option>
-                    <option value="Kinshasa">Kinshasa</option>
+                    <option value="Bas-Uele">Bas-Uele</option>
+                    <option value="Équateur">Équateur</option>
                     <option value="Haut-Katanga">Haut-Katanga</option>
-                    <option value="Nord-Kivu">Nord-Kivu</option>
-                    <option value="Sud-Kivu">Sud-Kivu</option>
-                    <option value="Kongo-Central">Kongo-Central</option>
-                    <option value="Lualaba">Lualaba</option>
-                    <option value="Tshopo">Tshopo</option>
+                    <option value="Haut-Lomami">Haut-Lomami</option>
+                    <option value="Haut-Uele">Haut-Uele</option>
                     <option value="Ituri">Ituri</option>
-                    <option value="Kasai">Kasaï</option>
-                    <option value="Autre">Autre province</option>
+                    <option value="Kasaï">Kasaï</option>
+                    <option value="Kasaï-Central">Kasaï-Central</option>
+                    <option value="Kasaï-Oriental">Kasaï-Oriental</option>
+                    <option value="Kinshasa">Kinshasa</option>
+                    <option value="Kongo-Central">Kongo-Central</option>
+                    <option value="Kwango">Kwango</option>
+                    <option value="Kwilu">Kwilu</option>
+                    <option value="Lomami">Lomami</option>
+                    <option value="Lualaba">Lualaba</option>
+                    <option value="Mai-Ndombe">Mai-Ndombe</option>
+                    <option value="Maniema">Maniema</option>
+                    <option value="Mongala">Mongala</option>
+                    <option value="Nord-Kivu">Nord-Kivu</option>
+                    <option value="Nord-Ubangi">Nord-Ubangi</option>
+                    <option value="Sankuru">Sankuru</option>
+                    <option value="Sud-Kivu">Sud-Kivu</option>
+                    <option value="Sud-Ubangi">Sud-Ubangi</option>
+                    <option value="Tanganyika">Tanganyika</option>
+                    <option value="Tshopo">Tshopo</option>
+                    <option value="Tshuapa">Tshuapa</option>
                 </select>
             </div>
             <div class="form-group">
@@ -649,6 +677,10 @@
             </div>
             <h1 style="font-size: 1.6rem; font-weight: 800;">EDUC National</h1>
             <p style="font-size: 0.85rem; opacity: 0.9;">Apprenons, comprenons et bâtissons avec EDUC</p>
+        </div>
+
+        <div class="info-box-ministere" style="margin-top: 20px;">
+            <i class="fa-solid fa-circle-info" style="color: var(--primary-blue);"></i> <strong>Note institutionnelle :</strong> Plateforme officielle de suivi pédagogique, d'apprentissage et d'évaluation interactive placée sous le haut patronage du Ministère de l'Éducation Nationale et Nouvelle Citoyenneté de la RDC.
         </div>
 
         <div class="search-bar-container">
@@ -830,18 +862,34 @@
         let userXP = 250;
         let userPhotoUrl = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
 
-        // SOUS-DIVISIONS (PROVINCES ÉDUCATIONNELLES) PAR PROVINCE DE LA RDC
+        // TOUTES LES 26 PROVINCES DE LA RDC ET LEURS SOUS-DIVISIONS ÉDUCATIONNELLES
         const subdivisionsData = {
+            "Bas-Uele": ["Buta", "Aketi", "Bondo", "Bambesa", "Poko"],
+            "Équateur": ["Mbandaka", "Bikoro", "Ingende", "Basankusu", "Lukolela"],
+            "Haut-Katanga": ["Lubumbashi 1", "Lubumbashi 2", "Likasi", "Kipushi", "Kasenga", "Sakania", "Kambove"],
+            "Haut-Lomami": ["Kamina", "Kamino-Territoire", "Bukama", "Kkabongo", "Malemba-Nkulu"],
+            "Haut-Uele": ["Isiro", "Wamba", "Niangara", "Dungu", "Faradje", "Rungu"],
+            "Ituri": ["Bunia", "Aru", "Mahagi", "Djugu", "Irumu", "Mambasa"],
+            "Kasaï": ["Tshikapa 1", "Tshikapa 2", "Mweka", "Ilebo", "Luebo", "Dekese"],
+            "Kasaï-Central": ["Kananga 1", "Kananga 2", "Dibaya", "Demba", "Kazumba", "Luiza"],
+            "Kasaï-Oriental": ["Mbuji-Mayi 1", "Mbuji-Mayi 2", "Katanda", "Lupatapata", "Miabi", "Tshilenge"],
             "Kinshasa": ["Kinshasa-Funa", "Kinshasa-Lukunga", "Kinshasa-Mont Amba", "Kinshasa-Tshangu", "Kinshasa-Plateau"],
-            "Haut-Katanga": ["Lubumbashi 1", "Lubumbashi 2", "Likasi", "Kipushi", "Kasenga", "Sakania"],
-            "Nord-Kivu": ["Goma", "Butembo", "Beni", "Rutshuru", "Masisi", "Walikale", "Lubero"],
-            "Sud-Kivu": ["Bukavu", "Uvira", "Walungu", "Kabare", "Fizi", "Mwenga", "Shabunda"],
-            "Kongo-Central": ["Matadi", "Boma", "Mbanza-Ngungu", "Kisantu", "Lukula", "Songololo"],
-            "Lualaba": ["Kolwezi 1", "Kolwezi 2", "Fungurume", "Dilolo", "Kapanga"],
-            "Tshopo": ["Kisangani 1", "Kisangani 2", "Basoko", "Banalia", "Opala"],
-            "Ituri": ["Bunia", "Aru", "Mahagi", "Djugu", "Irumu"],
-            "Kasai": ["Kananga 1", "Kananga 2", "Tshikapa 1", "Tshikapa 2", "Mweka", "Ilebo"],
-            "Autre": ["Sous-division Générale 1", "Sous-division Générale 2"]
+            "Kongo-Central": ["Matadi", "Boma", "Mbanza-Ngungu", "Kisantu", "Lukula", "Songololo", "Muanda", "Tshela"],
+            "Kwango": ["Kenge", "Kikwit-Sud", "Panzi", "Kasongo-Lunda", "Feshi", "Popokabaka"],
+            "Kwilu": ["Kikwit 1", "Kikwit 2", "Idiofa", "Bulungu", "Gungu", "Bandundu"],
+            "Lomami": ["Kabinda", "Ngandajika", "Luputa", "Kamiji", "Lubao"],
+            "Lualaba": ["Kolwezi 1", "Kolwezi 2", "Fungurume", "Dilolo", "Kapanga", "Sandoa"],
+            "Mai-Ndombe": ["Inongo", "Kutu", "Oshwe", "Kole", "Yumbi", "Bolobo"],
+            "Maniema": ["Kindu", "Kasongo", "Pangi", "Kibombo", "Lubutu", "Kailo"],
+            "Mongala": ["Lisala", "Bumba", "Bongandanga"],
+            "Nord-Kivu": ["Goma", "Butembo", "Beni", "Rutshuru", "Masisi", "Walikale", "Lubero", "Oicha"],
+            "Nord-Ubangi": ["Gbadolite", "Businga", "Yakoma", "Mobayi-Mbongo"],
+            "Sankuru": ["Lusambo", "Lodja", "Kole", "Katako-Kombe", "Lomela"],
+            "Sud-Kivu": ["Bukavu", "Uvira", "Walungu", "Kabare", "Fizi", "Mwenga", "Shabunda", "Minembwe"],
+            "Sud-Ubangi": ["Gemena", "Zongo", "Kungu", "Budjala"],
+            "Tanganyika": ["Kalemie", "Kongolo", "Kabalo", "Nyunzu", "Manono"],
+            "Tshopo": ["Kisangani 1", "Kisangani 2", "Basoko", "Banalia", "Opala", "Ubundu", "Isangi"],
+            "Tshuapa": ["Boende", "Befale", "Djolu", "Ikela", "Katalako"]
         };
 
         const manasseQuestionBank = [
@@ -861,24 +909,6 @@
                     "Le bleu représente le fleuve Congo, le rouge la terre minière et le jaune les richesses forestières.",
                     "Le bleu symbolise l'unité nationale, le rouge la liberté politique et le jaune le climat tropical.",
                     "Le bleu représente les lacs, le rouge l'armée et le jaune l'indépendance financière."
-                ]
-            },
-            {
-                q: "Quel rôle joue le Ministère de l'Éducation Nationale et Nouvelle Citoyenneté dirigé par Raïssa Malu ?",
-                correct: "Il pilote la politique éducative, la qualité des apprentissages et l'ancrage des valeurs civiques nationales.",
-                wrongs: [
-                    "Il gère exclusivement les infrastructures routières des universités publiques.",
-                    "Il supervise uniquement les compétitions sportives interscolaires.",
-                    "Il s'occupe de la diplomatie internationale et des relations frontalières."
-                ]
-            },
-            {
-                q: "Sous la présidence de S.E. Félix Tshisekedi, quelle grande mesure phare a été introduite dans l'enseignement de base en RDC ?",
-                correct: "L'effectivité de la gratuité de l'enseignement primaire dans les établissements publics.",
-                wrongs: [
-                    "La suppression totale des examens d'État de fin d'études secondaires.",
-                    "L'interdiction de l'usage du français dans toutes les écoles primaires.",
-                    "Le remplacement complet des manuels scolaires par des tablettes numériques obligatoires."
                 ]
             }
         ];
@@ -931,7 +961,6 @@
             document.getElementById('lightbox-modal').classList.remove('active');
         }
 
-        // MISE À JOUR DYNAMIQUE DES SOUS-DIVISIONS SELON LA PROVINCE
         function updateSubDivisions() {
             const provinceSelect = document.getElementById('user-province');
             const subDivSelect = document.getElementById('user-subdivision');
@@ -949,7 +978,6 @@
             }
         }
 
-        // APERÇU DE LA PHOTO DE PROFIL UPLOADÉE PAR L'UTILISATEUR
         function previewAvatar(event) {
             const file = event.target.files[0];
             if (file) {
@@ -979,8 +1007,23 @@
             const ecole = document.getElementById('user-school').value;
             const province = document.getElementById('user-province').value;
             const subdivision = document.getElementById('user-subdivision').value;
+            const phone = document.getElementById('rdc-phone').value;
 
-            const fullName = `${prenom} ${nom}`;
+            // CONTRÔLE CRÉATEUR / MINISTÈRE : ENREGISTREMENT DES INSCRITS
+            const nouveauProfil = {
+                nomComplet: `${nom} ${postnom} ${prenom}`,
+                ecole: ecole,
+                province: province,
+                sousDivision: subdivision,
+                telephone: `+243${phone}`,
+                dateInscription: new Date().toISOString()
+            };
+
+            // Sauvegarde locale dans le navigateur (peut être envoyé sur Firebase/Firestore pour le suivi du Ministère)
+            let inscrits = JSON.parse(localStorage.getItem('educ_inscrits_rdc') || '[]');
+            inscrits.push(nouveauProfil);
+            localStorage.setItem('educ_inscrits_rdc', JSON.stringify(inscrits));
+
             document.getElementById('display-username').innerText = prenom;
             document.getElementById('profile-full-name').innerText = `${prenom} ${nom} ${postnom}`;
             document.getElementById('profile-details-disp').innerText = `École: ${ecole} | ${subdivision}, ${province}`;
