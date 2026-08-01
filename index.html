@@ -562,6 +562,51 @@
             display: none;
         }
 
+        /* NOUVEAU STYLE : SCHÉMA INTERACTIF DES 3 RÈGLES D'OR */
+        .golden-rules-card {
+            background: linear-gradient(135deg, #0066cc 0%, #1a8cff 100%);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin: 0 20px 24px 20px;
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(0, 102, 204, 0.25);
+        }
+        .golden-rules-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 14px;
+        }
+        .rule-item {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .rule-item:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.25);
+        }
+        .rule-icon-box {
+            width: 40px;
+            height: 40px;
+            background: #ffffff;
+            color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
         /* LIGHTBOX POUR LES AUTORITÉS */
         #lightbox-modal {
             display: none;
@@ -774,6 +819,37 @@
                 </a>
             </div>
 
+            <div class="golden-rules-card">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h4 style="font-size: 1.05rem; font-weight: 800;"><i class="fa-solid fa-shield-cat"></i> Les 3 Règles d'Or EDUC</h4>
+                    <span style="font-size: 0.75rem; background: rgba(255,255,255,0.25); padding: 4px 8px; border-radius: 12px; font-weight: 700;">Schéma Clé</span>
+                </div>
+                <p style="font-size: 0.8rem; opacity: 0.9; margin-top: 4px;">Appuyez sur chaque règle pour comprendre les fondements de la réussite.</p>
+                <div class="golden-rules-grid">
+                    <div class="rule-item" onclick="alert('Règle 1 : Connexion de réussite\nElle implique un engagement constant et des efforts soutenus dans l\'apprentissage numérique et civique.')">
+                        <div class="rule-icon-box">1</div>
+                        <div>
+                            <h5 style="font-weight: 800; font-size: 0.95rem;">Connexion de réussite</h5>
+                            <p style="font-size: 0.75rem; opacity: 0.85;">Engagement et suivi pédagogique permanent.</p>
+                        </div>
+                    </div>
+                    <div class="rule-item" onclick="alert('Règle 2 : Valeurs civiques et religieuses\nLe respect de nos traditions, de l\'éthique et des principes moraux pour forger une conscience citoyenne.')">
+                        <div class="rule-icon-box">2</div>
+                        <div>
+                            <h5 style="font-weight: 800; font-size: 0.95rem;">Principes civiques et moraux</h5>
+                            <p style="font-size: 0.75rem; opacity: 0.85;">Respect mutuel, éthique et intégrité.</p>
+                        </div>
+                    </div>
+                    <div class="rule-item" onclick="alert('Règle 3 : Schéma d\'excellence (12000-11)\nLa feuille de route stratégique pour l\'encadrement de la jeunesse studieuse de la RDC.')">
+                        <div class="rule-icon-box">3</div>
+                        <div>
+                            <h5 style="font-weight: 800; font-size: 0.95rem;">Schéma d'Excellence (12000-11)</h5>
+                            <p style="font-size: 0.75rem; opacity: 0.85;">Objectif de performance et de développement.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <h3 class="section-title">Cours en vedette</h3>
             
             <div class="course-card">
@@ -783,16 +859,6 @@
                     <h4 style="font-size: 1.1rem; font-weight: 800;">Éducation à la Nouvelle Citoyenneté</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Droits, devoirs et valeurs patriotiques fondamentales pour bâtir la RDC.</p>
                     <button class="course-btn" onclick="addXP(150)">Commencer le cours (+150 XP)</button>
-                </div>
-            </div>
-
-            <div class="course-card">
-                <img src="histoire.jpeg" alt="Histoire RDC" class="course-img">
-                <div class="course-content">
-                    <span class="course-badge" style="background: #fef3c7; color: #d97706;"><i class="fa-solid fa-landmark"></i> Histoire & Patrimoine</span>
-                    <h4 style="font-size: 1.1rem; font-weight: 800;">Histoire de la RDC et ses Dirigeants</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Grandes figures historiques et évolution politique du Congo.</p>
-                    <button class="course-btn" style="background: #d97706;" onclick="addXP(150)">Commencer le cours (+150 XP)</button>
                 </div>
             </div>
 
@@ -976,11 +1042,9 @@
             const utilisateurActif = localStorage.getItem('educ_utilisateur_connecte');
             
             if (utilisateurActif) {
-                // L'utilisateur est déjà inscrit et connecté, on restaure ses données
                 const user = JSON.parse(utilisateurActif);
                 restaurerSessionDashboard(user);
             } else {
-                // Pas de session active, on affiche l'onboarding normal
                 showScreen('onboarding-screen');
             }
         }
@@ -1107,26 +1171,21 @@
                 dateInscription: new Date().toISOString()
             };
 
-            // 1. Enregistre dans la liste générale des inscrits (pour l'Admin)
             let inscrits = JSON.parse(localStorage.getItem('educ_inscrits_rdc') || '[]');
             inscrits.push(userData);
             localStorage.setItem('educ_inscrits_rdc', JSON.stringify(inscrits));
-
-            // 2. Mémorise la session active pour ne plus redemander l'inscription au rechargement
             localStorage.setItem('educ_utilisateur_connecte', JSON.stringify(userData));
 
             restaurerSessionDashboard(userData);
         }
 
-        // FONCTION DE DÉCONNEXION DE L'UTILISATEUR
         function deconnecterUtilisateur() {
             if (confirm("Voulez-vous vraiment vous déconnecter de votre compte ?")) {
                 localStorage.removeItem('educ_utilisateur_connecte');
-                location.reload(); // Recharge la page et ramène à l'onboarding / authentification
+                location.reload();
             }
         }
 
-        // FONCTION DE SÉCURITÉ ADMIN AVEC LE CODE "MNL"
         function demanderCodeAdmin() {
             let codeSaisi = prompt("Entrez le code secret du créateur :");
             if (codeSaisi && codeSaisi.toUpperCase() === "MNL") {
