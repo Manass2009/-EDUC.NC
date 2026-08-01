@@ -467,6 +467,24 @@
             background: var(--primary-blue);
         }
 
+        /* BOUTON DÉCONNEXION DANS PROFIL */
+        .btn-logout {
+            width: 100%;
+            background: #fef2f2;
+            color: var(--error-red);
+            border: 1px solid #fecaca;
+            padding: 14px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
         /* QUIZ 3D STYLE */
         .quiz-container-box {
             background: #ffffff;
@@ -867,6 +885,10 @@
                 <img id="tab-user-avatar" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="User" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-blue); margin-bottom: 12px;">
                 <h3 id="profile-full-name" style="font-weight: 800;">Manassé</h3>
                 <p id="profile-details-disp" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Élève</p>
+                
+                <button class="btn-logout" onclick="deconnecterUtilisateur()">
+                    <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter
+                </button>
             </div>
         </div>
 
@@ -943,7 +965,42 @@
 
         let currentActiveQuestion = null;
 
-        setTimeout(() => { showScreen('onboarding-screen'); }, 2000);
+        // VÉRIFICATION DE LA MÉMOIRE AU DÉMARRAGE DE L'APPLICATION
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                verifierSessionUtilisateur();
+            }, 2000);
+        });
+
+        function verifierSessionUtilisateur() {
+            const utilisateurActif = localStorage.getItem('educ_utilisateur_connecte');
+            
+            if (utilisateurActif) {
+                // L'utilisateur est déjà inscrit et connecté, on restaure ses données
+                const user = JSON.parse(utilisateurActif);
+                restaurerSessionDashboard(user);
+            } else {
+                // Pas de session active, on affiche l'onboarding normal
+                showScreen('onboarding-screen');
+            }
+        }
+
+        function restaurerSessionDashboard(user) {
+            document.getElementById('display-username').innerText = user.prenom;
+            document.getElementById('profile-full-name').innerText = `${user.prenom} ${user.nom} ${user.postnom}`;
+            document.getElementById('profile-details-disp').innerText = `École: ${user.ecole} | ${user.sousDivision}, ${user.province}`;
+            
+            if (user.photo) {
+                userPhotoUrl = user.photo;
+                document.getElementById('dash-avatar-img').src = userPhotoUrl;
+                document.getElementById('tab-user-avatar').src = userPhotoUrl;
+            }
+
+            showScreen('main-app');
+            updateXPBar();
+            fetchLiveNewsRDC();
+            generateInfiniteQuizQuestion();
+        }
 
         function showScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1037,30 +1094,36 @@
             const subdivision = document.getElementById('user-subdivision').value;
             const phone = document.getElementById('rdc-phone').value;
 
-            const nouveauProfil = {
+            const userData = {
+                nom: nom,
+                postnom: postnom,
+                prenom: prenom,
                 nomComplet: `${nom} ${postnom} ${prenom}`,
                 ecole: ecole,
                 province: province,
                 sousDivision: subdivision,
                 telephone: `+243${phone}`,
+                photo: userPhotoUrl,
                 dateInscription: new Date().toISOString()
             };
 
+            // 1. Enregistre dans la liste générale des inscrits (pour l'Admin)
             let inscrits = JSON.parse(localStorage.getItem('educ_inscrits_rdc') || '[]');
-            inscrits.push(nouveauProfil);
+            inscrits.push(userData);
             localStorage.setItem('educ_inscrits_rdc', JSON.stringify(inscrits));
 
-            document.getElementById('display-username').innerText = prenom;
-            document.getElementById('profile-full-name').innerText = `${prenom} ${nom} ${postnom}`;
-            document.getElementById('profile-details-disp').innerText = `École: ${ecole} | ${subdivision}, ${province}`;
-            
-            document.getElementById('dash-avatar-img').src = userPhotoUrl;
-            document.getElementById('tab-user-avatar').src = userPhotoUrl;
+            // 2. Mémorise la session active pour ne plus redemander l'inscription au rechargement
+            localStorage.setItem('educ_utilisateur_connecte', JSON.stringify(userData));
 
-            showScreen('main-app');
-            updateXPBar();
-            fetchLiveNewsRDC();
-            generateInfiniteQuizQuestion();
+            restaurerSessionDashboard(userData);
+        }
+
+        // FONCTION DE DÉCONNEXION DE L'UTILISATEUR
+        function deconnecterUtilisateur() {
+            if (confirm("Voulez-vous vraiment vous déconnecter de votre compte ?")) {
+                localStorage.removeItem('educ_utilisateur_connecte');
+                location.reload(); // Recharge la page et ramène à l'onboarding / authentification
+            }
         }
 
         // FONCTION DE SÉCURITÉ ADMIN AVEC LE CODE "MNL"
