@@ -24,6 +24,8 @@
             --border-color: #e2e8f0;
             --radius-lg: 20px;
             --radius-md: 16px;
+            --success-green: #10b981;
+            --error-red: #ef4444;
         }
 
         * {
@@ -493,37 +495,85 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* STYLES INTERNES POUR LES QUIZ GÉNÉRÉS PAR MANASSÉ IA EN ARRIÉRÉ-PLAN */
+        /* STYLES INTERNES POUR LE QUIZ STYLE TÉLÉPHONE 3D (VALIDATION VISUELLE INSPIRÉE DE LA MAQUETTE) */
         .quiz-container-box {
             background: #ffffff;
             border-radius: var(--radius-lg);
-            padding: 20px;
+            padding: 22px;
             margin: 0 20px 16px 20px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
         }
         .quiz-question-title {
-            font-size: 1rem;
-            font-weight: 700;
+            font-size: 1.05rem;
+            font-weight: 800;
             color: var(--text-dark);
-            margin-bottom: 14px;
+            margin-bottom: 16px;
+            line-height: 1.4;
         }
         .quiz-option-btn {
             width: 100%;
             text-align: left;
             background: #f8fafc;
-            border: 1px solid var(--border-color);
-            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            padding: 14px 16px;
             border-radius: var(--radius-md);
-            margin-bottom: 10px;
-            font-size: 0.9rem;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         .quiz-option-btn:hover {
-            background: #e8f2ff;
+            background: #f1f5f9;
             border-color: var(--primary-light-blue);
+        }
+        .quiz-option-btn.correct {
+            background: #ecfdf5 !important;
+            border-color: var(--success-green) !important;
+            color: #065f46;
+        }
+        .quiz-option-btn.incorrect {
+            background: #fef2f2 !important;
+            border-color: var(--error-red) !important;
+            color: #991b1b;
+        }
+        .quiz-feedback-box {
+            margin-top: 14px;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: none;
+            text-align: center;
+        }
+        .quiz-feedback-box.success {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+            display: block;
+        }
+        .quiz-feedback-box.error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+            display: block;
+        }
+        .next-question-btn {
+            margin-top: 14px;
+            width: 100%;
+            background: var(--primary-blue);
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: none;
         }
     </style>
 </head>
@@ -808,11 +858,13 @@
 
         <div id="tab-quiz" class="tab-content">
             <h3 class="section-title">Quiz et Évaluations</h3>
-            <div style="padding: 0 20px;" id="ai-quiz-dynamic-container">
+            <div style="padding: 0 20px;">
                 <div class="quiz-container-box">
-                    <span class="course-badge" style="background: #ffe4e6; color: #e11d48; margin-bottom: 12px;"><i class="fa-solid fa-brain"></i> Défi du Cours</span>
-                    <h4 class="quiz-question-title" id="quiz-q-text">Chargement des questions générées...</h4>
+                    <span class="course-badge" style="background: #ffe4e6; color: #e11d48; margin-bottom: 12px;"><i class="fa-solid fa-brain"></i> Défi Continu</span>
+                    <h4 class="quiz-question-title" id="quiz-q-text">Chargement de la question...</h4>
                     <div id="quiz-options-list"></div>
+                    <div id="quiz-feedback" class="quiz-feedback-box"></div>
+                    <button id="next-q-btn" class="next-question-btn" onclick="loadNextInfiniteQuestion()">Question suivante →</button>
                 </div>
             </div>
         </div>
@@ -855,41 +907,56 @@
         let userXP = 250;
         let userPhotoUrl = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
 
-        // BANQUE DE QUESTIONS INTERNES (GÉNÉRÉES EN ARRIÉRÉ-PLAN PAR LE MOTEUR IA BASÉ SUR LES COURS DU SITE)
-        const backgroundGeneratedQuestions = [
+        // MOTEUR DE GÉNÉRATION DE QUESTIONS INFINIES EN ARRIÉRÉ-PLAN (BASÉ EXCLUSIVEMENT SUR LES COURS DU SITE)
+        const courseQuestionBank = [
             {
-                question: "Selon l'Éducation Civique & Morale et la Constitution de la RDC, quel est l'un des devoirs fondamentaux du citoyen ?",
-                options: [
-                    "Respecter la Constitution et les lois de la République",
-                    "Ne payer des impôts qu'en cas de nécessité",
-                    "Ignorer les symboles de l'État",
-                    "Participer uniquement aux activités privées"
-                ],
-                correct: 0
+                q: "Quel est l'un des devoirs civiques fondamentaux inscrits dans l'Éducation Civique & Morale et la Constitution de la RDC ?",
+                correct: "Respecter la Constitution et les lois de la République",
+                wrongs: [
+                    "Ignorer les symboles de l'État et les institutions",
+                    "Ne payer des impôts qu'en période de fête",
+                    "Refuser de participer aux votes nationaux"
+                ]
             },
             {
-                question: "Quelle est la date historique de l'adoption de la Constitution de la République Démocratique du Congo actuelle ?",
-                options: [
+                q: "À quelle date historique la Constitution de la République Démocratique du Congo actuelle a-t-elle été adoptée ?",
+                correct: "18 février 2006",
+                wrongs: [
                     "30 juin 1960",
-                    "18 février 2006",
                     "24 novembre 1965",
                     "17 mai 1997"
-                ],
-                correct: 1
+                ]
             },
             {
-                question: "Quel est le rôle principal de l'Éducation à la Nouvelle Citoyenneté dans le programme d'études national ?",
-                options: [
-                    "Promouvoir les valeurs patriotiques, les droits et les devoirs civiques",
-                    "Enseigner exclusivement les langues étrangères",
-                    "Remplacer l'histoire nationale",
-                    "Dispenser des cours de sport"
-                ],
-                correct: 0
+                q: "Quel est l'objectif principal de l'Éducation à la Nouvelle Citoyenneté ?",
+                correct: "Promouvoir les valeurs patriotiques, civiques et les droits fondamentaux",
+                wrongs: [
+                    "Dispenser exclusivement des cours de langues étrangères",
+                    "Remplacer l'apprentissage de l'histoire régionale",
+                    "Former uniquement aux métiers de l'industrie lourde"
+                ]
+            },
+            {
+                q: "Dans l'Histoire de la RDC, quel événement marquant s'est déroulé le 30 juin 1960 ?",
+                correct: "L'accession du pays à l'indépendance nationale",
+                wrongs: [
+                    "La signature de la Constitution de la IIIe République",
+                    "L'unification administrative des 26 provinces",
+                    "La création des symboles de l'État congolais"
+                ]
+            },
+            {
+                q: "Combien compte-t-on officiellement de provinces en République Démocratique du Congo depuis le découpage territorial ?",
+                correct: "26 provinces",
+                wrongs: [
+                    "11 provinces",
+                    "20 provinces",
+                    "30 provinces"
+                ]
             }
         ];
 
-        let currentQuizIndex = 0;
+        let currentActiveQuestion = null;
 
         // BANQUE D'IMAGES POUR LES ACTUALITÉS
         const newsImagePool = [
@@ -933,7 +1000,7 @@
             document.querySelectorAll('.nav-item')[index].classList.add('active');
             
             if (tabId === 'tab-quiz') {
-                loadBackgroundAIQuiz();
+                generateInfiniteQuizQuestion();
             }
             
             window.scrollTo(0, 0);
@@ -943,31 +1010,86 @@
             alert(`Ouverture du cours : ${subjectName}`);
         }
 
-        // GESTION DU QUIZ GÉNÉRÉ DISCRÈTEMENT PAR L'IA EN ARRIÉRÉ-PLAN
-        function loadBackgroundAIQuiz() {
-            const qData = backgroundGeneratedQuestions[currentQuizIndex];
-            document.getElementById('quiz-q-text').innerText = qData.question;
-            const optionsContainer = document.getElementById('quiz-options-list');
-            optionsContainer.innerHTML = '';
+        // GÉNÉRATEUR INFINI DE QUESTIONS (MÉLANGE ALÉATOIRE DES POSITIONS DE RÉPONSES)
+        function generateInfiniteQuizQuestion() {
+            // Sélection aléatoire d'une question source
+            const baseItem = courseQuestionBank[Math.floor(Math.random() * courseQuestionBank.length)];
+            
+            // Combiner la bonne réponse et les mauvaises réponses
+            let options = [baseItem.correct, ...baseItem.wrongs];
+            
+            // Mélanger aléatoirement les options pour que la bonne réponse change toujours d'emplacement (Algorithme de Fisher-Yates)
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
 
-            qData.options.forEach((optText, idx) => {
+            currentActiveQuestion = {
+                question: baseItem.q,
+                options: options,
+                correctAnswer: baseItem.correct
+            };
+
+            renderQuizUI();
+        }
+
+        function renderQuizUI() {
+            document.getElementById('quiz-q-text').innerText = currentActiveQuestion.question;
+            const container = document.getElementById('quiz-options-list');
+            container.innerHTML = '';
+            
+            document.getElementById('quiz-feedback').style.display = 'none';
+            document.getElementById('quiz-feedback').className = 'quiz-feedback-box';
+            document.getElementById('next-q-btn').style.display = 'none';
+
+            currentActiveQuestion.options.forEach((optText) => {
                 const btn = document.createElement('button');
                 btn.className = 'quiz-option-btn';
-                btn.innerText = optText;
-                btn.onclick = () => checkQuizAnswer(idx, qData.correct);
-                optionsContainer.appendChild(btn);
+                btn.innerHTML = `<span>${optText}</span><i class="fa-regular fa-circle" style="color: var(--text-muted);"></i>`;
+                btn.onclick = () => validateAnswerChoice(btn, optText);
+                container.appendChild(btn);
             });
         }
 
-        function checkQuizAnswer(selectedIdx, correctIdx) {
-            if (selectedIdx === correctIdx) {
+        // VALIDATION VISUELLE INSPIRÉE DE LA MAQUETTE 3D
+        function validateAnswerChoice(selectedButton, chosenText) {
+            const allButtons = document.querySelectorAll('.quiz-option-btn');
+            allButtons.forEach(b => b.disabled = true); // Désactiver les clics multiples
+
+            const isCorrect = (chosenText === currentActiveQuestion.correctAnswer);
+            const feedbackBox = document.getElementById('quiz-feedback');
+
+            if (isCorrect) {
+                selectedButton.classList.add('correct');
+                selectedButton.querySelector('i').className = 'fa-solid fa-circle-check';
+                selectedButton.querySelector('i').style.color = 'var(--success-green)';
+                
+                feedbackBox.innerText = "Excellente réponse ! Validation réussie. +50 XP";
+                feedbackBox.className = 'quiz-feedback-box success';
                 addXP(50);
-                alert("Bonne réponse ! +50 XP");
             } else {
-                alert("Mauvaise réponse. Retentez l'exercice !");
+                selectedButton.classList.add('incorrect');
+                selectedButton.querySelector('i').className = 'fa-solid fa-circle-xmark';
+                selectedButton.querySelector('i').style.color = 'var(--error-red)';
+
+                // Mettre en évidence la bonne réponse pour l'apprentissage
+                allButtons.forEach(b => {
+                    if (b.innerText.trim() === currentActiveQuestion.correctAnswer.trim()) {
+                        b.classList.add('correct');
+                        b.querySelector('i').className = 'fa-solid fa-circle-check';
+                        b.querySelector('i').style.color = 'var(--success-green)';
+                    }
+                });
+
+                feedbackBox.innerText = "Mauvaise réponse. La bonne réponse est mise en surbrillance ci-dessus.";
+                feedbackBox.className = 'quiz-feedback-box error';
             }
-            currentQuizIndex = (currentQuizIndex + 1) % backgroundGeneratedQuestions.length;
-            loadBackgroundAIQuiz();
+
+            document.getElementById('next-q-btn').style.display = 'block';
+        }
+
+        function loadNextInfiniteQuestion() {
+            generateInfiniteQuizQuestion();
         }
 
         // TELECHARGER / AFFICHER LA PHOTO DE PROFIL MANUELLE
@@ -1046,7 +1168,7 @@
             showScreen('main-app');
             updateXPBar();
             fetchLiveNewsRDC();
-            loadBackgroundAIQuiz();
+            generateInfiniteQuizQuestion();
         }
 
         function addXP(amount) {
