@@ -474,7 +474,6 @@
             margin-top: 20px;
         }
 
-        /* BOUTON CRÉATEUR ULTRA DISCRET */
         .creator-secret-trigger {
             width: 20px;
             height: 20px;
@@ -841,28 +840,28 @@
             <div class="courses-grid-6" id="president-squares-container">
                 <a href="Président_Joseph_kasa_vubu.pdf" target="_blank" class="book-card">
                     <div class="book-cover-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Joseph_Kasa-Vubu_%28cropped%29.jpg/800px-Joseph_Kasa-Vubu_%28cropped%29.jpg" alt="Joseph Kasa-Vubu">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Joseph_Kasa-Vubu_1960.jpg/800px-Joseph_Kasa-Vubu_1960.jpg" alt="Joseph Kasa-Vubu">
                     </div>
                     <div class="book-title">Joseph Kasa Vubu</div>
                     <div class="book-sub">1er Président (1960-1965)</div>
                 </a>
                 <a href="Président_mobutu.pdf" target="_blank" class="book-card">
                     <div class="book-cover-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Mobutu_Sese_Seko_1983.jpg/800px-Mobutu_Sese_Seko_1983.jpg" alt="Mobutu Sese Seko">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/MobutuSeseSeko1983_%28cropped%29.jpg/800px-MobutuSeseSeko1983_%28cropped%29.jpg" alt="Mobutu Sese Seko">
                     </div>
                     <div class="book-title">Mobutu Sese Seko</div>
                     <div class="book-sub">2ème Président (1965-1997)</div>
                 </a>
                 <a href="Président_Laurent_Désiré.pdf" target="_blank" class="book-card">
                     <div class="book-cover-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Laurent-D%C3%A9sir%C3%A9_Kabila_%28cropped%29.jpg/800px-Laurent-D%C3%A9sir%C3%A9_Kabila_%28cropped%29.jpg" alt="Laurent-Désiré Kabila">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Laurent-D%C3%A9sir%C3%A9_Kabila_%28cropped%29.jpg/800px-Laurent-D%C3%A9sir%C3%A9_Kabila_%28cropped%29.jpg" alt="Laurent-Désiré Kabila">
                     </div>
                     <div class="book-title">Laurent-Désiré Kabila</div>
                     <div class="book-sub">3ème Président (1997-2001)</div>
                 </a>
                 <a href="Président_Joseph_kabila.pdf" target="_blank" class="book-card">
                     <div class="book-cover-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Joseph_Kabila_in_2014_%28cropped%29.jpg/800px-Joseph_Kabila_in_2014_%28cropped%29.jpg" alt="Joseph Kabila">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Joseph_Kabila_2014.jpg/800px-Joseph_Kabila_2014.jpg" alt="Joseph Kabila">
                     </div>
                     <div class="book-title">Joseph Kabila</div>
                     <div class="book-sub">4ème Président (2001-2019)</div>
@@ -944,7 +943,6 @@
                     <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter
                 </button>
 
-                <!-- Bouton Créateur Ultra Discret -->
                 <button class="creator-secret-trigger" onclick="ouvrirPanneauCreateur()" title="">•</button>
             </div>
         </div>
@@ -998,7 +996,6 @@
             "Tshuapa": ["Boende", "Befale", "Djolu", "Ikela", "Katalako"]
         };
 
-        /* Banque de questions axée sur l'Éducation Nationale et la Nouvelle Citoyenneté */
         const manasseQuestionBank = [
             {
                 q: "Quel est l'article de la Constitution de la RDC qui garantit le droit à l'éducation pour chaque citoyen ?",
@@ -1142,6 +1139,7 @@
             }
         }
 
+        // Amélioration de la gestion de la photo de profil (sécurisée sans blocage)
         function previewAvatar(event) {
             const file = event.target.files[0];
             if (file) {
@@ -1149,6 +1147,9 @@
                 reader.onload = function(e) {
                     userPhotoUrl = e.target.result;
                     document.getElementById('profile-avatar-img').src = userPhotoUrl;
+                }
+                reader.onerror = function() {
+                    console.error("Erreur de chargement de l'image");
                 }
                 reader.readAsDataURL(file);
             }
@@ -1182,7 +1183,7 @@
                 province: province,
                 sousDivision: subdivision,
                 telephone: `+243${phone}`,
-                photo: userPhotoUrl,
+                photo: userPhotoUrl || 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
                 dateInscription: new Date().toISOString()
             };
 
@@ -1201,7 +1202,6 @@
             }
         }
 
-        /* Panneau secret du créateur avec le code MNL */
         function ouvrirPanneauCreateur() {
             const code = prompt("Entrez le code secret créateur :");
             if (code === "MNL") {
