@@ -474,6 +474,23 @@
             margin-top: 20px;
         }
 
+        /* BOUTON CRÉATEUR ULTRA DISCRET */
+        .creator-secret-trigger {
+            width: 20px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            color: rgba(100, 116, 139, 0.2);
+            font-size: 0.6rem;
+            margin: 15px auto 0 auto;
+            display: block;
+            cursor: default;
+            outline: none;
+        }
+        .creator-secret-trigger:hover {
+            color: var(--text-muted);
+        }
+
         .quiz-container-box {
             background: #ffffff;
             border-radius: var(--radius-lg);
@@ -795,7 +812,7 @@
                 </div>
             </div>
             
-            <div class="course-card" style="margin-bottom: 24px;">
+            <div class="course-card" style="margin-bottom: 16px;">
                 <img src="ministre.jpg" alt="Raïssa Malu" class="course-img" style="height: 220px; object-position: top;" onclick="openLightbox('ministre.jpg')">
                 <div class="course-content" style="padding: 14px 18px;">
                     <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-building-columns"></i> Ministère de l'Éducation Nationale</span>
@@ -803,15 +820,16 @@
                     <p style="font-size: 0.8rem; color: var(--text-muted);">Ministre de l'Éducation Nationale et Nouvelle Citoyenneté</p>
                 </div>
             </div>
-        </div>
-<div class="course-card" style="margin-bottom: 16px;">
-                <img src="directeur.jpg" alt=" Monsieur Papy MANGOBE MOLEKA " class="course-img" style="height: 220px; object-position: top;" onclick="openLightbox('directeur.jpg')">
+
+            <div class="course-card" style="margin-bottom: 24px;">
+                <img src="directeur.jpg" alt="Monsieur Papy MANGOBE MOLEKA" class="course-img" style="height: 220px; object-position: top;" onclick="openLightbox('directeur.jpg')">
                 <div class="course-content" style="padding: 14px 18px;">
-                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-star"></i>Directeur Chef de service </span>
-                    <h4 style="font-size: 1.15rem; font-weight: 800;">  Monsieur Papy MANGOBE MOLEKA</h4>
-                    <p style="font-size: 0.8rem; color: var(--text-muted);">directeur chef de service</p>
+                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-star"></i> Directeur Chef de service</span>
+                    <h4 style="font-size: 1.15rem; font-weight: 800;">Monsieur Papy MANGOBE MOLEKA</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Directeur Chef de service</p>
                 </div>
             </div>
+        </div>
         
         <div id="tab-presidents-list" class="tab-content">
             <div style="padding: 16px 20px 0 20px; display: flex; align-items: center; gap: 10px;">
@@ -925,6 +943,9 @@
                 <button class="btn-logout" onclick="deconnecterUtilisateur()">
                     <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter
                 </button>
+
+                <!-- Bouton Créateur Ultra Discret -->
+                <button class="creator-secret-trigger" onclick="ouvrirPanneauCreateur()" title="">•</button>
             </div>
         </div>
 
@@ -977,6 +998,7 @@
             "Tshuapa": ["Boende", "Befale", "Djolu", "Ikela", "Katalako"]
         };
 
+        /* Banque de questions axée sur l'Éducation Nationale et la Nouvelle Citoyenneté */
         const manasseQuestionBank = [
             {
                 q: "Quel est l'article de la Constitution de la RDC qui garantit le droit à l'éducation pour chaque citoyen ?",
@@ -994,6 +1016,24 @@
                     "Le bleu représente le fleuve Congo, le rouge la terre minière et le jaune les richesses forestières.",
                     "Le bleu symbolise l'unité nationale, le rouge la liberté politique et le jaune le climat tropical.",
                     "Le bleu représente les lacs, le rouge l'armée et le jaune l'indépendance financière."
+                ]
+            },
+            {
+                q: "Que prône principalement le concept de la 'Nouvelle Citoyenneté' en RDC ?",
+                correct: "L'adoption de comportements civiques responsables, le civisme fiscal et le respect des biens publics.",
+                wrongs: [
+                    "L'obligation de parler uniquement les langues nationales dans les institutions.",
+                    "Le changement périodique des armoiries de la république.",
+                    "La suppression des examens d'État au cycle secondaire."
+                ]
+            },
+            {
+                q: "Quel ministère supervise directement les programmes scolaires et l'éducation de base en RDC ?",
+                correct: "Le Ministère de l'Éducation Nationale et Nouvelle Citoyenneté.",
+                wrongs: [
+                    "Le Ministère de la Jeunesse et Initiation à la Nouvelle Citoyenneté uniquement.",
+                    "Le Ministère de l'Enseignement supérieur et universitaire (ESU).",
+                    "Le Ministère de la Fonction Publique."
                 ]
             }
         ];
@@ -1158,6 +1198,21 @@
             if (confirm("Voulez-vous vraiment vous déconnecter de votre compte ?")) {
                 localStorage.removeItem('educ_utilisateur_connecte');
                 location.reload();
+            }
+        }
+
+        /* Panneau secret du créateur avec le code MNL */
+        function ouvrirPanneauCreateur() {
+            const code = prompt("Entrez le code secret créateur :");
+            if (code === "MNL") {
+                const inscrits = JSON.parse(localStorage.getItem('educ_inscrits_rdc') || '[]');
+                let listeStr = `=== UTILISATEURS INSCRITS (${inscrits.length}) ===\n\n`;
+                inscrits.forEach((u, i) => {
+                    listeStr += `${i+1}. ${u.nomComplet} | École: ${u.ecole} | Tél: ${u.telephone} | Province: ${u.province}\n`;
+                });
+                alert(listeStr);
+            } else if (code !== null) {
+                alert("Code erroné.");
             }
         }
 
