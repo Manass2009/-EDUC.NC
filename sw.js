@@ -44,3 +44,38 @@ self.addEventListener('fetch', (event) => {
       })
   );
 });
+
+// ==========================================
+// AJOUT : Gestion des notifications push
+// ==========================================
+self.addEventListener('push', (event) => {
+  const titre = "EDUC National - RDC";
+  const options = {
+    body: event.data ? event.data.text() : "C'est l'heure d'étudier votre cours de Nouvelle Citoyenneté !",
+    icon: './logoo.png',
+    badge: './logoo.png',
+    vibrate: [200, 100, 200]
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(titre, options)
+  );
+});
+
+// Gestion du clic sur la notification (ouvre l'application)
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      for (let i = 0; i < clientList.length; i++) {
+        const client = clientList[i];
+        if ('focus' in client) {
+          return client.focus();
+        }
+      }
+      if (clients.openWindow) {
+        return clients.openWindow('./index.html');
+      }
+    })
+  );
+});
