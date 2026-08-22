@@ -781,12 +781,12 @@
             
             <div class="course-card">
                 <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80" alt="Nouvelle Citoyenneté" class="course-img">
-                <a href="Nouvelle_citoyenneté.pdf" target="_blank" class="book-card" style="text-decoration: none;">
-    <div class="book-cover-icon" style="background: #059669;"><i class="fa-solid fa-hand-holding-heart"></i></div>
-    <div class="book-title">Nouvelle Citoyenneté</div>
-    <div class="book-sub">Document PDF</div>
-</a>
-
+                <div class="course-content">
+                    <span class="course-badge"><i class="fa-solid fa-flag"></i> Valeurs Nationales</span>
+                    <h4 style="font-size: 1.1rem; font-weight: 800;">Éducation à la Nouvelle Citoyenneté</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Droits, devoirs et valeurs patriotiques fondamentales pour bâtir la RDC.</p>
+                    <a href="Nouvelle_citoyenneté.pdf" target="_blank" class="course-btn" onclick="addXP(150)">Commencer le cours (+150 XP)</a>
+                </div>
             </div>
 
             <h3 class="section-title">Chronologie et Histoire des Présidents de la RDC</h3>
@@ -884,11 +884,11 @@
                     <div class="book-title">Éducation Civique & Morale</div>
                     <div class="book-sub">Document PDF</div>
                 </a>
-                <div class="book-card" onclick="alert('Module Nouvelle Citoyenneté')">
+                <a href="Nouvelle_citoyenneté.pdf" target="_blank" class="book-card">
                     <div class="book-cover-icon" style="background: #059669;"><i class="fa-solid fa-hand-holding-heart"></i></div>
                     <div class="book-title">Nouvelle Citoyenneté</div>
-                    <div class="book-sub">12 Modules</div>
-                </div>
+                    <div class="book-sub">Document PDF</div>
+                </a>
                 <div class="book-card" onclick="alert('Module Histoire')">
                     <div class="book-cover-icon" style="background: #d97706;"><i class="fa-solid fa-landmark"></i></div>
                     <div class="book-title">Histoire de la RDC</div>
@@ -1139,7 +1139,6 @@
             }
         }
 
-        // Amélioration de la gestion de la photo de profil (sécurisée sans blocage)
         function previewAvatar(event) {
             const file = event.target.files[0];
             if (file) {
