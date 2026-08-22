@@ -1,20 +1,14 @@
 {
-  "name": "EDUC NC RDC",
+  "name": "EDUC National RDC",
   "short_name": "EDUC RDC",
-  "description": "Application éducative officielle de la RDC",
-  "start_url": "/",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#1e3a8a",
+  "theme_color": "#0066cc",
   "icons": [
     {
       "src": "logoo.png",
       "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "logoo.png",
-      "sizes": "512x512",
       "type": "image/png"
     }
   ]
