@@ -1,0 +1,53 @@
+/* --- ADAPTATION "COMME DE L'EAU" (RESPONSIVE DESKTOP & MOBILE) --- */
+
+/* Sur les grands écrans (ordinateurs, tablettes larges) */
+@media (min-width: 768px) {
+    body, html {
+        background-color: #cbd5e1; /* Un fond élégant autour de l'application sur PC */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    /* On transforme ton appli en un "cadre adaptatif" fluide sur PC, ou on l'élargit */
+    .screen {
+        max-width: 480px; /* Largeur idéale type smartphone haut de gamme sur PC */
+        height: 100vh;
+        max-height: 900px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        border-radius: 24px;
+        position: relative;
+        overflow-y: auto;
+        border: 8px solid #ffffff;
+    }
+
+    #splash-screen, #auth-screen, #profile-screen {
+        max-width: 480px;
+        margin: auto;
+        border-radius: 24px;
+    }
+}
+
+/* Si tu veux que le site prenne TOUT l'écran sur PC en s'élargissant (mode grand site web) : */
+@media (min-width: 1024px) {
+    .screen {
+        max-width: 800px; /* S'élargit pour les tablettes et petits PC */
+    }
+}
+
+@media (min-width: 1280px) {
+    .screen {
+        max-width: 960px; /* S'élargit encore pour les grands ordinateurs */
+    }
+    
+    /* On adapte les grilles pour qu'elles profitent du grand écran */
+    .courses-grid-6 {
+        grid-template-columns: repeat(3, 1fr) !important; /* 3 colonnes au lieu de 2 sur grand PC */
+    }
+    
+    .quick-access-grid {
+        grid-template-columns: repeat(4, 1fr) !important; /* 4 colonnes côte à côte */
+    }
+}
+
