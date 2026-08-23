@@ -427,6 +427,69 @@
             text-decoration: none;
         }
 
+        /* NOUVEAU STYLE : Plein écran immersif pour les autorités (façon Google) */
+        .authority-fullscreen-card {
+            position: relative;
+            width: calc(100% - 40px);
+            margin: 0 20px 20px 20px;
+            height: 420px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            cursor: pointer;
+            background: #000;
+        }
+
+        .authority-fullscreen-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            transition: transform 0.5s ease;
+        }
+
+        .authority-fullscreen-card:hover .authority-fullscreen-img {
+            transform: scale(1.03);
+        }
+
+        .authority-fullscreen-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 30px 20px 20px 20px;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.85) 100%);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .authority-badge-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            align-self: flex-start;
+            margin-bottom: 4px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .authority-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .authority-role {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+        }
+
         .news-card {
             background: var(--card-bg);
             border-radius: var(--radius-md);
@@ -714,7 +777,7 @@
                         <h2 id="display-username" style="font-size: 1.2rem; font-weight: 800;">Manassé</h2>
                     </div>
                 </div>
-                <div style="background: rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <div style="background: rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="demanderPermissionNotifications()" title="Activer les rappels">
                     <i class="fa-solid fa-bell"></i>
                 </div>
             </div>
@@ -802,30 +865,31 @@
 
             <h3 class="section-title">Nos Autorités Actuelles</h3>
             
-            <div class="course-card" style="margin-bottom: 16px;">
-                <img src="president.jpg" alt="S.E. Félix Tshisekedi" class="course-img" style="height: 220px; object-position: top;" onclick="openLightbox('president.jpg')">
-                <div class="course-content" style="padding: 14px 18px;">
-                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-star"></i> Présidence de la République</span>
-                    <h4 style="font-size: 1.15rem; font-weight: 800;">S.E. Félix Tshisekedi</h4>
-                    <p style="font-size: 0.8rem; color: var(--text-muted);">Président de la République Démocratique du Congo</p>
+            <!-- AFFICHAGE PLEIN ÉCRAN FAÇON GOOGLE -->
+            <div class="authority-fullscreen-card" onclick="openLightbox('president.jpg')">
+                <img src="president.jpg" alt="S.E. Félix Tshisekedi" class="authority-fullscreen-img">
+                <div class="authority-fullscreen-overlay">
+                    <span class="authority-badge-tag"><i class="fa-solid fa-star"></i> Présidence de la République</span>
+                    <div class="authority-name">S.E. Félix Tshisekedi</div>
+                    <div class="authority-role">Président de la République Démocratique du Congo</div>
                 </div>
             </div>
             
-            <div class="course-card" style="margin-bottom: 16px;">
-                <img src="ministre.jpg" alt="Raïssa Malu" class="course-img" style="height: 220px; object-position: top;" onclick="openLightbox('ministre.jpg')">
-                <div class="course-content" style="padding: 14px 18px;">
-                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-building-columns"></i> Ministère de l'Éducation Nationale</span>
-                    <h4 style="font-size: 1.15rem; font-weight: 800;">Raïssa Malu</h4>
-                    <p style="font-size: 0.8rem; color: var(--text-muted);">Ministre de l'Éducation Nationale et Nouvelle Citoyenneté</p>
+            <div class="authority-fullscreen-card" onclick="openLightbox('ministre.jpg')">
+                <img src="ministre.jpg" alt="Raïssa Malu" class="authority-fullscreen-img">
+                <div class="authority-fullscreen-overlay">
+                    <span class="authority-badge-tag"><i class="fa-solid fa-building-columns"></i> Ministère de l'Éducation Nationale</span>
+                    <div class="authority-name">Raïssa Malu</div>
+                    <div class="authority-role">Ministre de l'Éducation Nationale et Nouvelle Citoyenneté</div>
                 </div>
             </div>
 
-            <div class="course-card" style="margin-bottom: 24px;">
-                <img src="directeur.jpg" alt="Monsieur Papy MANGOBE MOLEKA" class="course-img" style="height: 220px; object-position: top;" onclick="openLightbox('directeur.jpg')">
-                <div class="course-content" style="padding: 14px 18px;">
-                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-star"></i> Directeur Chef de service</span>
-                    <h4 style="font-size: 1.15rem; font-weight: 800;">Monsieur Papy MANGOBE MOLEKA</h4>
-                    <p style="font-size: 0.8rem; color: var(--text-muted);">Directeur Chef de service</p>
+            <div class="authority-fullscreen-card" onclick="openLightbox('directeur.jpg')">
+                <img src="directeur.jpg" alt="Monsieur Papy MANGOBE MOLEKA" class="authority-fullscreen-img">
+                <div class="authority-fullscreen-overlay">
+                    <span class="authority-badge-tag"><i class="fa-solid fa-star"></i> Direction Chef de service</span>
+                    <div class="authority-name">Monsieur Papy MANGOBE MOLEKA</div>
+                    <div class="authority-role">Directeur Chef de service</div>
                 </div>
             </div>
         </div>
@@ -1068,6 +1132,7 @@
             updateXPBar();
             fetchLiveNewsRDC();
             generateInfiniteQuizQuestion();
+            initialiserRappelsEtude();
         }
 
         function showScreen(id) {
@@ -1147,9 +1212,6 @@
                     userPhotoUrl = e.target.result;
                     document.getElementById('profile-avatar-img').src = userPhotoUrl;
                 }
-                reader.onerror = function() {
-                    console.error("Erreur de chargement de l'image");
-                }
                 reader.readAsDataURL(file);
             }
         }
@@ -1192,6 +1254,7 @@
             localStorage.setItem('educ_utilisateur_connecte', JSON.stringify(userData));
 
             restaurerSessionDashboard(userData);
+            demanderPermissionNotifications();
         }
 
         function deconnecterUtilisateur() {
@@ -1213,6 +1276,45 @@
             } else if (code !== null) {
                 alert("Code erroné.");
             }
+        }
+
+        function demanderPermissionNotifications() {
+            if (!("Notification" in window)) {
+                alert("Votre navigateur ne prend pas en charge les notifications.");
+                return;
+            }
+
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    envoyerNotificationInstantanee("EDUC National", "Rappels d'étude activés avec succès !");
+                }
+            });
+        }
+
+        function envoyerNotificationInstantanee(titre, corps) {
+            if (Notification.permission === "granted") {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.ready.then(registration => {
+                        registration.showNotification(titre, {
+                            body: corps,
+                            icon: 'logoo.png',
+                            badge: 'logoo.png'
+                        });
+                    });
+                }
+            }
+        }
+
+        function initialiserRappelsEtude() {
+            const intervalleRappelMS = 4 * 60 * 60 * 1000;
+            setInterval(() => {
+                const messagesRappel = [
+                    "C'est l'heure d'étudier ! Révisez votre module de Nouvelle Citoyenneté pour gagner +150 XP 🇨🇩",
+                    "Manassé IA vous attend pour un nouveau quiz éducatif. Venez tester vos connaissances !"
+                ];
+                const messageAleatoire = messagesRappel[Math.floor(Math.random() * messagesRappel.length)];
+                envoyerNotificationInstantanee("Rappel d'Étude - EDUC National", messageAleatoire);
+            }, intervalleRappelMS);
         }
 
         function generateInfiniteQuizQuestion() {
@@ -1278,7 +1380,7 @@
                     }
                 });
 
-                feedbackBox.innerText = "Incorrect. Manassé IA a mis en évidence la bonne réponse ci-dessus.";
+                feedbackBox.innerText = "Incorrect. La bonne réponse est mise en évidence ci-dessus.";
                 feedbackBox.className = 'quiz-feedback-box error';
             }
 
@@ -1291,7 +1393,7 @@
 
         function addXP(amount) {
             userXP += amount;
-            if (userXP > 1000000) userXP = 1000000;
+            if (userXP > 1000) userXP = 1000;
             updateXPBar();
         }
 
@@ -1338,9 +1440,9 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('Service Worker enregistré avec succès !', reg))
-            .catch(err => console.log('Erreur lors de l’enregistrement du Service Worker :', err));
+          navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('Service Worker enregistré !', reg))
+            .catch(err => console.log('Erreur Service Worker :', err));
         });
       }
     </script>
