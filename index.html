@@ -427,69 +427,6 @@
             text-decoration: none;
         }
 
-        /* NOUVEAU STYLE : Plein écran immersif pour les autorités (façon Google) */
-        .authority-fullscreen-card {
-            position: relative;
-            width: calc(100% - 40px);
-            margin: 0 20px 20px 20px;
-            height: 420px;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-            cursor: pointer;
-            background: #000;
-        }
-
-        .authority-fullscreen-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: top center;
-            transition: transform 0.5s ease;
-        }
-
-        .authority-fullscreen-card:hover .authority-fullscreen-img {
-            transform: scale(1.03);
-        }
-
-        .authority-fullscreen-overlay {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            padding: 30px 20px 20px 20px;
-            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.85) 100%);
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .authority-badge-tag {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-            color: #ffffff;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            align-self: flex-start;
-            margin-bottom: 4px;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .authority-name {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            line-height: 1.2;
-        }
-
-        .authority-role {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: 500;
-        }
-
         .news-card {
             background: var(--card-bg);
             border-radius: var(--radius-md);
@@ -782,7 +719,7 @@
                 </div>
             </div>
             <h1 style="font-size: 1.6rem; font-weight: 800;">EDUC National</h1>
-            <p style="font-size: 0.85rem; opacity: 0.9;">Apprenons, comprenons et bâtissons avec EDUC NC </p>
+            <p style="font-size: 0.85rem; opacity: 0.9;">Apprenons, comprenons et bâtissons avec EDUC</p>
         </div>
 
         <div class="info-box-ministere" style="margin-top: 20px;">
@@ -865,31 +802,39 @@
 
             <h3 class="section-title">Nos Autorités Actuelles</h3>
             
-            <!-- AFFICHAGE PLEIN ÉCRAN FAÇON GOOGLE -->
-            <div class="authority-fullscreen-card" onclick="openLightbox('president.jpg')">
-                <img src="president.jpg" alt="S.E. Félix Tshisekedi" class="authority-fullscreen-img">
-                <div class="authority-fullscreen-overlay">
-                    <span class="authority-badge-tag"><i class="fa-solid fa-star"></i> Présidence de la République</span>
-                    <div class="authority-name">S.E. Félix Tshisekedi</div>
-                    <div class="authority-role">Président de la République Démocratique du Congo</div>
-                </div>
-            </div>
-            </div>
-            <div class="authority-fullscreen-card" onclick="openLightbox('premier_ministre.jpg')">
-                <img src="premier_ministre.jpg" alt="Judith Suminwa Tuluka" class="authority-fullscreen-img">
-                <div class="authority-fullscreen-overlay">
-                    <span class="authority-badge-tag"><i class="fa-solid fa-building-columns"></i> première Ministère de la RDC</span>
-                    <div class="authority-name">Judith Suminwa Tuluka</div>
-                    <div class="authority-role">Première ministredela république démocratique du congo</div>
+            <div class="course-card" style="margin-bottom: 16px;">
+                <img src="president.jpg" alt="S.E. Félix Tshisekedi" class="course-img" style="height: 220px; object-position: top;" onclick="openLightbox('president.jpg')">
+                <div class="course-content" style="padding: 14px 18px;">
+                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-star"></i> Présidence de la République</span>
+                    <h4 style="font-size: 1.15rem; font-weight: 800;">S.E. Félix Tshisekedi</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Président de la République Démocratique du Congo</p>
                 </div>
             </div>
 
-            <div class="authority-fullscreen-card" onclick="openLightbox('ministre.jpg')">
-                <img src="ministre.jpg" alt="Raïssa Malu" class="authority-fullscreen-img">
-                <div class="authority-fullscreen-overlay">
-                    <span class="authority-badge-tag"><i class="fa-solid fa-star"></i>ministre de l'éducation nationale</span>
-                    <div class="authority-name">madame raïssa Malu </div>
-                    <div class="authority-role">Ministre del'Éducation Nationaleetde la nouvelle citoyenneté</div>
+            <div class="course-card" style="margin-bottom: 16px;">
+                <img src="premier_ministre.jpg" alt="Judith Suminwa Tuluka" class="course-img" style="height: 220px; object-position: top;" onclick="openLightbox('premier_ministre.jpg')">
+                <div class="course-content" style="padding: 14px 18px;">
+                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-building-shield"></i> Primature</span>
+                    <h4 style="font-size: 1.15rem; font-weight: 800;">Judith Suminwa Tuluka</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Première Ministre, Cheffe du Gouvernement de la RDC</p>
+                </div>
+            </div>
+            
+            <div class="course-card" style="margin-bottom: 16px;">
+                <img src="ministre.jpg" alt="Raïssa Malu" class="course-img" style="height: 220px; object-position: top;" onclick="openLightbox('ministre.jpg')">
+                <div class="course-content" style="padding: 14px 18px;">
+                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-building-columns"></i> Ministère de l'Éducation Nationale</span>
+                    <h4 style="font-size: 1.15rem; font-weight: 800;">Raïssa Malu</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Ministre de l'Éducation Nationale et Nouvelle Citoyenneté</p>
+                </div>
+            </div>
+
+            <div class="course-card" style="margin-bottom: 24px;">
+                <img src="directeur.jpg" alt="Monsieur Papy MANGOBE MOLEKA" class="course-img" style="height: 220px; object-position: top;" onclick="openLightbox('directeur.jpg')">
+                <div class="course-content" style="padding: 14px 18px;">
+                    <span class="course-badge" style="background: #e0f2fe; color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-star"></i> Directeur Chef de service</span>
+                    <h4 style="font-size: 1.15rem; font-weight: 800;">Monsieur Papy MANGOBE MOLEKA</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Directeur Chef de service</p>
                 </div>
             </div>
         </div>
@@ -1132,6 +1077,7 @@
             updateXPBar();
             fetchLiveNewsRDC();
             generateInfiniteQuizQuestion();
+            
             initialiserRappelsEtude();
         }
 
@@ -1212,6 +1158,9 @@
                     userPhotoUrl = e.target.result;
                     document.getElementById('profile-avatar-img').src = userPhotoUrl;
                 }
+                reader.onerror = function() {
+                    console.error("Erreur de chargement de l'image");
+                }
                 reader.readAsDataURL(file);
             }
         }
@@ -1254,6 +1203,7 @@
             localStorage.setItem('educ_utilisateur_connecte', JSON.stringify(userData));
 
             restaurerSessionDashboard(userData);
+            
             demanderPermissionNotifications();
         }
 
@@ -1286,7 +1236,10 @@
 
             Notification.requestPermission().then(permission => {
                 if (permission === "granted") {
-                    envoyerNotificationInstantanee("EDUC National", "Rappels d'étude activés avec succès !");
+                    alert("Super ! Les notifications de rappel pour la Nouvelle Citoyenneté et l'étude sont activées.");
+                    envoyerNotificationInstantanee("EDUC National", "Bien joué ! Vos rappels d'étude sont désormais configurés.");
+                } else {
+                    alert("Les notifications ont été refusées. Vous pouvez les réactiver dans les paramètres de votre navigateur.");
                 }
             });
         }
@@ -1301,18 +1254,26 @@
                             badge: 'logoo.png'
                         });
                     });
+                } else {
+                    new Notification(titre, {
+                        body: corps,
+                        icon: 'logoo.png'
+                    });
                 }
             }
         }
 
         function initialiserRappelsEtude() {
             const intervalleRappelMS = 4 * 60 * 60 * 1000;
+            
             setInterval(() => {
                 const messagesRappel = [
                     "C'est l'heure d'étudier ! Révisez votre module de Nouvelle Citoyenneté pour gagner +150 XP 🇨🇩",
-                    "Manassé IA vous attend pour un nouveau quiz éducatif. Venez tester vos connaissances !"
+                    "Manassé IA vous attend pour un nouveau quiz éducatif. Venez tester vos connaissances !",
+                    "Maintenez votre série d'apprentissage ! Ouvrez l'application EDUC National dès maintenant."
                 ];
                 const messageAleatoire = messagesRappel[Math.floor(Math.random() * messagesRappel.length)];
+                
                 envoyerNotificationInstantanee("Rappel d'Étude - EDUC National", messageAleatoire);
             }, intervalleRappelMS);
         }
@@ -1380,7 +1341,7 @@
                     }
                 });
 
-                feedbackBox.innerText = "Incorrect. La bonne réponse est mise en évidence ci-dessus.";
+                feedbackBox.innerText = "Incorrect. Manassé IA a mis en évidence la bonne réponse ci-dessus.";
                 feedbackBox.className = 'quiz-feedback-box error';
             }
 
@@ -1441,8 +1402,8 @@
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log('Service Worker enregistré !', reg))
-            .catch(err => console.log('Erreur Service Worker :', err));
+            .then(reg => console.log('Service Worker enregistré avec succès !', reg))
+            .catch(err => console.log('Erreur lors de l’enregistrement du Service Worker :', err));
         });
       }
     </script>
