@@ -1,9 +1,10 @@
-const CACHE_NAME = 'educ-rdc-v1';
+const CACHE_NAME = 'educ-rdc-v3'; // Incrémenté en v3 pour inclure la photo de la Première Ministre et les dernières mises à jour
 const urlsToCache = [
   './',
   './index.html',
   './logoo.png',
   './president.jpg',
+  './premier_ministre.jpg',
   './ministre.jpg',
   './directeur.jpg',
   './histoire.jpeg'
@@ -11,6 +12,7 @@ const urlsToCache = [
 
 // Installation du Service Worker et mise en cache des fichiers essentiels
 self.addEventListener('install', (event) => {
+  self.skipWaiting(); // Force l'activation immédiate du nouveau SW
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
@@ -19,18 +21,19 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activation et nettoyage des anciens caches
+// Activation et nettoyage instantané des anciens caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheName !== CACHE_NAME) {
+            console.log('Suppression de l ancien cache :', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
-    })
+    }).then(() => self.clients.claim()) // Prend le contrôle immédiat des pages ouvertes
   );
 });
 
@@ -45,9 +48,7 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
-// ==========================================
-// AJOUT : Gestion des notifications push
-// ==========================================
+// Gestion des notifications push
 self.addEventListener('push', (event) => {
   const titre = "EDUC National - RDC";
   const options = {
